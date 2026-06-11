@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="base-depth" content="1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre mí — Andrés Galdino</title>
+  <link rel="preload" as="image" href="../assets/perfil1.webp">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/main.css">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#EBEBEB;font-family:var(--font);height:100%;overflow:hidden;color:#111}
+.cursor{width:10px;height:10px;background:#ffffff;border-radius:50%;position:fixed;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .2s;mix-blend-mode:difference;opacity:1}
+.cursor.big{width:36px;height:36px;background:#fff}
+.page-wrap{position:fixed;inset:0;top:var(--nh);display:flex;align-items:stretch;padding:12px;gap:10px}
+.sb-pill{width:60px;flex-shrink:0;background:#111113;border-radius:20px;display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:3px}
+.sb-toggle,.sb-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:none;border:none;border-radius:12px;color:rgba(255,255,255,.42);transition:background .25s cubic-bezier(.16,1,.3,1),color .25s}
+.sb-toggle{margin-bottom:6px;color:rgba(255,255,255,.65)}
+.sb-toggle:hover,.sb-icon:hover{background:rgba(255,255,255,.1);color:#fff}
+.sb-icon.active{background:rgba(255,255,255,.15);color:#fff}
+.sb-div{width:28px;height:1px;background:rgba(255,255,255,.08);margin:4px 0}
+.sb-panel{width:0;overflow:hidden;background:#fff;border-radius:20px;flex-shrink:0;transition:width .42s cubic-bezier(.16,1,.3,1)}
+.sb-panel.open{width:210px}
+.sb-inner{width:210px;padding:14px 10px;display:flex;flex-direction:column;height:100%;overflow-y:auto}
+.sb-inner::-webkit-scrollbar{width:3px}
+.sb-inner::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:3px}
+.sb-head{display:flex;align-items:center;justify-content:space-between;padding:2px 8px 12px;border-bottom:1px solid rgba(0,0,0,.06);margin-bottom:8px;flex-shrink:0}
+.sb-head-title{font-size:13px;font-weight:700;color:#111}
+.sb-close-btn{width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.05);border:none;border-radius:8px;color:#aaa;transition:background .2s}
+.sb-close-btn:hover{background:rgba(0,0,0,.1);color:#555}
+.sb-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;font-size:12px;font-weight:500;color:#777;background:none;border:none;text-align:left;width:100%;font-family:var(--font);transition:background .2s cubic-bezier(.16,1,.3,1),color .2s;white-space:nowrap}
+.sb-item:hover{background:rgba(0,0,0,.05);color:#333}
+.sb-item.active{background:rgba(0,0,0,.08);color:#111;font-weight:600}
+.sb-badge{margin-left:auto;font-size:9px;font-weight:600;background:rgba(0,0,0,.06);color:#bbb;border-radius:4px;padding:2px 6px}
+.db-content{flex:1;background:#fff;border-radius:20px;overflow-y:auto;padding:28px 32px}
+.db-content::-webkit-scrollbar{width:4px}
+.db-content::-webkit-scrollbar-thumb{background:rgba(0,0,0,.1);border-radius:4px}
+@keyframes panelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.db-panel{display:none}
+.db-panel.active{display:flex;flex-direction:column;gap:12px;animation:panelIn .48s cubic-bezier(.16,1,.3,1) both}
+.db-panel.active>*:nth-child(1){animation:cardIn .48s cubic-bezier(.16,1,.3,1) .04s both}
+.db-panel.active>*:nth-child(2){animation:cardIn .48s cubic-bezier(.16,1,.3,1) .09s both}
+.db-panel.active>*:nth-child(3){animation:cardIn .48s cubic-bezier(.16,1,.3,1) .14s both}
+.db-panel.active>*:nth-child(4){animation:cardIn .48s cubic-bezier(.16,1,.3,1) .19s both}
+.db-panel.active>*:nth-child(5){animation:cardIn .48s cubic-bezier(.16,1,.3,1) .24s both}
+.ph-title{font-size:22px;font-weight:800;letter-spacing:-.025em;color:#111;margin-bottom:2px}
+.ph-sub{font-size:12px;color:#aaa;margin-bottom:4px}
+.card{background:#fff;border-radius:18px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 16px rgba(0,0,0,.05);transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s cubic-bezier(.16,1,.3,1);overflow:hidden}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 38px rgba(0,0,0,.09)}
+.card-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#bbb;margin-bottom:5px}
+.card-val{font-size:14px;font-weight:700;color:#111}
+.card-desc{font-size:11px;color:#aaa;margin-top:3px;line-height:1.5}
+.row{display:grid;gap:12px}
+.col-2{grid-template-columns:1fr 1fr}
+.col-3{grid-template-columns:1fr 1fr 1fr}
+.hero-card{background:#111;border-radius:20px;color:#f5f5f7;display:flex;flex-direction:column;overflow:hidden;min-height:280px;position:relative}
+.hero-img-slot{width:100%;height:650px;background:#1a1a1c;flex-shrink:0;overflow:hidden}
+.hero-img-slot img{width:100%;height:100%;object-fit:cover;display:block;opacity:.85;transition:opacity .5s,transform .7s cubic-bezier(.16,1,.3,1)}
+.hero-card:hover .hero-img-slot img{opacity:.92;transform:scale(1.02)}
+.hero-body{padding:24px 28px;position:relative;z-index:1}
+.hero-name{font-size:clamp(24px,3.5vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:5px}
+.hero-role{font-size:13px;color:rgba(245,245,247,.5);font-weight:400}
+.hero-avail{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.14);border:1px solid rgba(34,197,94,.28);border-radius:999px;padding:5px 12px;font-size:11px;font-weight:600;color:#4ade80;margin-top:12px}
+.dot-g{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:dotPulse 2s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{box-shadow:0 0 0 4px rgba(34,197,94,0)}}
+.info-card{padding:18px 20px}
+.bio-card{padding:20px 22px}
+.bio-text{font-size:13px;line-height:1.85;color:#666}
+.tl-card{padding:22px 24px;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+.tl-num{width:38px;height:38px;border-radius:11px;background:#111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;transition:transform .35s cubic-bezier(.16,1,.3,1),background .3s}
+.tl-card:hover .tl-num{transform:scale(1.1);background:#333}
+.tl-yr{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#ccc;margin-bottom:4px}
+.tl-title{font-size:14px;font-weight:700;color:#111;margin-bottom:6px}
+.tl-desc{font-size:13px;color:#777;line-height:1.7}
+.wheel-card{padding:26px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.color-readout{display:flex;align-items:center;gap:10px;padding:10px 18px;background:#f5f5f5;border-radius:12px;min-width:200px;justify-content:center;transition:background .3s}
+.color-preview-dot{width:22px;height:22px;border-radius:7px;border:1px solid rgba(0,0,0,.1);transition:background .2s;flex-shrink:0}
+.color-hex-v{font-size:14px;font-weight:700;font-family:monospace;color:#111}
+.color-lbl-v{font-size:10px;color:#aaa;margin-top:1px}
+.palette-card{padding:20px 22px}
+.palette-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.swatch{aspect-ratio:1;border-radius:10px;border:1px solid rgba(0,0,0,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1)}
+.swatch:hover{box-shadow:0 8px 18px rgba(0,0,0,.18);filter:brightness(1.05)}
+.hobby-card{display:flex;flex-direction:column;overflow:hidden}
+.hobby-img{width:100%;height:240px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
+.hobby-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.hobby-card:hover .hobby-img img{transform:scale(1.06)}
+.hobby-body{padding:18px 18px 20px}
+.hobby-icon-text{font-size:22px;margin-bottom:8px;display:block}
+.hobby-title{font-size:13px;font-weight:700;color:#111;margin-bottom:4px}
+.hobby-desc-text{font-size:11px;color:#888;line-height:1.65}
+.tool-card-v{display:flex;flex-direction:column;overflow:hidden}
+.tool-img{width:100%;height:400px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
+.tool-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)}
+.tool-card-v:hover .tool-img img{transform:scale(1.04)}
+.tool-body{padding:20px 22px}
+.tool-logo-badge{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.tool-logo-badge img{width:60%;height:60%;object-fit:contain;display:block}
+.tool-name-v{font-size:15px;font-weight:700;color:#111;margin-bottom:5px}
+.tool-desc-v{font-size:12px;color:#aaa;line-height:1.55}
+.lang-card{display:flex;flex-direction:column;overflow:hidden}
+.lang-img{width:100%;height:180px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
+.lang-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.lang-card:hover .lang-img img{transform:scale(1.05)}
+.lang-body{padding:20px 22px}
+.lang-name-v{font-size:15px;font-weight:800;color:#111;margin-bottom:3px}
+.lang-detail-v{font-size:11px;color:#aaa;margin-bottom:14px;line-height:1.5}
+.lang-bar-wrap{height:3px;background:rgba(0,0,0,.07);border-radius:2px;overflow:hidden}
+.lang-bar-fill{height:100%;background:#111;border-radius:2px}
+.skill-cat-card{padding:20px 22px}
+.skill-cat-title{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#bbb;margin-bottom:11px}
+.skill-tags{display:flex;flex-wrap:wrap;gap:7px}
+.skill-tag{font-size:12px;font-weight:500;color:#555;border:1px solid rgba(0,0,0,.1);border-radius:999px;padding:6px 14px;transition:background .25s cubic-bezier(.16,1,.3,1),color .25s,border-color .25s,transform .25s cubic-bezier(.16,1,.3,1)}
+.skill-tag:hover{background:#111;color:#fff;border-color:#111}
+.proc-card{padding:26px 24px}
+.proc-num{font-size:44px;font-weight:800;color:rgba(0,0,0,.07);letter-spacing:-.05em;line-height:1;margin-bottom:10px;transition:color .35s}
+.proc-card:hover .proc-num{color:rgba(0,0,0,.15)}
+.proc-title{font-size:14px;font-weight:700;color:#111;margin-bottom:9px}
+.proc-body{font-size:12px;color:#777;line-height:1.8}
+.inspo-card{padding:22px 24px;display:flex;align-items:center;gap:16px}
+.inspo-logo{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.inspo-card:hover .inspo-logo{transform:scale(1.1) rotate(-4deg)}
+.inspo-logo img{width:100%;height:100%;object-fit:contain}
+.inspo-name{font-size:14px;font-weight:700;color:#111;margin-bottom:4px}
+.inspo-why{font-size:12px;color:#888;line-height:1.65}
+.exp-timeline{display:flex;flex-direction:column;position:relative}
+.exp-timeline::before{content:'';position:absolute;left:6px;top:32px;bottom:32px;width:1.5px;background:linear-gradient(to bottom,transparent,rgba(0,0,0,.1) 15%,rgba(0,0,0,.1) 85%,transparent);z-index:0}
+.exp-block{display:grid;grid-template-columns:20px 52px 1fr;gap:0 16px;align-items:start;padding:22px 0;position:relative;z-index:1}
+.exp-block:not(:last-child){border-bottom:1px solid rgba(0,0,0,.04)}
+.exp-dot{width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid rgba(0,0,0,.2);margin-top:16px;flex-shrink:0;transition:border-color .35s,transform .35s cubic-bezier(.16,1,.3,1),background .35s;z-index:2}
+.exp-block:hover .exp-dot{border-color:#111;background:#111;transform:scale(1.25)}
+.exp-logo-wrap{width:52px;height:52px;border-radius:13px;background:#f7f7f7;border:1px solid rgba(0,0,0,.07);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s cubic-bezier(.16,1,.3,1);flex-shrink:0}
+.exp-logo-wrap img{width:62%;height:62%;object-fit:contain;display:block}
+.exp-block:hover .exp-logo-wrap{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
+.exp-main{min-width:0}
+.exp-co-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;gap:10px}
+.exp-co-name{font-size:14px;font-weight:700;color:#111}
+.exp-co-meta{font-size:11px;color:#000000;margin-bottom:10px}
+.exp-co-badge{font-size:10px;font-weight:600;background:rgba(0,0,0,.05);color:#888;border-radius:999px;padding:3px 10px;letter-spacing:.02em;white-space:nowrap;flex-shrink:0}
+.exp-roles-list{display:flex;flex-direction:column;gap:8px}
+.exp-role-row{padding:10px 14px;background:rgba(0, 0, 0, 0.025);border-radius:10px;border-left:2px solid rgba(0,0,0,.08);transition:background .3s cubic-bezier(.16,1,.3,1),border-color .3s}
+.exp-role-row:hover{background:rgba(0,0,0,.05);border-color:#111}
+.exp-role-title{font-size:11.5px;font-weight:700;color:#111;letter-spacing:.01em;margin-bottom:3px}
+.exp-role-meta{font-size:11px;color:#000000;line-height:1.5}
+.exp-role-skills{font-size:11px;color:#000000;margin-top:5px;font-style:italic}
+.exp-founder-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.08);border-radius:999px;padding:3px 10px;color:#555;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+<div id="nav-container"></div>
+<div class="page-wrap">
+
+<div class="sb-pill">
+  <button class="sb-toggle" id="sbToggle" aria-label="Menú"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  <button class="sb-icon active" data-ctx="sobremí" aria-label="Sobre mí"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></button>
+  <button class="sb-icon" data-ctx="herramientas" aria-label="Herramientas"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></button>
+  <div class="sb-div"></div>
+  <button class="sb-icon" data-ctx="idiomas" aria-label="Idiomas"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></button>
+  <button class="sb-icon" data-ctx="habilidades" aria-label="Habilidades"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>
+  <button class="sb-icon" data-ctx="filosofia" aria-label="Filosofía"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-1.86 5.58-4.6 6.67L14 18H10l-.4-2.33C6.86 14.58 5 12 5 9a7 7 0 0 1 7-7z"/><line x1="10" y1="22" x2="14" y2="22"/></svg></button>
+  <button class="sb-icon" data-ctx="inspiracion" aria-label="Inspiración"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+  <div class="sb-div"></div>
+  <button class="sb-icon" data-ctx="experiencia" aria-label="Experiencia"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></button>
+</div>
+
+<div class="sb-panel" id="sbPanel">
+  <div class="sb-inner">
+    <div class="sb-head"><span class="sb-head-title" id="sbTitle">Sobre mí</span><button class="sb-close-btn" id="sbClose"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+    <div id="sbNav"></div>
+  </div>
+</div>
+
+<main class="db-content">
+
+<!-- PERFIL -->
+<div class="db-panel active" id="panel-perfil">
+  <div class="ph"><div class="ph-title">Perfil</div><div class="ph-sub">Quién soy y de dónde vengo</div></div>
+  <div class="hero-card">
+    <div class="hero-img-slot"><img src="../assets/perfil1.webp" alt="Andrés Galdino" width="800" height="500"></div>
+    <div class="hero-body">
+      <div class="hero-name">Andrés Galdino</div>
+      <div class="hero-role">Product &amp; Creative Designer</div>
+      <div class="hero-avail"><span class="dot-g"></span>Disponible para proyectos</div>
+    </div>
+  </div>
+  <div class="row col-3">
+    <div class="card info-card"><div class="card-lbl">Ubicación</div><div class="card-val">Bogotá, Colombia</div><div class="card-desc">Remoto · Latam</div></div>
+    <div class="card info-card"><div class="card-lbl">Formación</div><div class="card-val">UX/UI Design</div><div class="card-desc">P. Universidad Javeriana</div></div>
+    <div class="card info-card"><div class="card-lbl">Fecha de nacimiento</div><div class="card-val">31 · 12 · 2001</div><div class="card-desc">Capricornio</div></div>
+  </div>
+  <div class="card bio-card">
+    <div class="card-lbl">Bio</div>
+    <p class="bio-text">Crecí entre planos y maquetas — mi padre es arquitecto y desde pequeño entendí que los espacios tienen el poder de cambiar cómo te sientes. Esa misma idea me llevó al diseño digital: la posibilidad de construir experiencias sin límites físicos.</p>
+    <p class="bio-text" style="margin-top:10px">Me formé en Diseño de Experiencias y Comunicación Digital en la Pontificia Universidad Javeriana, y soy autodidacta por naturaleza. Combino investigación de usuarios, pensamiento de sistemas y un criterio estético sólido para diseñar cosas que funcionan antes de que alguien las note. Si lo diseñé, tiene que poder verse y sentirse en un navegador real.</p>
+  </div>
+</div>
+
+<!-- HISTORIA -->
+<div class="db-panel" id="panel-historia">
+  <div class="ph"><div class="ph-title">Historia</div><div class="ph-sub">El camino que me trajo hasta aquí</div></div>
+  <div class="card tl-card"><div class="tl-num">01</div><div><div class="tl-yr">Desde siempre</div><div class="tl-title">Nací queriendo construir</div><div class="tl-desc">Mi padre es arquitecto. Crecí rodeado de planos, maquetas y la idea de que los espacios tienen el poder de cambiar cómo te sientes. Desde pequeño dibujaba, construía y me preguntaba cómo hacían las cosas que veía en pantalla.</div></div></div>
+  <div class="card tl-card"><div class="tl-num">02</div><div><div class="tl-yr">El giro</div><div class="tl-title">La arquitectura me quedaba corta</div><div class="tl-desc">Quería construir, pero sin límites físicos. Cuando la tecnología cruzó mi camino y descubrí Figma, algo hizo clic. Podía crear mundos completos, sistemas visuales, interfaces que se sienten — sin cemento ni grúas.</div></div></div>
+  <div class="card tl-card"><div class="tl-num">03</div><div><div class="tl-yr">Formación</div><div class="tl-title">Autodidacta + Pontificia U. Javeriana</div><div class="tl-desc">Aprendí diseño gráfico con videos, práctica y referentes. Lo formalicé estudiando Diseño de Experiencias y Comunicación Digital en la Pontificia Universidad Javeriana. La mentalidad de "si no sé, aprendo" nunca se fue.</div></div></div>
+  <div class="card tl-card"><div class="tl-num">04</div><div><div class="tl-yr">Hoy</div><div class="tl-title">Diseño que se puede probar en vivo</div><div class="tl-desc">Con la llegada de la IA, paso mis diseños de Figma a código real para validar que mis ideas más ambiciosas sean también factibles. Si lo diseñé, tiene que poder verse en un navegador antes de entregarlo. Este portafolio es prueba de eso.</div></div></div>
+</div>
+
+<!-- COLORES -->
+<div class="db-panel" id="panel-colores">
+  <div class="ph"><div class="ph-title">Colores</div><div class="ph-sub">Pasa el cursor sobre la rueda · Click para copiar</div></div>
+  <div class="row col-2" style="grid-template-columns:1fr 1.2fr">
+    <div class="card wheel-card">
+      <canvas id="colorWheel" width="200" height="200" style="cursor:none;flex-shrink:0"></canvas>
+      <div class="color-readout">
+        <div class="color-preview-dot" id="colorPreview" style="background:#737373"></div>
+        <div><div class="color-hex-v" id="colorHex">#737373</div><div class="color-lbl-v" id="colorLbl">500 · Hover para explorar</div></div>
+      </div>
+      <div style="font-size:11px;color:#ccc;text-align:center">12 tonos · #FFFFFF → #0A0A0A</div>
+    </div>
+    <div class="card palette-card">
+      <div class="card-lbl" style="margin-bottom:14px">Neutral — estructura</div>
+      <div class="palette-row" id="paletteGrid"></div>
+      <p style="font-size:11px;color:#aaa;margin-top:18px;line-height:1.7">Negro y blanco para estructura y seriedad. El gris para los matices. Los colores de acento aparecen solo en los proyectos — destacan porque el entorno es sobrio.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PASATIEMPOS -->
+<div class="db-panel" id="panel-pasatiempos">
+  <div class="ph"><div class="ph-title">Pasatiempos</div><div class="ph-sub">Lo que hago cuando no estoy diseñando — aunque casi siempre lo estoy</div></div>
+  <div class="row col-3">
+    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/game.webp" alt="Videojuegos" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Videojuegos</div><div class="hobby-desc-text">Jugar y construir. Actualmente aprendiendo Unity para crear mis propios mundos y mecánicas desde cero.</div></div></div>
+    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/nature.webp" alt="Naturaleza" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Naturaleza</div><div class="hobby-desc-text">Documentales de fauna, animales y nuestro planeta. Me enganchan los de David Attenborough y ecosistemas increíbles.</div></div></div>
+    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/ia.webp" alt="Inteligencia Artificial" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Inteligencia Artificial</div><div class="hobby-desc-text">Sigo cada actualización. La IA es uno de los momentos más fascinantes de la humanidad — y lo aprovecho al máximo.</div></div></div>
+    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/music.webp" alt="Música" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Música</div><div class="hobby-desc-text">La escucho constantemente, mayormente en inglés. También la creo — de forma muy personal, no para publicar.</div></div></div>
+    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/technology.webp" alt="Tecnología" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Tecnología</div><div class="hobby-desc-text">Noticias, lanzamientos, tendencias. Si ocurre algo nuevo en tech o diseño, me entero ese mismo día.</div></div></div>
+    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/learning.webp" alt="Aprender" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Aprender</div><div class="hobby-desc-text">Si algo me llama la atención, lo estudio. Unity, código, IA — el proceso siempre me engancha más que el resultado.</div></div></div>
+  </div>
+</div>
+
+<!-- H: DISEÑO -->
+<div class="db-panel" id="panel-h-diseno">
+  <div class="ph"><div class="ph-title">Diseño</div><div class="ph-sub">Herramientas de diseño visual y motion</div></div>
+  <div class="row col-2">
+    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-figma.webp" alt="Figma" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/figma.svg" alt="Logo Figma"></div><div class="tool-name-v">Figma</div><div class="tool-desc-v">Mi herramienta principal de diseño. Construyo sistemas de componentes, variantes, prototipos interactivos y handoff con variables de tokens para desarrollo. También uso Dev Mode para conectar el diseño con código real.</div></div></div>
+    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-illustrator.webp" alt="Illustrator" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/illustrator.svg" alt="Logo Illustrator"></div><div class="tool-name-v">Illustrator</div><div class="tool-desc-v">Para todo lo que requiere precisión vectorial: construcción de logotipos, sistemas de iconos, manuales de marca y materiales de packaging. La herramienta de identidad visual por excelencia.</div></div></div>
+  </div>
+</div>
+
+<!-- H: PRODUCTIVIDAD -->
+<div class="db-panel" id="panel-h-productividad">
+  <div class="ph"><div class="ph-title">Productividad</div><div class="ph-sub">Organización y documentación</div></div>
+  <div class="row col-2">
+    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-notion.webp" alt="Notion" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/notion-icon.svg" alt="Logo Notion"></div><div class="tool-name-v">Notion</div><div class="tool-desc-v">Centro de operaciones de todos mis proyectos. Aquí viven los case studies, flujos de trabajo, manuales de marca de clientes y mis notas de investigación. Todo organizado, todo accesible.</div></div></div>
+    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-vscode.webp" alt="VS Code" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/vscode.svg" alt="Logo VS Code"></div><div class="tool-name-v">VS Code</div><div class="tool-desc-v">Editor de código con el que construyo y valido mis diseños en el navegador. Uso Live Server para ver cambios en tiempo real y confirmar que lo que diseñé en Figma funciona tal como lo imaginé.</div></div></div>
+  </div>
+</div>
+
+<!-- H: IA -->
+<div class="db-panel" id="panel-h-ia">
+  <div class="ph"><div class="ph-title">IA &amp; Automatización</div><div class="ph-sub">Herramientas de inteligencia artificial en mi flujo diario</div></div>
+  <div class="row col-2">
+    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-claude.webp" alt="Claude" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/claude.svg" alt="Logo Claude"></div><div class="tool-name-v">Claude</div><div class="tool-desc-v">Mi copiloto principal de desarrollo. Convierto diseños de Figma a HTML/CSS funcional con Claude como asistente técnico. Este portafolio completo fue construido así — Figma como fuente, Claude como ejecutor, navegador como validación.</div></div></div>
+    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-chatgpt.webp" alt="ChatGPT" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/chatgpt.svg" alt="Logo ChatGPT"></div><div class="tool-name-v">ChatGPT</div><div class="tool-desc-v">Para redacción, conceptualización y análisis. Lo uso en la fase de investigación de proyectos: sintetizar benchmarks, estructurar narrativas de marca y desarrollar textos de copy para identidades visuales.</div></div></div>
+    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-gemini.webp" alt="Gemini" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/gemini.svg" alt="Logo Gemini"></div><div class="tool-name-v">Gemini</div><div class="tool-desc-v">Búsqueda aumentada con integración a Google Workspace. Lo uso para análisis de documentos, investigación con contexto ampliado y tareas que cruzan información de múltiples fuentes simultáneamente.</div></div></div>
+  </div>
+</div>
+
+<!-- H: APRENDIENDO -->
+<div class="db-panel" id="panel-h-aprendiendo">
+  <div class="ph"><div class="ph-title">Aprendiendo</div><div class="ph-sub">Tecnologías en proceso activo de dominio</div></div>
+  <div class="row col-2">
+    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-unity.webp" alt="Unity" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/unity.svg" alt="Logo Unity"></div><div class="tool-name-v">Unity</div><div class="tool-desc-v">Motor de videojuegos en aprendizaje activo. Mi objetivo: diseñar y programar experiencias interactivas propias en C#. Quiero crear mundos desde cero — no solo diseñarlos, sino construirlos y hacerlos jugables.</div></div></div>
+  </div>
+</div>
+
+<!-- IDIOMAS -->
+<div class="db-panel" id="panel-idiomas">
+  <div class="ph"><div class="ph-title">Idiomas</div><div class="ph-sub">Idiomas en los que trabajo y me comunico</div></div>
+  <div class="row col-3">
+    <div class="card lang-card"><div class="lang-img"><img src="../assets/idiomas/espanol.webp" alt="Español" loading="lazy" width="400" height="180"></div><div class="lang-body"><div class="lang-name-v">Español</div><div class="lang-detail-v">Lengua materna · Colombia<br>Comunicación y escritura profesional</div><div class="lang-bar-wrap"><div class="lang-bar-fill" style="width:100%"></div></div></div></div>
+    <div class="card lang-card"><div class="lang-img"><img src="../assets/idiomas/portugues.webp" alt="Portugués" loading="lazy" width="400" height="180"></div><div class="lang-body"><div class="lang-name-v">Português</div><div class="lang-detail-v">Nativo · Família brasileira<br>Mercado más grande de Latam</div><div class="lang-bar-wrap"><div class="lang-bar-fill" style="width:100%"></div></div></div></div>
+    <div class="card lang-card"><div class="lang-img"><img src="../assets/idiomas/english.webp" alt="Inglés" loading="lazy" width="400" height="180"></div><div class="lang-body"><div class="lang-name-v">English</div><div class="lang-detail-v">En aprendizaje<br>Básico-intermedio · En progreso</div><div class="lang-bar-wrap"><div class="lang-bar-fill" style="width:38%"></div></div></div></div>
+  </div>
+</div>
+
+<!-- HABILIDADES -->
+<div class="db-panel" id="panel-habilidades">
+  <div class="ph"><div class="ph-title">Habilidades</div><div class="ph-sub">Disciplinas y capacidades profesionales</div></div>
+  <div class="row col-1">
+    <div class="card skill-cat-card"><div class="skill-cat-title">Identidad &amp; Comunicación</div><div class="skill-tags"><span class="skill-tag">Brand Identity</span><span class="skill-tag">Logotipo</span><span class="skill-tag">Packaging</span><span class="skill-tag">Editorial</span><span class="skill-tag">Manual de marca</span></div></div>
+    <div class="card skill-cat-card"><div class="skill-cat-title">Digital &amp; Producto</div><div class="skill-tags"><span class="skill-tag">UX / UI Design</span><span class="skill-tag">Design Systems</span><span class="skill-tag">Prototipado</span><span class="skill-tag">Motion Design</span></div></div>
+    <div class="card skill-cat-card"><div class="skill-cat-title">Producción Visual</div><div class="skill-tags"><span class="skill-tag">Fotografía</span><span class="skill-tag">Retoque</span><span class="skill-tag">Edición de video</span><span class="skill-tag">Experiencias web</span></div></div>
+    <div class="card skill-cat-card"><div class="skill-cat-title">Proceso &amp; Research</div><div class="skill-tags"><span class="skill-tag">Case Study</span><span class="skill-tag">User Research</span><span class="skill-tag">Benchmark</span><span class="skill-tag">JTBD</span></div></div>
+  </div>
+</div>
+
+<!-- FILOSOFÍA -->
+<div class="db-panel" id="panel-filosofia">
+  <div class="ph"><div class="ph-title">Filosofía &amp; Proceso</div><div class="ph-sub">Cómo pienso antes y durante el diseño</div></div>
+  <div class="row col-2">
+    <div class="card proc-card"><div class="proc-num">01</div><div class="proc-title">Primero escucho, siempre</div><div class="proc-body">Antes de abrir Figma, cierro la boca. Cada proyecto comienza con una fase de escucha activa donde entiendo al cliente, al usuario y el contexto del problema desde múltiples ángulos. No se trata solo de saber qué quieren, sino por qué lo quieren y qué pasaría si no lo tuvieran. Sin esta base, cualquier decisión de diseño es solo estética — no solución real.</div></div>
+    <div class="card proc-card"><div class="proc-num">02</div><div class="proc-title">Investigo antes de proponer</div><div class="proc-body">La investigación no es opcional — es el fundamento de cada decisión. Realizo benchmarks de la competencia, análisis de referentes visuales y, cuando el proyecto lo permite, investigación directa con usuarios. Solo cuando tengo datos reales y un mapa claro del terreno comienzo a idear. Proponer sin investigar es disparar sin apuntar.</div></div>
+    <div class="card proc-card"><div class="proc-num">03</div><div class="proc-title">Valido en lo real, no en la pantalla</div><div class="proc-body">Un diseño que solo existe en Figma es una hipótesis. Paso mis propuestas a HTML y CSS para probarlas en navegadores reales antes de entregar. Esto me permite detectar problemas de responsive, ritmo visual y comportamiento que en el prototipo estático son completamente invisibles.</div></div>
+    <div class="card proc-card"><div class="proc-num">04</div><div class="proc-title">Elegancia sobre ruido</div><div class="proc-body">El minimalismo no es una tendencia para mí — es una filosofía de trabajo. Cada elemento que aparece en una pieza debe tener una razón concreta de existir. Si puedo comunicar lo mismo con menos, lo hago. El diseño más difícil no es el más complejo: es el que dice exactamente lo que necesita y absolutamente nada más.</div></div>
+    <div class="card proc-card"><div class="proc-num">05</div><div class="proc-title">Los detalles son el diseño</div><div class="proc-body">La diferencia entre un diseño bueno y uno memorable está en los detalles que nadie nota conscientemente pero que todos sienten. El espaciado correcto, la transición precisa, el peso tipográfico exacto — son decisiones que forman la personalidad invisible de una pieza.</div></div>
+    <div class="card proc-card"><div class="proc-num">06</div><div class="proc-title">Organizado, adaptable, sin ego</div><div class="proc-body">Mi proceso tiene estructura, pero no rigidez. Sé trabajar con plena autonomía y responsabilidad sobre cada decisión, y también sé integrarme a equipos sin fricciones. Lo que no cambia en ningún escenario es el estándar de calidad que me exijo a mí mismo.</div></div>
+  </div>
+</div>
+
+<!-- INSPIRACIÓN -->
+<div class="db-panel" id="panel-inspiracion">
+  <div class="ph"><div class="ph-title">Inspiración</div><div class="ph-sub">Marcas y referentes que influyen en mi estética</div></div>
+  <div class="row col-3">
+    <div class="card inspo-card"><div class="inspo-logo" style="background:transparent"><img src="../assets/iconos/apple.svg" alt="Apple"></div><div><div class="inspo-name">Apple</div><div class="inspo-why">El estándar definitivo del producto bien pensado. Sistema visual cohesivo, lenguaje propio y una obsesión por los detalles que nadie ve pero todos sienten. Mi referente principal en consistencia y elegancia.</div></div></div>
+    <div class="card inspo-card"><div class="inspo-logo" style="background:transparent"><img src="../assets/iconos/adidas.svg" alt="adidas"></div><div><div class="inspo-name">adidas</div><div class="inspo-why">Identidad que trasciende el deporte. Su capacidad de mantenerse relevante entre culturas, décadas y audiencias sin perder su esencia es un masterclass en construcción de marca a largo plazo.</div></div></div>
+    <div class="card inspo-card"><div class="inspo-logo" style="background:transparent"><img src="../assets/iconos/netflix.svg" alt="Netflix"></div><div><div class="inspo-name">Netflix</div><div class="inspo-why">Domina el diseño de experiencia a escala global. Su UI oscura, su sistema de personalización y la forma en que conecta contenido con usuario son una referencia directa en mis proyectos digitales.</div></div></div>
+    <div class="card inspo-card"><div class="inspo-logo" style="background:transparent"><img src="../assets/iconos/nike.svg" alt="Nike"></div><div><div class="inspo-name">Nike</div><div class="inspo-why">Emoción condensada en simplicidad. El storytelling de Nike demuestra que el diseño más poderoso no es el más complejo — es el que comunica exactamente lo que necesita y mueve a las personas a actuar.</div></div></div>
+    <div class="card inspo-card" style="opacity:.4;border-style:dashed"><div class="inspo-logo" style="background:#f2f2f2;border:1px dashed rgba(0,0,0,.12)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="inspo-name" style="color:#ccc">Próximamente</div><div class="inspo-why" style="color:#ddd">Más referentes en camino...</div></div></div>
+  </div>
+</div>
+
+<!-- EXPERIENCIA -->
+<div class="db-panel" id="panel-experiencia">
+  <div class="ph"><div class="ph-title">Experiencia</div><div class="ph-sub">Trayectoria profesional</div></div>
+  <div class="card" style="padding:20px 24px">
+    <div class="exp-timeline">
+      <div class="exp-block">
+        <div class="exp-dot"></div>
+        <div class="exp-logo-wrap"><img src="../assets/iconos/victoria-regia.svg" alt="Reserva Natural Victoria Regia"></div>
+        <div class="exp-main">
+          <div class="exp-co-header">
+            <div><div class="exp-co-name">Reserva Natural Victoria Regia</div></div>
+            <span class="exp-co-badge">Founder</span>
+          </div>
+          <div class="exp-co-meta">Leticia, Amazonas, Colombia · Ecoturismo · mar. 2019 – actualidad</div>
+          <div class="exp-roles-list">
+            <div class="exp-role-row">
+              <div class="exp-role-title">DIGITAL FOUNDER &amp; CREATIVE DIRECTOR</div>
+              <div class="exp-role-meta">Proyecto propio · Dirección creativa autónoma</div>
+              <div class="exp-founder-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Fundador · No es empleo de tiempo completo</div>
+              <div class="exp-role-skills">Branding · Adobe Illustrator · Dirección creativa · Gestión de proyectos · UX/UI</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="exp-block">
+        <div class="exp-dot"></div>
+        <div class="exp-logo-wrap"><img src="../assets/iconos/chiperos.svg" alt="ChiperOS"></div>
+        <div class="exp-main">
+          <div class="exp-co-header">
+            <div><div class="exp-co-name">ChiperOS</div></div>
+            <span class="exp-co-badge">Jornada completa</span>
+          </div>
+          <div class="exp-co-meta">En remoto · 10 meses · B2B Marketplace</div>
+          <div class="exp-roles-list">
+            <div class="exp-role-row">
+              <div class="exp-role-title">GRAPHIC DESIGNER (BILINGUAL)</div>
+              <div class="exp-role-meta">ago. 2024 – mar. 2025 · 8 meses · Bogotá, Colombia</div>
+              <div class="exp-role-skills">Adobe Illustrator · Diseño UX/UI · Comunicación bilingüe ES/EN</div>
+            </div>
+            <div class="exp-role-row">
+              <div class="exp-role-title">GRAPHIC DESIGNER</div>
+              <div class="exp-role-meta">jun. 2024 – ago. 2024 · 3 meses · Colombia</div>
+              <div class="exp-role-skills">Adobe Illustrator · Diseño gráfico · Identidad visual</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="exp-block">
+        <div class="exp-dot"></div>
+        <div class="exp-logo-wrap"><img src="../assets/iconos/modaweek.svg" alt="Moda Week International"></div>
+        <div class="exp-main">
+          <div class="exp-co-header">
+            <div><div class="exp-co-name">Moda Week International</div></div>
+            <span class="exp-co-badge">Jornada completa</span>
+          </div>
+          <div class="exp-co-meta">Estados Unidos · En remoto · 4 años 5 meses</div>
+          <div class="exp-roles-list">
+            <div class="exp-role-row">
+              <div class="exp-role-title">GRAPHIC DESIGNER &amp; BRAND STRATEGIST</div>
+              <div class="exp-role-meta">ene. 2018 – may. 2022 · 4 años 5 meses</div>
+              <div class="exp-role-skills">Adobe Illustrator · Estrategia de marca · Motion · Fotografía · Edición de imágenes</div>
+            </div>
+            <div class="exp-role-row">
+              <div class="exp-role-title">PHOTOGRAPHER, EDITOR &amp; GRAPHIC DESIGNER</div>
+              <div class="exp-role-meta">ene. 2018 – nov. 2018 · 11 meses</div>
+              <div class="exp-role-skills">Fotografía · Retoque · Edición de video · Adobe Illustrator</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script src="../js/loader.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ── Cursor ── */
+var cursor=document.getElementById('cursor');
+var IHOV='a,button,.swatch,.skill-tag,[role="button"]';
+document.addEventListener('mousemove',function(e){
+  cursor.style.left=e.clientX+'px';
+  cursor.style.top=e.clientY+'px';
+});
+document.addEventListener('mouseleave',function(){cursor.style.opacity='0';});
+document.addEventListener('mouseenter',function(){cursor.style.opacity='1';});
+function bindCursorHover(){
+  document.querySelectorAll(IHOV).forEach(function(el){
+    el.addEventListener('mouseenter',function(){cursor.classList.add('big');});
+    el.addEventListener('mouseleave',function(){cursor.classList.remove('big');});
+  });
+}
+window.addEventListener('load',bindCursorHover);
+
+/* ── Paneles ── */
+function showPanel(id){
+  document.querySelectorAll('.db-panel').forEach(function(p){p.classList.remove('active');});
+  var p=document.getElementById('panel-'+id);
+  if(p)p.classList.add('active');
+}
+
+/* ── Sidebar ── */
+var sbPanel=document.getElementById('sbPanel'),
+    sbToggle=document.getElementById('sbToggle'),
+    sbClose=document.getElementById('sbClose'),
+    sbNav=document.getElementById('sbNav'),
+    sbTitle=document.getElementById('sbTitle'),
+    isOpen=false;
+function openSB(){isOpen=true;sbPanel.classList.add('open');}
+function closeSB(){isOpen=false;sbPanel.classList.remove('open');}
+sbToggle.addEventListener('click',function(){isOpen?closeSB():openSB();});
+sbClose.addEventListener('click',closeSB);
+
+/* ── SVG icons ── */
+var SVG={
+  person:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>',
+  clock:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  palette:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22c4.4 0 8-3.6 8-8H4c0 4.4 3.6 8 8 8z"/></svg>',
+  game:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01M7 12v-2m0 2v2M17 10h2m-2 2h2"/></svg>',
+  pen:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg>',
+  grid:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+  spark:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>',
+  book:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  globe:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  star:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  idea:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-1.86 5.58-4.6 6.67L14 18H10l-.4-2.33C6.86 14.58 5 12 5 9a7 7 0 0 1 7-7z"/><line x1="10" y1="22" x2="14" y2="22"/></svg>',
+  heart:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+  bag:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>'
+};
+
+/* ── Contextos ── */
+var CONTEXTS={
+  'sobremí':{title:'Sobre mí',items:[{l:'Perfil',p:'perfil',i:'person'},{l:'Historia',p:'historia',i:'clock'},{l:'Colores',p:'colores',i:'palette'},{l:'Pasatiempos',p:'pasatiempos',i:'game'}]},
+  'herramientas':{title:'Herramientas',items:[{l:'Diseño',p:'h-diseno',i:'pen'},{l:'Productividad',p:'h-productividad',i:'grid'},{l:'IA & Automatización',p:'h-ia',i:'spark'},{l:'Aprendiendo',p:'h-aprendiendo',i:'book'}]},
+  'idiomas':{title:'Idiomas',items:[{l:'Ver idiomas',p:'idiomas',i:'globe'}]},
+  'habilidades':{title:'Habilidades',items:[{l:'Ver habilidades',p:'habilidades',i:'star'}]},
+  'filosofia':{title:'Filosofía',items:[{l:'Filosofía & Proceso',p:'filosofia',i:'idea'}]},
+  'inspiracion':{title:'Inspiración',items:[{l:'Ver inspiración',p:'inspiracion',i:'heart'}]},
+  'experiencia':{title:'Experiencia',items:[{l:'Experiencia',p:'experiencia',i:'bag'}]}
+};
+
+function loadCtx(ctxKey){
+  var ctx=CONTEXTS[ctxKey];
+  if(!ctx)return;
+  sbTitle.textContent=ctx.title;
+  sbNav.innerHTML='';
+  document.querySelectorAll('.sb-icon[data-ctx]').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-ctx')===ctxKey);
+  });
+  ctx.items.forEach(function(item,i){
+    var btn=document.createElement('button');
+    btn.className='sb-item'+(i===0?' active':'');
+    btn.setAttribute('data-panel',item.p);
+    btn.innerHTML=(SVG[item.i]||'')+'<span>'+item.l+'</span>'+(item.badge?'<span class="sb-badge">'+item.badge+'</span>':'');
+    btn.addEventListener('click',function(){
+      sbNav.querySelectorAll('.sb-item').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      showPanel(item.p);
+    });
+    sbNav.appendChild(btn);
+  });
+  showPanel(ctx.items[0].p);
+}
+
+document.querySelectorAll('.sb-icon[data-ctx]').forEach(function(btn){
+  btn.addEventListener('click',function(){loadCtx(btn.getAttribute('data-ctx'));openSB();});
+});
+loadCtx('sobremí');
+
+/* ── Copy helper ── */
+function safeCopy(txt,cb){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(cb).catch(function(){});
+  } else {
+    var t=document.createElement('input');t.value=txt;document.body.appendChild(t);t.select();
+    try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(t);
+  }
+}
+
+/* ── Color Wheel ── */
+var canvas=document.getElementById('colorWheel');
+if(canvas){
+  var c2=canvas.getContext('2d'),S=canvas.width,CX=S/2,CY=S/2,R=S/2-4,IN=R*0.4;
+  var PAL=[{hex:'#FFFFFF',n:'Base 0'},{hex:'#FAFAFA',n:'50'},{hex:'#F5F5F5',n:'100'},{hex:'#E5E5E5',n:'200'},{hex:'#D4D4D4',n:'300'},{hex:'#A3A3A3',n:'400'},{hex:'#737373',n:'500'},{hex:'#525252',n:'600'},{hex:'#404040',n:'700'},{hex:'#262626',n:'800'},{hex:'#171717',n:'900'},{hex:'#0A0A0A',n:'950'}];
+  var N=PAL.length;
+  function dW(hi){
+    c2.clearRect(0,0,S,S);
+    PAL.forEach(function(c,i){
+      var sa=(i/N)*Math.PI*2-Math.PI/2,ea=((i+1)/N)*Math.PI*2-Math.PI/2;
+      c2.beginPath();c2.moveTo(CX,CY);c2.arc(CX,CY,hi===i?R+5:R,sa,ea);c2.closePath();
+      c2.fillStyle=c.hex;c2.fill();
+      if(['#FFFFFF','#FAFAFA','#F5F5F5'].indexOf(c.hex)>-1){c2.strokeStyle='rgba(0,0,0,.1)';c2.lineWidth=0.5;c2.stroke();}
+    });
+    PAL.forEach(function(_,i){
+      var a=(i/N)*Math.PI*2-Math.PI/2;
+      c2.beginPath();c2.moveTo(CX,CY);c2.lineTo(CX+Math.cos(a)*(R+6),CY+Math.sin(a)*(R+6));
+      c2.strokeStyle='#EBEBEB';c2.lineWidth=2;c2.stroke();
+    });
+    c2.beginPath();c2.arc(CX,CY,IN,0,Math.PI*2);c2.fillStyle='#EBEBEB';c2.fill();
+  }
+  dW(-1);
+  var pg=document.getElementById('paletteGrid');
+  PAL.forEach(function(c){
+    var d=document.createElement('div');d.className='swatch';d.style.background=c.hex;
+    d.addEventListener('mouseenter',function(){
+      document.getElementById('colorPreview').style.background=c.hex;
+      document.getElementById('colorHex').textContent=c.hex;
+      document.getElementById('colorLbl').textContent=c.n;
+    });
+    d.addEventListener('click',function(){safeCopy(c.hex,function(){});});
+    pg.appendChild(d);
+  });
+  pg.addEventListener('mouseleave',function(){
+    document.getElementById('colorPreview').style.background='#737373';
+    document.getElementById('colorHex').textContent='#737373';
+    document.getElementById('colorLbl').textContent='500 · Hover para explorar';
+  });
+  canvas.addEventListener('mousemove',function(e){
+    var rect=canvas.getBoundingClientRect(),
+        x=(e.clientX-rect.left)*(S/rect.width)-CX,
+        y=(e.clientY-rect.top)*(S/rect.height)-CY,
+        dist=Math.sqrt(x*x+y*y);
+    if(dist>IN&&dist<R+6){
+      var a=Math.atan2(y,x)+Math.PI/2;if(a<0)a+=Math.PI*2;
+      var idx=Math.floor((a/(Math.PI*2))*N)%N;
+      dW(idx);
+      document.getElementById('colorPreview').style.background=PAL[idx].hex;
+      document.getElementById('colorHex').textContent=PAL[idx].hex;
+      document.getElementById('colorLbl').textContent=PAL[idx].n+' · Click para copiar';
+    } else {dW(-1);}
+  });
+  canvas.addEventListener('mouseleave',function(){dW(-1);});
+  canvas.addEventListener('click',function(e){
+    var rect=canvas.getBoundingClientRect(),
+        x=(e.clientX-rect.left)*(S/rect.width)-CX,
+        y=(e.clientY-rect.top)*(S/rect.height)-CY,
+        dist=Math.sqrt(x*x+y*y);
+    if(dist>IN&&dist<R+6){
+      var a=Math.atan2(y,x)+Math.PI/2;if(a<0)a+=Math.PI*2;
+      var idx=Math.floor((a/(Math.PI*2))*N)%N;
+      safeCopy(PAL[idx].hex,function(){
+        document.getElementById('colorLbl').textContent='Copiado!';
+        setTimeout(function(){document.getElementById('colorLbl').textContent=PAL[idx].n;},1200);
+      });
+    }
+  });
+}
+
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="base-depth" content="2">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmalaxIA — Andrés Galdino</title>
+  <meta name="description" content="Case Study de Brand Identity Design para FarmalaxIA.">
+  <meta property="og:title" content="FarmalaxIA — Andrés Galdino">
+  <meta property="og:image" content="/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/proyecto-page.css">
+  <style>
+    /* ── Left panel overrides only ── */
+    .vr-title { font-size: clamp(38px, 4.2vw, 62px); }
+
+    /* ── Right panel: scoped farmalaxia tokens (no bleeding to left panel) ── */
+    .vr-scroll-panel {
+      overflow-y: auto;
+      height: 100%;
+      scroll-behavior: smooth;
+      position: relative;
+      --blue:     #103292;
+      --mid:      #1E4DA6;
+      --light:    #A8C4E0;
+      --pale:     #EEF4FB;
+      --ink:      #0a1628;
+      --fm-muted: rgba(10,22,40,0.42);
+      --bg:       #f5f7fc;
+      --white:    #ffffff;
+      --ease:     cubic-bezier(0.16,1,0.3,1);
+      --r:        20px;
+      --max:      1260px;
+      background: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Glass cards ── */
+    .vr-scroll-panel .gc {
+      background: rgba(255,255,255,0.68);
+      backdrop-filter: blur(48px) saturate(200%);
+      -webkit-backdrop-filter: blur(48px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: 0 8px 32px rgba(16,50,146,0.05), inset 0 1.5px 0 rgba(255,255,255,0.9);
+      will-change: transform;
+      transform: translateZ(0);
+      isolation: isolate;
+    }
+
+    .vr-scroll-panel .dark {
+      background: var(--blue);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 16px 48px rgba(16,50,146,0.28);
+      color: #fff;
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    /* ── Watermark ── */
+    .vr-scroll-panel .wm {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      user-select: none;
+      filter: saturate(3) brightness(0.82) contrast(1.1);
+    }
+
+    /* ── Video hero ── */
+    .fm-hero {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fm-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .fm-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(10,22,40,0.04) 0%, rgba(10,22,40,0.4) 100%);
+    }
+
+    .fm-badge {
+      position: absolute;
+      bottom: 5.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .62rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      white-space: nowrap;
+      animation: fmFadeUp 1.2s var(--ease) 1s both;
+    }
+
+    .fm-sc {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: fmScl 2s ease-in-out infinite;
+    }
+
+    @keyframes fmScl {
+      0%, 100% { height: 22px; opacity: .3 }
+      50%       { height: 44px; opacity: .7 }
+    }
+
+    @keyframes fmFadeUp {
+      from { opacity: 0; transform: translate(-50%, 16px) }
+      to   { opacity: .65; transform: translate(-50%, 0) }
+    }
+
+    /* ── Layout ── */
+    .vr-scroll-panel .section {
+      padding: 11rem 6vw;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vr-scroll-panel .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .vr-scroll-panel hr.div {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(16,50,146,0.07), transparent);
+      margin: 0 6vw;
+    }
+
+    /* ── Chip ── */
+    .vr-scroll-panel .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 2rem;
+    }
+
+    .vr-scroll-panel .chip::before {
+      content: '';
+      width: 16px;
+      height: 2px;
+      background: var(--mid);
+      border-radius: 2px;
+      display: block;
+    }
+
+    /* ── Section heading ── */
+    .vr-scroll-panel h2.st {
+      font-size: clamp(2rem, 3.2vw, 3.8rem);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.04;
+      color: var(--blue);
+      margin-bottom: 1.6rem;
+    }
+
+    .vr-scroll-panel .sb {
+      font-size: .95rem;
+      line-height: 1.8;
+      color: var(--fm-muted);
+    }
+
+    /* ── Cover ── */
+    .vr-scroll-panel .cover {
+      padding: 11rem 6vw 12rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vr-scroll-panel .cover-grid {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .vr-scroll-panel .cover-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 1.6rem;
+    }
+
+    .vr-scroll-panel .ey-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--light);
+      border-radius: 50%;
+    }
+
+    .vr-scroll-panel .cover-h1 {
+      font-size: clamp(3.2rem, 5.8vw, 6rem);
+      font-weight: 800;
+      letter-spacing: -3px;
+      line-height: 1;
+      color: var(--blue);
+      margin-bottom: 1.4rem;
+    }
+
+    .vr-scroll-panel .cover-h1 em {
+      font-style: normal;
+      color: var(--light);
+    }
+
+    .vr-scroll-panel .cover-desc {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--fm-muted);
+      max-width: 420px;
+      margin-bottom: 2.8rem;
+    }
+
+    .vr-scroll-panel .cover-meta {
+      display: flex;
+      gap: 2.5rem;
+      padding-top: 1.8rem;
+      border-top: 1px solid rgba(16,50,146,0.07);
+    }
+
+    .vr-scroll-panel .cover-meta-item span {
+      display: block;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: .25rem;
+    }
+
+    .vr-scroll-panel .cover-meta-item strong {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .vr-scroll-panel .cover-char {
+      display: block;
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    /* ── Workflow cards ── */
+    .vr-scroll-panel .wf-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 5rem;
+    }
+
+    .vr-scroll-panel .wf-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .vr-scroll-panel .wf-card {
+      border-radius: var(--r);
+      padding: 1.8rem 1.4rem;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.88);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      box-shadow: 0 2px 16px rgba(16,50,146,0.05), 0 1px 4px rgba(0,0,0,0.03);
+      will-change: transform;
+      transform: translateZ(0);
+      transition: transform .3s var(--ease);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .vr-scroll-panel .wf-card:hover { transform: translateY(-4px); }
+
+    /* Override: dark cards must win over the base wf-card white bg */
+    .vr-scroll-panel .wf-card.dark {
+      background: var(--blue);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 16px 48px rgba(16,50,146,0.28);
+    }
+    .vr-scroll-panel .wf-card.gc {
+      background: rgba(255,255,255,0.68);
+      backdrop-filter: blur(48px) saturate(200%);
+      -webkit-backdrop-filter: blur(48px) saturate(200%);
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: 0 8px 32px rgba(16,50,146,0.05), inset 0 1.5px 0 rgba(255,255,255,0.9);
+    }
+
+    .vr-scroll-panel .wf-n {
+      font-size: .65rem;
+      font-weight: 700;
+      color: var(--mid);
+      letter-spacing: 1px;
+    }
+
+    .vr-scroll-panel .wf-card p {
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.5;
+      margin-top: auto;
+    }
+
+    /* ── Problema ── */
+    .vr-scroll-panel .prob-header {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 6rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+
+    .vr-scroll-panel .prob-rows {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(16,50,146,0.07);
+      margin-bottom: 4rem;
+    }
+
+    .vr-scroll-panel .prob-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 3rem;
+      padding: 1.6rem 0;
+      border-bottom: 1px solid rgba(16,50,146,0.06);
+    }
+
+    .vr-scroll-panel .prob-row:last-child { border-bottom: none; }
+
+    .vr-scroll-panel .prob-row-label {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--blue);
+      min-width: 180px;
+      flex-shrink: 0;
+    }
+
+    .vr-scroll-panel .prob-row-val {
+      font-size: .8rem;
+      color: var(--fm-muted);
+      line-height: 1.6;
+    }
+
+    .vr-scroll-panel .bq {
+      padding: 4rem 4.5rem;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vr-scroll-panel .bq-mark {
+      position: absolute;
+      top: -2.5rem;
+      left: 2rem;
+      font-size: 11rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.05);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .vr-scroll-panel .bq-text {
+      font-size: clamp(1rem, 1.5vw, 1.4rem);
+      font-weight: 500;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.88);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Persona ── */
+    .vr-scroll-panel .persona-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .vr-scroll-panel .persona-featured {
+      padding: 3rem;
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .vr-scroll-panel .persona-cards-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+    }
+
+    .vr-scroll-panel .attr-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .vr-scroll-panel .attr-row:last-child { border-bottom: none; }
+
+    .vr-scroll-panel .attr-key {
+      font-size: .78rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 500;
+    }
+
+    .vr-scroll-panel .attr-val {
+      font-size: .78rem;
+      color: #fff;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .vr-scroll-panel .persona-card {
+      padding: 2.2rem;
+      border-radius: var(--r);
+    }
+
+    .vr-scroll-panel .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .8rem;
+    }
+
+    .vr-scroll-panel .tag {
+      padding: .38rem .85rem;
+      border-radius: 100px;
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--blue);
+      background: var(--pale);
+      border: 1px solid rgba(168,196,224,0.4);
+    }
+
+    .vr-scroll-panel .frus-list {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      margin-top: .8rem;
+    }
+
+    .vr-scroll-panel .frus-row {
+      font-size: .8rem;
+      color: var(--fm-muted);
+      padding-left: .8rem;
+      border-left: 2px solid var(--light);
+      line-height: 1.5;
+    }
+
+    .vr-scroll-panel .label-sm {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light);
+      margin-bottom: .4rem;
+    }
+
+    .vr-scroll-panel .label-sm-dark {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(168,196,224,0.7);
+      margin-bottom: .4rem;
+    }
+
+    .vr-scroll-panel .sec-char {
+      display: block;
+      max-width: 300px;
+      width: 100%;
+    }
+
+    /* ── JTBD ── */
+    .vr-scroll-panel .jtbd-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+
+    .vr-scroll-panel .jtbd-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .vr-scroll-panel .jtbd-card {
+      padding: 2.5rem;
+      border-radius: var(--r);
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s var(--ease);
+    }
+
+    .vr-scroll-panel .jtbd-card:hover { transform: translateY(-5px); }
+
+    .vr-scroll-panel .jtbd-chip {
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: .8rem;
+    }
+
+    .vr-scroll-panel .jtbd-card h4 {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: .55rem;
+      line-height: 1.35;
+    }
+
+    .vr-scroll-panel .jtbd-card p {
+      font-size: .78rem;
+      color: var(--fm-muted);
+      line-height: 1.65;
+    }
+
+    .vr-scroll-panel .jtbd-card.dark .jtbd-chip { color: rgba(168,196,224,.8); }
+    .vr-scroll-panel .jtbd-card.dark h4 { color: #fff; }
+    .vr-scroll-panel .jtbd-card.dark p  { color: rgba(255,255,255,.6); }
+
+    /* ── Necesidades ── */
+    .vr-scroll-panel .nec-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 3rem;
+      align-items: end;
+    }
+
+    .vr-scroll-panel .nec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 4rem;
+    }
+
+    .vr-scroll-panel .nec-col-title {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--fm-muted);
+      margin-bottom: 1rem;
+    }
+
+    .vr-scroll-panel .nec-item {
+      padding: 1.1rem 1.3rem;
+      border-radius: 14px;
+      font-size: .8rem;
+      color: var(--fm-muted);
+      line-height: 1.5;
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: .8rem;
+    }
+
+    .vr-scroll-panel .nd {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--mid);
+      flex-shrink: 0;
+      margin-top: .3rem;
+    }
+
+    .vr-scroll-panel .nd-lt { background: var(--light); }
+
+    /* ── Hipótesis ── */
+    .vr-scroll-panel .hipo-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+      margin-top: 4rem;
+    }
+
+    .vr-scroll-panel .hipo-featured {
+      padding: 3.5rem;
+      border-radius: 28px;
+      grid-row: span 2;
+    }
+
+    .vr-scroll-panel .hipo-card {
+      padding: 2.2rem;
+      border-radius: var(--r);
+    }
+
+    .vr-scroll-panel .hipo-n {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--light);
+      line-height: 1;
+      margin-bottom: .6rem;
+    }
+
+    .vr-scroll-panel .hipo-card p       { font-size: .8rem; color: var(--fm-muted); line-height: 1.65; }
+    .vr-scroll-panel .hipo-featured .hipo-n { color: rgba(168,196,224,0.7); }
+    .vr-scroll-panel .hipo-featured p   { color: rgba(255,255,255,0.85); }
+
+    /* ── Color swatches ── */
+    .vr-scroll-panel .color-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .vr-scroll-panel .color-item {
+      position: relative;
+      height: 148px;
+      display: flex;
+      align-items: center;
+    }
+
+    .vr-scroll-panel .color-solid {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 70%;
+      height: 108px;
+      border-radius: 18px;
+    }
+
+    .vr-scroll-panel .color-glow {
+      position: absolute;
+      left: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52%;
+      height: 86px;
+      border-radius: 18px;
+      filter: blur(22px);
+      z-index: 1;
+      opacity: .7;
+    }
+
+    .vr-scroll-panel .color-glass {
+      position: relative;
+      z-index: 2;
+      width: 64%;
+      height: 148px;
+      background: rgba(255,255,255,0.26);
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+      border: 1px solid rgba(255,255,255,0.72);
+      border-radius: 26px;
+      box-shadow: 0 4px 20px rgba(16,50,146,0.06), inset 0 1.5px 0 rgba(255,255,255,0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: transform .3s var(--ease);
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    .vr-scroll-panel .color-item:hover .color-glass { transform: translateY(-4px); }
+
+    .vr-scroll-panel .c-name {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .4px;
+      text-transform: capitalize;
+      margin-bottom: 3px;
+    }
+
+    .vr-scroll-panel .c-hex {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      font-family: monospace;
+    }
+
+    .vr-scroll-panel .tw { color: #fff; }
+    .vr-scroll-panel .td { color: var(--blue); }
+
+    /* ── Typography ── */
+    .vr-scroll-panel .typo-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 4rem;
+      align-items: end;
+      margin-top: 4rem;
+    }
+
+    .vr-scroll-panel .typo-sub {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 3rem;
+    }
+
+    .vr-scroll-panel .typo-sub span {
+      color: var(--fm-muted);
+      margin-left: .3rem;
+    }
+
+    .vr-scroll-panel .typo-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 110px;
+      align-items: baseline;
+      gap: 2rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid rgba(16,50,146,0.06);
+    }
+
+    .vr-scroll-panel .typo-row:last-child { border-bottom: none; }
+
+    .vr-scroll-panel .typo-level {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--fm-muted);
+    }
+
+    .vr-scroll-panel .typo-sample {
+      color: var(--ink);
+      letter-spacing: -.3px;
+      line-height: 1.1;
+    }
+
+    .vr-scroll-panel .typo-spec {
+      font-size: .65rem;
+      font-weight: 500;
+      color: var(--fm-muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* ── Reveal animation ── */
+    .vr-scroll-panel .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .85s var(--ease), transform .85s var(--ease);
+    }
+
+    .vr-scroll-panel .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Footer ── */
+    .vr-scroll-panel footer {
+      padding: 7rem 6vw 3.5rem;
+      border-top: 1px solid rgba(16,50,146,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vr-scroll-panel .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .vr-scroll-panel .footer-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: -.4px;
+    }
+
+    .vr-scroll-panel .footer-pills {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .vr-scroll-panel .footer-pill {
+      padding: .32rem .85rem;
+      border-radius: 100px;
+      font-size: .65rem;
+      font-weight: 600;
+      color: var(--mid);
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(168,196,224,0.4);
+    }
+
+    /* ══════════════════════════════════════════════
+       CINEMATIC: scroll-driven animations & parallax
+    ══════════════════════════════════════════════ */
+
+    /* Scroll progress bar */
+    #fmProgress {
+      position: sticky;
+      top: 0;
+      height: 2px;
+      margin-bottom: -2px;
+      background: linear-gradient(90deg, var(--blue), var(--mid), var(--light));
+      width: 0%;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    /* Word-split heading spans */
+    .vr-scroll-panel .sw  { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.15em; margin-bottom: -0.15em; }
+    .vr-scroll-panel .swi {
+      display: inline-block;
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform .9s cubic-bezier(.16,1,.3,1), opacity .5s ease;
+      will-change: transform;
+    }
+
+    /* h2 headings with word split: only fade, words handle motion */
+    .vr-scroll-panel h2.st-split.reveal    { transform: none; }
+    .vr-scroll-panel h2.st-split.reveal.on { transform: none; }
+
+    /* Chip: slide from left instead of Y */
+    .vr-scroll-panel .chip.reveal    { transform: translateX(-16px); }
+    .vr-scroll-panel .chip.reveal.on { transform: translateX(0); }
+
+    /* Quote blocks: scale + lift entrance */
+    .vr-scroll-panel .bq.reveal {
+      transform: translateY(36px) scale(0.96);
+      transition: opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
+    }
+    .vr-scroll-panel .bq.reveal.on { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Hipo secondary cards: slide from right */
+    .vr-scroll-panel .hipo-card.gc.reveal    { transform: translateX(24px); }
+    .vr-scroll-panel .hipo-card.gc.reveal.on { transform: translateX(0); }
+
+    /* Color items: scale + lift (stagger via JS) */
+    .vr-scroll-panel .color-item.reveal {
+      transform: translateY(28px) scale(0.94);
+      transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+    }
+    .vr-scroll-panel .color-item.reveal.on { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Dark card shine sweep on hover (GPU-accelerated) */
+    .vr-scroll-panel .wf-card.dark       { position: relative; overflow: hidden; }
+    .vr-scroll-panel .hipo-featured.dark { position: relative; overflow: hidden; }
+    .vr-scroll-panel .wf-card.dark::after,
+    .vr-scroll-panel .jtbd-card.dark::after,
+    .vr-scroll-panel .hipo-featured.dark::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.09) 50%, transparent 70%);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: transform .65s var(--ease);
+      pointer-events: none;
+    }
+    .vr-scroll-panel .wf-card.dark:hover::after        { transform: translateX(120%) skewX(-15deg); }
+    .vr-scroll-panel .jtbd-card.dark:hover::after      { transform: translateX(120%) skewX(-15deg); }
+    .vr-scroll-panel .hipo-featured.dark:hover::after  { transform: translateX(120%) skewX(-15deg); }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      html, body { height: auto; overflow: auto; }
+      .vr-stage  { grid-template-columns: 1fr; height: auto; position: static; overflow: visible; }
+      .vr-info   { min-height: 100svh; }
+      .vr-scroll-panel { height: auto; overflow-y: visible; }
+      .fm-hero   { height: 60vw; min-height: 320px; }
+    }
+
+    @media (max-width: 1024px) {
+      .vr-scroll-panel .cover-grid,
+      .vr-scroll-panel .wf-header,
+      .vr-scroll-panel .prob-header,
+      .vr-scroll-panel .persona-grid,
+      .vr-scroll-panel .persona-cards-row,
+      .vr-scroll-panel .jtbd-head,
+      .vr-scroll-panel .jtbd-grid,
+      .vr-scroll-panel .nec-layout,
+      .vr-scroll-panel .hipo-layout,
+      .vr-scroll-panel .typo-layout { grid-template-columns: 1fr; }
+      .vr-scroll-panel .wf-cards   { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .wf-cards .wf-card[style*="grid-column:span 2"],
+      .vr-scroll-panel .wf-cards .wf-card[style*="grid-column: span 2"] { grid-column: span 1; }
+      .vr-scroll-panel .hipo-featured { grid-row: auto; }
+      .vr-scroll-panel .nec-grid   { grid-template-columns: 1fr; }
+      .vr-scroll-panel .color-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .vr-scroll-panel .section { padding: 6rem 4vw; }
+      .vr-scroll-panel .cover   { padding: 7rem 4vw 8rem; }
+      .vr-scroll-panel .jtbd-grid,
+      .vr-scroll-panel .color-grid,
+      .vr-scroll-panel .wf-cards { grid-template-columns: 1fr; }
+      .vr-scroll-panel .typo-row { grid-template-columns: 60px 1fr; }
+      .vr-scroll-panel .typo-spec { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div id="nav-container"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="vr-stage">
+
+  <!-- ═══ LEFT PANEL ═══ -->
+  <div class="vr-info">
+    <span class="vr-num">05 / 07 &nbsp;—&nbsp; FarmalaxIA</span>
+    <div class="vr-center">
+      <p class="vr-category">Branding · Identidad Visual · Manual de Marca</p>
+      <h1 class="vr-title">FarmalaxIA</h1>
+      <p class="vr-desc">
+        FarmalaxIA es la primera plataforma construida específicamente para el droguista
+        independiente colombiano: inventario inteligente, crédito sin banco y marketplace
+        entre droguerías. Diseñé la identidad visual completa — desde cero.
+      </p>
+      <p class="vr-role"><strong>Brand Identity Designer</strong><br>Estrategia de marca · Sistema cromático · Tipografía · Manual de marca · Mockups</p>
+      <p class="vr-tools-label">Herramientas</p>
+      <div class="vr-tools">
+        <span class="tool-pill">
+          <svg width="12" height="12" viewBox="0 0 38 57" fill="none">
+            <path d="M19 28.5A9.5 9.5 0 1 1 28.5 19H19v9.5z" fill="#1ABCFE"/>
+            <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5A9.5 9.5 0 0 1 0 47.5z" fill="#0ACF83"/>
+            <path d="M19 0v19h9.5a9.5 9.5 0 0 0 0-19H19z" fill="#FF7262"/>
+            <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" fill="#F24E1E"/>
+            <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" fill="#A259FF"/>
+          </svg>Figma
+        </span>
+        <span class="tool-pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="3.5" fill="#300000"/>
+            <path d="M8.2 15.6H6L5.2 18H3.5l3-9h2l3 9h-1.8l-.7-2.4zM7.8 14.3l-.8-2.7-.8 2.7h1.6zM15.2 11.2c.3-.5.7-.8 1.2-1 .4-.2.9-.3 1.4-.3v1.6c-.7-.1-1.2.1-1.6.4-.4.4-.6.9-.6 1.7V18h-1.6v-7.9h1.6v1.1z" fill="#FF9A00"/>
+          </svg>Illustrator
+        </span>
+        <span class="tool-pill">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="3.5" fill="#1C1C1C"/>
+            <text x="2" y="16" font-family="sans-serif" font-size="8" font-weight="700" fill="#9c9c9c">No</text>
+          </svg>Notion
+        </span>
+      </div>
+      <div class="vr-btns">
+        <a class="btn-primary" id="verCaso" href="#descripcion">Ver caso completo →</a>
+        <a class="btn-secondary" href="../proyectos.html">← Proyectos</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ RIGHT PANEL: scrollable case study ═══ -->
+  <div class="vr-scroll-panel" id="scrollPanel">
+    <div id="fmProgress" aria-hidden="true"></div>
+
+    <!-- VIDEO HERO -->
+    <div class="fm-hero">
+      <video class="fm-video" autoplay muted loop playsinline>
+        <source src="../../assets/farmalaxia/video logo.mp4" type="video/mp4">
+      </video>
+      <div class="fm-overlay"></div>
+      <div class="fm-badge">FarmalaxIA · Manual de Marca v1</div>
+      <div class="fm-sc"></div>
+    </div>
+
+    <!-- COVER -->
+    <section class="cover" style="position:relative;overflow:hidden;">
+      <img src="../../assets/farmalaxia/marcadeaguaparawallpaper.png" class="wm"
+        style="width:1240px;right:-460px;top:-200px;transform:rotate(-14deg);opacity:.11;" alt="">
+      <img src="../../assets/farmalaxia/marcadeaguaparawallpaper.png" class="wm"
+        style="width:260px;left:-40px;bottom:-20px;transform:rotate(-13deg);opacity:.07;" alt="">
+      <div class="cover-grid">
+        <div class="reveal">
+          <div class="cover-eyebrow"><span class="ey-dot"></span>Case Study · Brand Identity</div>
+          <h1 class="cover-h1">Farmal<em>ax</em>IA</h1>
+          <p class="cover-desc">Marca construida desde cero para el droguista independiente colombiano.
+            Un sistema visual que combina autoridad, confianza y cercanía.</p>
+          <div class="cover-meta">
+            <div class="cover-meta-item"><span>Cliente</span><strong>FarmalaxIA</strong></div>
+            <div class="cover-meta-item"><span>Rol</span><strong>Brand Identity</strong></div>
+            <div class="cover-meta-item"><span>Año</span><strong>2024</strong></div>
+            <div class="cover-meta-item"><span>Tools</span><strong>Figma · Illustrator · Notion</strong></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-end;justify-content:center;">
+          <img src="../../assets/farmalaxia/1.png" class="cover-char" alt="">
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 01 DESCRIPCIÓN -->
+    <section class="section" id="descripcion" style="position:relative;overflow:hidden;padding-top:12rem;">
+      <img src="../../assets/farmalaxia/marcadeaguaparawallpaper.png" class="wm"
+        style="width:1020px;left:-320px;bottom:-180px;transform:rotate(-14deg);opacity:.09;" alt="">
+      <div class="container">
+        <div class="wf-header reveal">
+          <div>
+            <div class="chip">Descripción del Proyecto</div>
+            <h2 class="st">Tres módulos, un solo sistema.</h2>
+          </div>
+          <p class="sb" style="padding-top:1rem;">Inventario inteligente, marketplace entre droguerías y crédito sin banco.
+            El reto no era solo diseñar una identidad bonita — era construir una marca que el
+            droguista sintiera suya desde el primer contacto.</p>
+        </div>
+
+        <!-- Bento: 4-col grid con ritmo asimétrico intencional -->
+        <div class="wf-cards reveal" style="transition-delay:.1s;">
+
+          <!-- Fase 01 — ancho 2: protagonista -->
+          <div class="wf-card dark"
+            style="grid-column:span 2;border-radius:24px;padding:2.8rem;flex-direction:column;justify-content:space-between;min-height:200px;">
+            <div class="wf-n" style="color:rgba(168,196,224,0.7);">Fase 01</div>
+            <div>
+              <p style="font-size:1.05rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:.6rem;">Brief e Investigación</p>
+              <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.6;">Análisis del brief del cliente, benchmarking de marcas de salud y fintech, e inmersión en el mundo del droguista independiente.</p>
+            </div>
+          </div>
+
+          <!-- Fase 02 — ancho 1: glass -->
+          <div class="wf-card gc">
+            <div class="wf-n">Fase 02</div>
+            <p>Estrategia de marca — valores, tono de voz y posicionamiento verbal</p>
+          </div>
+
+          <!-- Fase 03 — ancho 1: blanco -->
+          <div class="wf-card">
+            <div class="wf-n">Fase 03</div>
+            <p>Hipótesis de dirección visual y moodboard de referentes</p>
+          </div>
+
+          <!-- Fase 04 — ancho 1: blanco -->
+          <div class="wf-card">
+            <div class="wf-n">Fase 04</div>
+            <p>Sistema cromático — paleta primaria, secundaria y reglas de uso</p>
+          </div>
+
+          <!-- Fase 05 — ancho 1: glass -->
+          <div class="wf-card gc">
+            <div class="wf-n">Fase 05</div>
+            <p>Selección tipográfica — jerarquía de Poppins en 6 pesos</p>
+          </div>
+
+          <!-- Fase 06 — ancho 2: dark -->
+          <div class="wf-card dark"
+            style="grid-column:span 2;border-radius:var(--r);padding:2.5rem;flex-direction:column;justify-content:space-between;min-height:180px;">
+            <div class="wf-n" style="color:rgba(168,196,224,.7);">Fase 06</div>
+            <div>
+              <p style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:.5rem;">Diseño del Logotipo</p>
+              <p style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;">Logotipo principal, isotipo, versiones cromáticas, construcción y usos correctos e incorrectos.</p>
+            </div>
+          </div>
+
+          <!-- Fase 07 — ancho 2: glass -->
+          <div class="wf-card gc" style="grid-column:span 2;padding:2.5rem;flex-direction:column;justify-content:space-between;min-height:160px;">
+            <div class="wf-n">Fase 07</div>
+            <p style="font-size:.9rem;font-weight:600;color:var(--ink);line-height:1.4;margin-top:auto;">Manual de Marca — documentación completa del sistema en Figma y Notion</p>
+          </div>
+
+          <!-- Fase 08 — ancho 2: dark -->
+          <div class="wf-card dark"
+            style="grid-column:span 2;border-radius:var(--r);padding:2.5rem;flex-direction:row;align-items:flex-end;justify-content:space-between;min-height:160px;">
+            <div>
+              <div class="wf-n" style="color:rgba(168,196,224,.7);margin-bottom:.8rem;">Fase 08</div>
+              <p style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.3;">Entrega Final</p>
+            </div>
+            <p style="font-size:.75rem;color:rgba(255,255,255,.45);max-width:180px;text-align:right;line-height:1.6;">Mockups de app, wallpapers de marca y archivos fuente Figma + AI</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 02 PROBLEMA -->
+    <section class="section" id="problema" style="position:relative;overflow:hidden;">
+      <div class="container">
+        <div class="prob-header reveal">
+          <div>
+            <div class="chip">El Problema</div>
+            <h2 class="st">Una marca invisible en un mercado invisible.</h2>
+            <p class="sb">Colombia tiene más de 60.000 droguerías independientes. Ningún software existente fue
+              diseñado para ellas: son herramientas genéricas de supermercado adaptadas a la fuerza.
+              FarmalaxIA llegó con una solución real — pero sin una identidad que la diferenciara.</p>
+          </div>
+        </div>
+
+        <div class="prob-rows reveal" style="transition-delay:.1s;">
+          <div class="prob-row">
+            <span class="prob-row-label">Sin identidad propia</span>
+            <span class="prob-row-val">Competidores con marcas corporativas frías que no conectan emocionalmente con el droguista de barrio</span>
+          </div>
+          <div class="prob-row">
+            <span class="prob-row-label">Lenguaje equivocado</span>
+            <span class="prob-row-val">Comunicación pensada para contadores y gerentes, no para quien abre a las 6 am y cierra a las 10 pm</span>
+          </div>
+          <div class="prob-row">
+            <span class="prob-row-label">Sistema fragmentado</span>
+            <span class="prob-row-val">Sin guía de marca: cada pieza se veía diferente, debilitando la confianza en la plataforma</span>
+          </div>
+          <div class="prob-row">
+            <span class="prob-row-label">Percepción de riesgo</span>
+            <span class="prob-row-val">El droguista no adopta software nuevo si la marca no transmite solidez y permanencia</span>
+          </div>
+        </div>
+
+        <div class="bq dark reveal" style="transition-delay:.15s;">
+          <div class="bq-mark">"</div>
+          <p class="bq-text">"El droguista no compra software. Compra confianza. Si la marca no le habla en su idioma,
+            la conversación termina antes de empezar."</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 03 PERSONA -->
+    <section class="section" id="persona" style="position:relative;overflow:hidden;">
+      <img src="../../assets/farmalaxia/marcadeaguaparawallpaper.png" class="wm"
+        style="width:1360px;right:-500px;top:50%;transform:translateY(-50%) rotate(-14deg);opacity:.09;" alt="">
+      <div class="container">
+        <div class="chip reveal">User Persona</div>
+        <h2 class="st reveal" style="max-width:600px;">El Droguista de Barrio.</h2>
+
+        <!-- Row 1: perfil dark + character glass (misma altura) -->
+        <div class="persona-grid" style="margin-top:4rem;">
+          <div class="persona-featured dark reveal">
+            <div>
+              <div class="label-sm-dark">Perfil Principal</div>
+              <p style="font-size:1.5rem;font-weight:700;color:#fff;letter-spacing:-.4px;margin-top:.3rem;line-height:1.2;">El Droguista<br>Independiente</p>
+            </div>
+            <div style="display:flex;flex-direction:column;">
+              <div class="attr-row"><span class="attr-key">Ocupación</span><span class="attr-val">Dueño de droguería</span></div>
+              <div class="attr-row"><span class="attr-key">Antigüedad</span><span class="attr-val">5 – 20 años</span></div>
+              <div class="attr-row"><span class="attr-key">Ciudad</span><span class="attr-val">Ciudades intermedias y barrios</span></div>
+              <div class="attr-row"><span class="attr-key">Tecnología</span><span class="attr-val">WhatsApp y redes sociales</span></div>
+              <div class="attr-row"><span class="attr-key">Dispositivo</span><span class="attr-val">Android gama media</span></div>
+              <div class="attr-row"><span class="attr-key">Horario</span><span class="attr-val">6 am – 10 pm · 7 días</span></div>
+              <div class="attr-row" style="border-bottom:none;"><span class="attr-key">Meta</span><span class="attr-val">Que le sobre a fin de mes</span></div>
+            </div>
+          </div>
+          <!-- Character dentro de una glass card, misma altura que el perfil -->
+          <div class="gc reveal" style="border-radius:28px;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;min-height:400px;padding:0;transition-delay:.06s;">
+            <img src="../../assets/farmalaxia/2.png" style="width:100%;max-width:320px;display:block;" alt="">
+          </div>
+        </div>
+
+        <!-- Row 2: necesidades + frustraciones al mismo nivel -->
+        <div class="persona-cards-row">
+          <div class="persona-card gc reveal" style="transition-delay:.08s;">
+            <div class="label-sm">Lo que necesita</div>
+            <div class="tag-wrap">
+              <span class="tag">Inventario sin esfuerzo</span>
+              <span class="tag">Alertas de agotamiento</span>
+              <span class="tag">Caja disponible</span>
+              <span class="tag">Crédito sin trámites</span>
+              <span class="tag">Todo desde el celular</span>
+            </div>
+          </div>
+          <div class="persona-card gc reveal" style="transition-delay:.12s;">
+            <div class="label-sm">Lo que lo frustra hoy</div>
+            <div class="frus-list">
+              <p class="frus-row">Software hecho para supermercados, no para droguerías</p>
+              <p class="frus-row">Inventario congelado que pierde valor con el tiempo</p>
+              <p class="frus-row">Pierde descuentos de proveedores por falta de caja</p>
+              <p class="frus-row">Capacitaciones largas que nadie puede atender</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote / objetivo -->
+        <div style="margin-top:1.5rem;" class="reveal">
+          <div class="dark bq">
+            <p style="font-size:.95rem;font-weight:500;color:rgba(255,255,255,.88);line-height:1.75;">Objetivo de diseño: FarmalaxIA debe sentirse
+              tan cercana y directa que el droguista piense — por primera vez — que alguien construyó
+              algo pensando en él.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 04 JTBD -->
+    <section class="section" id="jtbd" style="position:relative;overflow:hidden;">
+      <div class="container">
+        <div class="jtbd-head reveal">
+          <div>
+            <div class="chip">Jobs to be Done</div>
+            <h2 class="st">¿Para qué sirve realmente FarmalaxIA?</h2>
+          </div>
+          <p class="sb" style="padding-top:1.5rem;">Cinco trabajos reales que el droguista necesita resolver cada día y que la plataforma
+            resuelve con IA. La identidad debía comunicar esta utilidad sin palabras técnicas.</p>
+        </div>
+
+        <div class="jtbd-grid">
+          <!-- Tall dark card — main job -->
+          <div class="jtbd-card dark reveal"
+            style="grid-row:span 2;transition-delay:.05s;border-radius:28px;display:flex;flex-direction:column;min-height:380px;">
+            <div>
+              <div class="jtbd-chip" style="color:rgba(168,196,224,.8);">Job 01 — Inventario</div>
+              <h4 style="color:#fff;font-size:1.05rem;line-height:1.3;margin-bottom:.8rem;">Saber qué se va a agotar antes de que pase</h4>
+              <p style="color:rgba(255,255,255,.6);font-size:.82rem;line-height:1.65;">
+                Cuando gestiono el inventario, quiero recibir alertas predictivas de agotamiento,
+                para nunca perder una venta por faltantes y dejar de depender de la memoria.
+              </p>
+            </div>
+          </div>
+          <!-- 4 smaller cards — stagger in 2 cols -->
+          <div class="jtbd-card gc reveal" style="transition-delay:.1s;">
+            <div class="jtbd-chip">Job 02 — Crédito</div>
+            <h4>Acceder a liquidez sin banco</h4>
+            <p>Cuando necesito pagar a un proveedor, quiero crédito inmediato sin trámites, para nunca perder un descuento por falta de caja.</p>
+          </div>
+          <div class="jtbd-card gc reveal" style="transition-delay:.15s;">
+            <div class="jtbd-chip">Job 03 — Marketplace</div>
+            <h4>Mover producto paralizado</h4>
+            <p>Cuando tengo medicamentos sin rotación, quiero venderlos a otras droguerías, para recuperar el capital invertido.</p>
+          </div>
+          <div class="jtbd-card gc reveal" style="transition-delay:.2s;">
+            <div class="jtbd-chip">Job 04 — IA</div>
+            <h4>Vender más en el mostrador</h4>
+            <p>Cuando atiendo a un cliente, quiero sugerencias de complementarios en tiempo real, para aumentar el ticket promedio sin esfuerzo.</p>
+          </div>
+          <div class="jtbd-card gc reveal" style="transition-delay:.25s;">
+            <div class="jtbd-chip">Job 05 — Digitalización</div>
+            <h4>Ingresar facturas sin digitar</h4>
+            <p>Cuando recibo mercancía, quiero registrar la factura con una foto, para eliminar errores y recuperar tiempo en el día a día.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 05 NECESIDADES -->
+    <section class="section" id="necesidades" style="position:relative;overflow:hidden;">
+      <img src="../../assets/farmalaxia/marcadeaguaparawallpaper.png" class="wm"
+        style="width:940px;left:-280px;top:-100px;transform:rotate(-14deg);opacity:.10;" alt="">
+      <div class="container">
+        <div class="nec-layout">
+          <div>
+            <div class="chip reveal">Necesidades de Diseño</div>
+            <h2 class="st reveal">La marca habla a dos audiencias.</h2>
+            <p class="sb reveal" style="max-width:520px;margin-bottom:0;transition-delay:.05s;">La identidad debía funcionar hacia afuera — para el droguista que adopta la plataforma — y hacia adentro — como sistema visual coherente que escala con el producto.</p>
+            <div class="nec-grid reveal" style="transition-delay:.1s;">
+              <div>
+                <div class="nec-col-title">FarmalaxIA — Producto</div>
+                <div class="nec-item gc" style="border-radius:14px;"><span class="nd"></span>Identidad que transmita confianza y permanencia</div>
+                <div class="nec-item gc" style="border-radius:14px;"><span class="nd"></span>Sistema escalable: app, web y piezas físicas</div>
+                <div class="nec-item gc" style="border-radius:14px;"><span class="nd"></span>Diferenciación clara frente a competidores genéricos</div>
+                <div class="nec-item gc" style="border-radius:14px;"><span class="nd"></span>Legible y funcional en pantallas pequeñas Android</div>
+              </div>
+              <div>
+                <div class="nec-col-title">El Droguista — Usuario</div>
+                <div class="nec-item" style="background:rgba(168,196,224,.12);border:1px solid rgba(168,196,224,.3);border-radius:14px;"><span class="nd nd-lt"></span><span><strong>Funcional:</strong> Sin curva de aprendizaje larga</span></div>
+                <div class="nec-item" style="background:rgba(168,196,224,.12);border:1px solid rgba(168,196,224,.3);border-radius:14px;"><span class="nd nd-lt"></span><span><strong>Funcional:</strong> Accesible desde el celular de bajo costo</span></div>
+                <div class="nec-item" style="background:rgba(168,196,224,.12);border:1px solid rgba(168,196,224,.3);border-radius:14px;"><span class="nd nd-lt"></span><span><strong>Emocional:</strong> Sentir que fue hecha para su negocio</span></div>
+                <div class="nec-item" style="background:rgba(168,196,224,.12);border:1px solid rgba(168,196,224,.3);border-radius:14px;"><span class="nd nd-lt"></span><span><strong>Emocional:</strong> Confiar en que va a estar disponible</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
+            <img src="../../assets/farmalaxia/3.png" style="width:100%;max-width:340px;display:block;" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 06 HIPÓTESIS -->
+    <section class="section" id="hipotesis" style="position:relative;overflow:hidden;">
+      <div class="container">
+        <div class="chip reveal">Hipótesis de Diseño</div>
+        <h2 class="st reveal">La apuesta estratégica.</h2>
+
+        <div class="hipo-layout">
+          <div class="hipo-featured dark reveal">
+            <div class="bq-mark" style="font-size:8rem;top:-1.5rem;left:1.5rem;">"</div>
+            <div class="hipo-n" style="margin-bottom:1.2rem;">Hipótesis central</div>
+            <p style="font-size:.95rem;color:rgba(255,255,255,.88);line-height:1.8;position:relative;z-index:1;">Si FarmalaxIA construye una identidad visual que combine
+              la <strong style="color:#A8C4E0;">autoridad del azul profundo</strong> con la cercanía de Poppins,
+              el droguista percibirá la plataforma como confiable y moderna —
+              sin sentirla corporativa ni ajena a su mundo.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:1.2rem;">
+            <div class="hipo-card gc reveal" style="transition-delay:.08s;">
+              <div class="hipo-n">01</div>
+              <p><strong style="color:var(--blue);">Azul profundo</strong> como color principal: transmite tecnología, salud y confianza sin la frialdad de los azules corporativos clásicos.</p>
+            </div>
+            <div class="hipo-card gc reveal" style="transition-delay:.13s;">
+              <div class="hipo-n">02</div>
+              <p><strong style="color:var(--blue);">Poppins</strong> como única familia tipográfica: legibilidad en pantallas pequeñas, personalidad moderna y calidez en pesos bajos.</p>
+            </div>
+            <div class="hipo-card gc reveal" style="transition-delay:.18s;">
+              <div class="hipo-n">03</div>
+              <p><strong style="color:var(--blue);">Logotipo reductible a isotipo:</strong> prioritario para una app móvil donde el espacio es mínimo y el reconocimiento debe ser inmediato.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 07 SISTEMA VISUAL -->
+    <section class="section" id="sistema" style="position:relative;overflow:hidden;">
+      <img src="../../assets/farmalaxia/marcadeaguaparawallpaper.png" class="wm"
+        style="width:1060px;right:-320px;bottom:-100px;transform:rotate(-14deg);opacity:.11;" alt="">
+      <div class="container">
+        <div class="chip reveal">Sistema Visual · Resultado</div>
+        <h2 class="st reveal">El lenguaje de la marca.</h2>
+        <p class="sb reveal" style="max-width:600px;transition-delay:.05s;">Un sistema cohesivo, documentado y listo para escalar. Cada decisión visual tiene una razón estratégica: el color no es decoración, la tipografía no es capricho.</p>
+
+        <!-- Colors -->
+        <div class="chip reveal" style="margin-top:6rem;">Sistema Cromático</div>
+        <div class="color-grid reveal">
+          <div class="color-item">
+            <div class="color-solid" style="background:#103292;"></div>
+            <div class="color-glow"  style="background:#103292;"></div>
+            <div class="color-glass tw"><span class="c-name">Azul profundo</span><span class="c-hex">#103292</span></div>
+          </div>
+          <div class="color-item">
+            <div class="color-solid" style="background:#1E4DA6;"></div>
+            <div class="color-glow"  style="background:#1E4DA6;"></div>
+            <div class="color-glass tw"><span class="c-name">Azul medio</span><span class="c-hex">#1E4DA6</span></div>
+          </div>
+          <div class="color-item">
+            <div class="color-solid" style="background:#A8C4E0;"></div>
+            <div class="color-glow"  style="background:#A8C4E0;"></div>
+            <div class="color-glass td"><span class="c-name">Azul claro</span><span class="c-hex">#A8C4E0</span></div>
+          </div>
+          <div class="color-item">
+            <div class="color-solid" style="background:#fff;border:1px solid #e5e7eb;"></div>
+            <div class="color-glow"  style="background:#dde6f2;"></div>
+            <div class="color-glass td"><span class="c-name">Blanco</span><span class="c-hex">#FFFFFF</span></div>
+          </div>
+          <div class="color-item">
+            <div class="color-solid" style="background:#6B7280;"></div>
+            <div class="color-glow"  style="background:#6B7280;"></div>
+            <div class="color-glass tw"><span class="c-name">Gris</span><span class="c-hex">#6B7280</span></div>
+          </div>
+          <div class="color-item">
+            <div class="color-solid" style="background:#000;"></div>
+            <div class="color-glow"  style="background:#000;"></div>
+            <div class="color-glass tw"><span class="c-name">Negro marca</span><span class="c-hex">#000000</span></div>
+          </div>
+        </div>
+
+        <!-- Typography -->
+        <div style="margin-top:9rem;">
+          <div class="chip reveal">Sistema Tipográfico</div>
+          <h2 class="st reveal">Poppins, de display a caption.</h2>
+          <p class="sb reveal" style="max-width:520px;transition-delay:.04s;">Una sola familia, seis pesos, jerarquía clara. Poppins se eligió por su legibilidad en Android de gama media y por su tono — técnico pero accesible.</p>
+          <div class="typo-layout">
+            <div class="reveal">
+              <div class="typo-sub">Tipografía oficial <span>→ Poppins</span></div>
+              <div class="typo-row">
+                <span class="typo-level">Display</span>
+                <span class="typo-sample" style="font-size:52px;font-weight:900;">Salud Inteligente</span>
+                <span class="typo-spec">Black · 52px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">H1</span>
+                <span class="typo-sample" style="font-size:40px;font-weight:700;">Tecnología Farmacéutica</span>
+                <span class="typo-spec">Bold · 40px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">H2</span>
+                <span class="typo-sample" style="font-size:28px;font-weight:600;">Nuestros Servicios</span>
+                <span class="typo-spec">SemiBold · 28px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">H3</span>
+                <span class="typo-sample" style="font-size:20px;font-weight:500;">Soluciones para tu bienestar</span>
+                <span class="typo-spec">Medium · 20px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">Body</span>
+                <span class="typo-sample" style="font-size:15px;font-weight:400;color:var(--fm-muted);letter-spacing:0;">Texto de cuerpo principal en comunicaciones de marca.</span>
+                <span class="typo-spec">Regular · 15px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">Caption</span>
+                <span class="typo-sample" style="font-size:11px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--fm-muted);">Etiquetas · Referencias · Metadata</span>
+                <span class="typo-spec">Light · 11px</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:flex-end;justify-content:center;">
+              <img src="../../assets/farmalaxia/4.png" style="width:100%;max-width:360px;display:block;" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">FarmalaxIA · 2024</div>
+        <p style="font-size:.75rem;color:var(--fm-muted);text-align:center;max-width:360px;line-height:1.7;">
+          Identidad visual completa · Manual de Marca v1<br>Diseñado por Andrés Galdino
+        </p>
+        <div class="footer-pills">
+          <span class="footer-pill">Brand Identity</span>
+          <span class="footer-pill">Figma</span>
+          <span class="footer-pill">Illustrator</span>
+          <span class="footer-pill">Notion</span>
+          <span class="footer-pill">Manual de Marca</span>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- end .vr-scroll-panel -->
+</div><!-- end .vr-stage -->
+
+<script src="../../js/loader.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var cursor      = document.getElementById('cursor');
+  var scrollPanel = document.getElementById('scrollPanel');
+
+  /* ── Cursor ── */
+  document.addEventListener('mousemove', function (e) {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  window.addEventListener('load', function () {
+    document.querySelectorAll('a, button').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
+      el.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
+    });
+  });
+
+  /* ── "Ver caso completo" ── */
+  var verCaso = document.getElementById('verCaso');
+  if (verCaso && scrollPanel) {
+    verCaso.addEventListener('click', function (e) {
+      e.preventDefault();
+      var t = document.getElementById('descripcion');
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  if (!scrollPanel) return;
+
+  /* ════════════════════════════════════════
+     PHASE 1 — DOM SETUP
+  ════════════════════════════════════════ */
+
+  /* 1a. Split every h2.st into word spans for cascade reveal */
+  scrollPanel.querySelectorAll('h2.st').forEach(function (h) {
+    var words = h.textContent.trim().split(/\s+/);
+    h.textContent = '';
+    h.classList.add('st-split');
+    words.forEach(function (w, i) {
+      var outer = document.createElement('span');
+      outer.className = 'sw';
+      var inner = document.createElement('span');
+      inner.className = 'swi';
+      inner.textContent = w;
+      inner.style.transitionDelay = (i * 0.07) + 's';
+      outer.appendChild(inner);
+      h.appendChild(outer);
+      if (i < words.length - 1) h.appendChild(document.createTextNode(' '));
+    });
+  });
+
+  /* 1b. Convert .color-grid.reveal → individual per-item reveals with stagger */
+  scrollPanel.querySelectorAll('.color-grid.reveal').forEach(function (grid) {
+    grid.classList.remove('reveal');
+    grid.querySelectorAll('.color-item').forEach(function (item, i) {
+      item.classList.add('reveal');
+      item.style.transitionDelay = (i * 0.075) + 's';
+    });
+  });
+
+  /* 1c. Convert .wf-cards.reveal → individual per-card stagger */
+  scrollPanel.querySelectorAll('.wf-cards.reveal').forEach(function (cards) {
+    cards.classList.remove('reveal');
+    cards.querySelectorAll('.wf-card').forEach(function (card, i) {
+      card.classList.add('reveal');
+      card.style.transitionDelay = Math.min(i * 0.055, 0.38) + 's';
+    });
+  });
+
+  /* ════════════════════════════════════════
+     PHASE 2 — INTERSECTION OBSERVER
+  ════════════════════════════════════════ */
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      el.classList.add('on');
+      /* Trigger word-split spans inside this element (handles h2.st inside .reveal containers) */
+      el.querySelectorAll('.swi').forEach(function (s) {
+        s.style.transform = 'translateY(0)';
+        s.style.opacity   = '1';
+      });
+      io.unobserve(el);
+    });
+  }, { root: scrollPanel, threshold: 0.03 });
+
+  requestAnimationFrame(function () {
+    scrollPanel.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  });
+
+  /* ════════════════════════════════════════
+     PHASE 3 — RAF PARALLAX LOOP
+  ════════════════════════════════════════ */
+
+  var heroEl    = scrollPanel.querySelector('.fm-hero');
+  var heroVid   = heroEl ? heroEl.querySelector('.fm-video')   : null;
+  var heroOvl   = heroEl ? heroEl.querySelector('.fm-overlay') : null;
+  var heroBadge = heroEl ? heroEl.querySelector('.fm-badge')   : null;
+  var heroSc    = heroEl ? heroEl.querySelector('.fm-sc')      : null;
+  var coverChar = scrollPanel.querySelector('.cover-char');
+  var progress  = document.getElementById('fmProgress');
+
+  /* GPU-hint moving elements */
+  if (heroVid)   heroVid.style.willChange = 'transform';
+  if (coverChar) coverChar.style.willChange = 'transform';
+
+  /* Pre-cache watermarks with their inline base transform */
+  var wms = [];
+  scrollPanel.querySelectorAll('.wm').forEach(function (wm) {
+    wm.style.willChange = 'transform';
+    wms.push({ el: wm, base: wm.style.transform || '' });
+  });
+
+  var ticking = false;
+
+  function tick() {
+    var sy = scrollPanel.scrollTop;
+    var ph = scrollPanel.clientHeight;
+    var sh = scrollPanel.scrollHeight;
+
+    /* 1 — Scroll progress bar */
+    if (progress) {
+      progress.style.width = (sy / Math.max(sh - ph, 1) * 100) + '%';
+    }
+
+    /* 2 — Hero: scale video + darken overlay + badge drift + scroll-line fade */
+    if (heroVid) {
+      var heroH = heroEl.offsetHeight || ph;
+      var p     = Math.min(Math.max(sy / heroH, 0), 1);
+      heroVid.style.transform  = 'scale(' + (1 + p * 0.07) + ')';
+      if (heroOvl)   heroOvl.style.background  = 'linear-gradient(to bottom,rgba(10,22,40,' + (0.04 + p * 0.36) + ') 0%,rgba(10,22,40,' + (0.4 + p * 0.28) + ') 100%)';
+      if (heroBadge) heroBadge.style.transform  = 'translateX(-50%) translateY(' + (sy * 0.30) + 'px)';
+      if (heroSc)    heroSc.style.opacity        = String(Math.max(0, 1 - sy * 0.007));
+    }
+
+    /* 3 — Cover character: float upward slower than scroll (parallax) */
+    if (coverChar && heroEl) {
+      var heroHeight   = heroEl.offsetHeight || ph;
+      var coverScrolled = Math.max(0, sy - heroHeight);
+      coverChar.style.transform = 'translateY(' + (-coverScrolled * 0.12) + 'px)';
+    }
+
+    /* 4 — Watermark drift: each moves at ~8% relative to its section center */
+    for (var i = 0; i < wms.length; i++) {
+      var item    = wms[i];
+      var section = item.el.closest('section') || item.el.closest('footer');
+      if (!section) continue;
+      var r     = section.getBoundingClientRect();
+      var mid   = r.top + r.height * 0.5;
+      var shift = (ph * 0.5 - mid) * 0.04;
+      item.el.style.transform = item.base + ' translateY(' + shift + 'px)';
+    }
+
+    ticking = false;
+  }
+
+  scrollPanel.addEventListener('scroll', function () {
+    if (!ticking) { requestAnimationFrame(tick); ticking = true; }
+  }, { passive: true });
+
+  /* Initial tick to establish states before first user scroll */
+  requestAnimationFrame(tick);
+
+})();
+</script>
+</body>
+</html>
