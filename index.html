@@ -423,6 +423,19 @@
        MOBILE  ≤ 767 px
     ═══════════════════════════════════════════ */
     @media (max-width: 767px) {
+      /* Rotating words — 2 líneas */
+      .rotating-words { height: 36px; }
+      .word-item { height: 36px; line-height: 18px; }
+      .wi-mid { display: none; }
+      .wi-a, .wi-b { display: block; }
+      @keyframes wordScroll {
+        0%,22%  { transform: translateY(0); }
+        25%,47% { transform: translateY(-36px); }
+        50%,72% { transform: translateY(-72px); }
+        75%,97% { transform: translateY(-108px); }
+        100%    { transform: translateY(-144px); }
+      }
+
       /* Hero */
       .hero { padding: 80px 20px 36px; }
       .hero-sub { font-size: 14px; }
@@ -502,11 +515,11 @@
 <main class="hero">
   <div class="rotating-words" aria-hidden="true">
     <div class="word-track">
-      <div class="word-item">Designer &nbsp;·&nbsp; Creator &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Thinker</div>
-      <div class="word-item">Product &nbsp;·&nbsp; Branding &nbsp;·&nbsp; Motion &nbsp;·&nbsp; Systems</div>
-      <div class="word-item">Bogotá &nbsp;·&nbsp; Colombia &nbsp;·&nbsp; Remote &nbsp;·&nbsp; Global</div>
-      <div class="word-item">Ideas &nbsp;·&nbsp; Craft &nbsp;·&nbsp; Impact &nbsp;·&nbsp; Detail</div>
-      <div class="word-item">Designer &nbsp;·&nbsp; Creator &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Thinker</div>
+      <div class="word-item"><span class="wi-a">Designer &nbsp;·&nbsp; Creator</span><span class="wi-mid"> &nbsp;·&nbsp; </span><span class="wi-b">Builder &nbsp;·&nbsp; Thinker</span></div>
+      <div class="word-item"><span class="wi-a">Product &nbsp;·&nbsp; Branding</span><span class="wi-mid"> &nbsp;·&nbsp; </span><span class="wi-b">Motion &nbsp;·&nbsp; Systems</span></div>
+      <div class="word-item"><span class="wi-a">Bogotá &nbsp;·&nbsp; Colombia</span><span class="wi-mid"> &nbsp;·&nbsp; </span><span class="wi-b">Remote &nbsp;·&nbsp; Global</span></div>
+      <div class="word-item"><span class="wi-a">Ideas &nbsp;·&nbsp; Craft</span><span class="wi-mid"> &nbsp;·&nbsp; </span><span class="wi-b">Impact &nbsp;·&nbsp; Detail</span></div>
+      <div class="word-item"><span class="wi-a">Designer &nbsp;·&nbsp; Creator</span><span class="wi-mid"> &nbsp;·&nbsp; </span><span class="wi-b">Builder &nbsp;·&nbsp; Thinker</span></div>
     </div>
   </div>
 
