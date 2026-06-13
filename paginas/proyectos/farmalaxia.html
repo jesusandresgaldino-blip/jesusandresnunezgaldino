@@ -17,6 +17,12 @@
   <link rel="stylesheet" href="../../css/main.css">
   <link rel="stylesheet" href="../../css/proyecto-page.css">
   <style>
+    /* Eliminar grano del panel en todas las resoluciones */
+
+    /* Fix para pantallas grandes (>1440px): el wrapper debe ocupar toda la altura */
+    .vr-info-wrapper { height: 100%; position: relative; }
+    .vr-info { height: 100%; }
+
     /* ── Left panel overrides only ── */
     .vr-title { font-size: clamp(38px, 4.2vw, 62px); }
 
@@ -90,11 +96,7 @@
       object-fit: cover;
     }
 
-    .fm-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(10,22,40,0.04) 0%, rgba(10,22,40,0.4) 100%);
-    }
+    .fm-overlay { display: none; }
 
     .fm-badge {
       position: absolute;
@@ -165,14 +167,7 @@
       margin-bottom: 2rem;
     }
 
-    .vr-scroll-panel .chip::before {
-      content: '';
-      width: 16px;
-      height: 2px;
-      background: var(--mid);
-      border-radius: 2px;
-      display: block;
-    }
+    .vr-scroll-panel .chip::before { display: none; }
 
     /* ── Section heading ── */
     .vr-scroll-panel h2.st {
@@ -620,14 +615,16 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
-      align-items: start;
+      align-items: stretch;
       margin-top: 4rem;
     }
 
     .vr-scroll-panel .hipo-featured {
       padding: 3.5rem;
       border-radius: 28px;
-      grid-row: span 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .vr-scroll-panel .hipo-card {
@@ -908,41 +905,261 @@
     .vr-scroll-panel .hipo-featured.dark:hover::after  { transform: translateX(120%) skewX(-15deg); }
 
     /* ── Responsive ── */
-    @media (max-width: 900px) {
-      html, body { height: auto; overflow: auto; }
-      .vr-stage  { grid-template-columns: 1fr; height: auto; position: static; overflow: visible; }
-      .vr-info   { min-height: 100svh; }
-      .vr-scroll-panel { height: auto; overflow-y: visible; }
-      .fm-hero   { height: 60vw; min-height: 320px; }
+    @media (max-width: 1100px) {
+      .vr-scroll-panel .cover-grid, .vr-scroll-panel .wf-header,
+      .vr-scroll-panel .prob-header, .vr-scroll-panel .persona-grid,
+      .vr-scroll-panel .persona-cards-row, .vr-scroll-panel .jtbd-head,
+      .vr-scroll-panel .jtbd-grid, .vr-scroll-panel .nec-layout,
+      .vr-scroll-panel .hipo-layout, .vr-scroll-panel .typo-layout { grid-template-columns: 1fr; }
+      .vr-scroll-panel .cover-grid > .reveal { text-align: center; }
+      .vr-scroll-panel .cover-eyebrow { justify-content: center; }
+      .vr-scroll-panel .cover-meta { justify-content: center; }
+      .vr-scroll-panel .cover-desc { max-width: 100%; }
+      .vr-scroll-panel .wf-cards { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .wf-cards > * { grid-column: span 1; }
+      .vr-scroll-panel .hipo-featured { grid-row: auto; }
+      .vr-scroll-panel .nec-grid { grid-template-columns: 1fr; }
+      .vr-scroll-panel .color-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .learning-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .section { padding: 9rem 5vw; }
+      .vr-scroll-panel .cover { padding: 14rem 5vw 9rem; }
+      .vr-scroll-panel h2.st { font-size: clamp(1.8rem, 3.5vw, 3.2rem); letter-spacing: -1.5px; }
+      .vr-scroll-panel .cover-h1 { font-size: clamp(3.2rem, 7vw, 6rem); }
     }
 
-    @media (max-width: 1024px) {
-      .vr-scroll-panel .cover-grid,
-      .vr-scroll-panel .wf-header,
-      .vr-scroll-panel .prob-header,
-      .vr-scroll-panel .persona-grid,
-      .vr-scroll-panel .persona-cards-row,
-      .vr-scroll-panel .jtbd-head,
-      .vr-scroll-panel .jtbd-grid,
-      .vr-scroll-panel .nec-layout,
-      .vr-scroll-panel .hipo-layout,
-      .vr-scroll-panel .typo-layout { grid-template-columns: 1fr; }
-      .vr-scroll-panel .wf-cards   { grid-template-columns: repeat(2, 1fr); }
-      .vr-scroll-panel .wf-cards .wf-card[style*="grid-column:span 2"],
-      .vr-scroll-panel .wf-cards .wf-card[style*="grid-column: span 2"] { grid-column: span 1; }
-      .vr-scroll-panel .hipo-featured { grid-row: auto; }
-      .vr-scroll-panel .nec-grid   { grid-template-columns: 1fr; }
-      .vr-scroll-panel .color-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 900px) {
+      html, body { height: auto !important; overflow: auto !important; min-height: 100%; }
+      .vr-stage {
+        position: relative !important; inset: auto !important;
+        display: flex !important; flex-direction: column !important;
+        height: auto !important; overflow: visible !important;
+        grid-template-columns: 1fr;
+      }
+      .vr-info {
+        min-height: 100svh;
+        height: auto !important; overflow: visible !important;
+        padding: 16px 36px 72px; position: relative !important;
+      }
+      .vr-num { margin-bottom: auto; }
+      .vr-center { justify-content: flex-end; }
+      .vr-scroll-panel { height: auto !important; min-height: 100svh; overflow-y: visible !important; overflow: visible !important; }
+      .vr-title { font-size: clamp(42px, 9vw, 68px); }
+      .vr-desc { max-width: 100%; font-size: 12.5px; }
+      .vr-tools { flex-wrap: wrap; }
+      .fm-hero { height: 60vw; min-height: 320px; }
+      .vr-scroll-panel .section { padding: 8rem 5vw; }
+      .vr-scroll-panel .cover { padding: 10rem 5vw 8rem; }
+    }
+
+    @media (max-width: 768px) {
+      .vr-info { padding: 16px 28px 64px; }
+      .vr-title { font-size: clamp(38px, 9vw, 58px); }
+      .vr-desc { font-size: 12px; }
+      .fm-hero { height: 68vw; min-height: 280px; }
+      .vr-scroll-panel .section { padding: 7rem 5vw; }
+      .vr-scroll-panel .cover { padding: 8rem 5vw 7rem; }
+      .vr-scroll-panel h2.st { font-size: clamp(1.7rem, 5vw, 2.6rem); letter-spacing: -1px; }
+      .vr-scroll-panel .cover-h1 { font-size: clamp(2.8rem, 10vw, 5rem); }
+      .vr-scroll-panel .sb { font-size: .84rem; }
     }
 
     @media (max-width: 640px) {
-      .vr-scroll-panel .section { padding: 6rem 4vw; }
-      .vr-scroll-panel .cover   { padding: 7rem 4vw 8rem; }
-      .vr-scroll-panel .jtbd-grid,
-      .vr-scroll-panel .color-grid,
-      .vr-scroll-panel .wf-cards { grid-template-columns: 1fr; }
+      .vr-info { padding: 16px 20px 56px; }
+      .vr-title { font-size: clamp(34px, 10vw, 50px); }
+      .vr-subtitle { font-size: 9px; }
+      .vr-desc { font-size: 11.5px; margin-bottom: 16px; }
+      .vr-role { font-size: 9.5px; }
+      .vr-tools-label { font-size: 7px; }
+      .vr-tools { gap: 5px; margin-bottom: 24px; }
+      .tool-pill { font-size: 9.5px; padding: 5px 10px; }
+      .vr-btns { flex-direction: column; gap: 8px; }
+      .btn-primary, .btn-secondary { text-align: center; font-size: 11px; padding: 12px 18px; }
+      .fm-hero { height: 72vw; min-height: 240px; }
+      .vr-scroll-panel .section { padding: 5rem 5vw; }
+      .vr-scroll-panel .cover { padding: 5rem 5vw 6rem; }
+      .vr-scroll-panel h2.st { font-size: clamp(1.5rem, 7vw, 2.2rem); letter-spacing: -.5px; line-height: 1.1; }
+      .vr-scroll-panel .sb { font-size: .8rem; line-height: 1.7; }
+      .vr-scroll-panel .cover-h1 { font-size: clamp(2.6rem, 13vw, 4.5rem); letter-spacing: -2px; }
+      .vr-scroll-panel .cover-desc { font-size: .82rem; margin-bottom: 1.6rem; }
+      .vr-scroll-panel .cover-meta { gap: .6rem; flex-wrap: wrap; }
+      .vr-scroll-panel .cover-meta-item { min-width: 45%; }
+      .vr-scroll-panel .chip { font-size: .58rem; }
+      .vr-scroll-panel .wf-cards, .vr-scroll-panel .jtbd-grid,
+      .vr-scroll-panel .color-grid, .vr-scroll-panel .nec-grid,
+      .vr-scroll-panel .metrics-grid, .vr-scroll-panel .learning-grid { grid-template-columns: 1fr; }
+      .vr-scroll-panel .wf-cards > *, .vr-scroll-panel .learning-grid > * { grid-column: span 1 !important; }
+      .vr-scroll-panel .prob-row { grid-template-columns: 1fr; gap: .3rem; padding: 1.2rem 0; }
+      .vr-scroll-panel .prob-row-val { padding-left: .8rem; border-left: 2px solid rgba(16,50,146,0.15); font-size: .77rem; }
+      .vr-scroll-panel .wf-card { padding: 1.4rem; }
+      .vr-scroll-panel .strat-card { padding: 1.8rem 1.4rem; }
+      .vr-scroll-panel .research-card { padding: 1.8rem 1.4rem; }
+      .vr-scroll-panel .campaign-card { padding: 1.8rem 1.4rem; }
+      .vr-scroll-panel .metric-card { padding: 2rem 1.6rem; }
+      .vr-scroll-panel .learning-card { padding: 1.8rem 1.4rem; }
+      .vr-scroll-panel .mc-n { font-size: clamp(2.2rem, 11vw, 3.6rem); }
+      .vr-scroll-panel .bq { padding: 1.8rem 1.4rem; }
+      .vr-scroll-panel .bq-text { font-size: .82rem; line-height: 1.7; }
+      .vr-scroll-panel .bq-mark { font-size: 4rem; }
+      .vr-scroll-panel .rc-body, .vr-scroll-panel .rc-item,
+      .vr-scroll-panel .strat-body { font-size: .78rem; }
+      .vr-scroll-panel .lc-n { font-size: 2rem; }
       .vr-scroll-panel .typo-row { grid-template-columns: 60px 1fr; }
       .vr-scroll-panel .typo-spec { display: none; }
+    }
+
+    @media (max-width: 390px) {
+      .vr-info { padding: 16px 16px 48px; }
+      .vr-title { font-size: 30px; }
+      .vr-scroll-panel .section { padding: 4rem 4vw; }
+      .vr-scroll-panel .cover { padding: 4rem 4vw 5rem; }
+      .vr-scroll-panel h2.st { font-size: 1.4rem; }
+      .vr-scroll-panel .cover-h1 { font-size: 2.4rem; }
+      .vr-scroll-panel .sb { font-size: .77rem; }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      html, body { height: auto !important; overflow: auto !important; min-height: 100%; }
+      .vr-stage { position: relative !important; inset: auto !important; display: flex !important; flex-direction: column !important; height: auto !important; overflow: visible !important; }
+      .vr-info { height: auto !important; overflow: visible !important; position: relative !important; min-height: auto; padding: 24px 28px 28px; }
+      .vr-scroll-panel { height: auto !important; overflow-y: visible !important; overflow: visible !important; }
+      .vr-num { margin-bottom: 12px; }
+      .vr-title { font-size: 30px; margin-bottom: 4px; }
+      .vr-subtitle { margin-bottom: 6px; font-size: 8px; }
+      .vr-desc { font-size: 10.5px; margin-bottom: 10px; line-height: 1.6; }
+      .vr-role { font-size: 9px; margin-bottom: 10px; }
+      .vr-tools { margin-bottom: 10px; gap: 4px; }
+      .tool-pill { font-size: 9px; padding: 4px 8px; }
+      .vr-btns { gap: 6px; flex-wrap: wrap; }
+      .btn-primary, .btn-secondary { font-size: 10px; padding: 9px 14px; }
+      .fm-hero { height: 42vw; min-height: 180px; }
+      .vr-scroll-panel .section { padding: 4rem 5vw; }
+      .vr-scroll-panel .cover { padding: 5rem 5vw 4rem; }
+      .vr-scroll-panel h2.st { font-size: clamp(1.3rem, 4vw, 2rem); }
+      .vr-scroll-panel .cover-h1 { font-size: clamp(2.2rem, 7vw, 3.5rem); }
+      .vr-scroll-panel .sb { font-size: .8rem; }
+      .vr-scroll-panel .wf-cards { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .wf-cards > *, .vr-scroll-panel .learning-grid > * { grid-column: span 1 !important; }
+      .vr-scroll-panel .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+      .vr-scroll-panel .learning-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .metric-card { padding: 1.8rem 1.6rem; }
+      .vr-scroll-panel .mc-n { font-size: 2.2rem; }
+    }
+
+    /* ── Dynamic Island pulse ── */
+    /* ── Flecha pulsante (solo el icono, el botón es estático) ── */
+    @keyframes arrowRight {
+      0%, 100% { transform: translateX(0)  scale(1);   opacity: 0.55; }
+      50%       { transform: translateX(3px) scale(1.25); opacity: 1; }
+    }
+    @keyframes arrowLeft {
+      0%, 100% { transform: translateX(0)   scale(1);   opacity: 0.55; }
+      50%       { transform: translateX(-3px) scale(1.25); opacity: 1; }
+    }
+    @keyframes arrowRightHandle {
+      0%, 100% { transform: translateX(0) rotate(180deg) scale(1); opacity: 0.55; }
+      50%       { transform: translateX(3px) rotate(180deg) scale(1.25); opacity: 1; }
+    }
+
+    /* Tab handle: píldora discreta en el borde izquierdo (cuerpo estático) */
+    .info-tab {
+      display: none;
+      position: fixed;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      z-index: 400;
+      width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: 0.5px solid rgba(255,255,255,0.1);
+      border-left: none;
+      color: rgba(255,255,255,0.8);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 3px 0 14px rgba(0,0,0,0.55);
+      transition: background .2s, color .2s;
+    }
+    .info-tab:hover { background: #1c1c24; color: #fff; }
+    .info-tab svg { animation: arrowRight 1.6s ease-in-out infinite; }
+    .info-tab:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+    .info-tab.panel-open { opacity: 0; pointer-events: none; }
+
+    /* Close button: píldora discreta (ahora anclada al wrapper) */
+    .info-close {
+      display: none;
+      position: absolute;
+      right: -22px; /* Sobresale hacia la derecha del panel */
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 500;
+      width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: none;
+      box-shadow: none;
+      color: rgba(255,255,255,0.8);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .info-close:hover { color: #fff; }
+    .info-close svg { animation: arrowRightHandle 1.6s ease-in-out infinite; }
+    .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
+
+    @media (min-width: 901px) and (max-width: 1440px) {
+      /* Ocultamos el tab estático, usaremos solo el tirador físico del panel */
+      .info-tab   { display: none !important; }
+      .info-close { display: flex; opacity: 1; pointer-events: all; }
+      .vr-stage { grid-template-columns: 1fr !important; }
+      .vr-stage::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: transparent;
+        pointer-events: none;
+        transition: background .35s ease;
+        z-index: 2;
+      }
+      .vr-stage.panel-open::after {
+        background: rgba(0,0,0,0.58);
+        pointer-events: all;
+      }
+      .vr-info-wrapper {
+        position: fixed !important;
+        top: var(--nh) !important;
+        bottom: -20px !important; 
+        left: 0;
+        width: min(460px, 88vw);
+        z-index: 3;
+        transform: translateX(-100%);
+        transition: transform .4s cubic-bezier(0.16,1,0.3,1), filter .4s ease;
+        filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+      }
+      .vr-info-wrapper.panel-open {
+        transform: translateX(0);
+        filter: drop-shadow(12px 0 40px rgba(0,0,0,0.55));
+      }
+      /* Cuando está abierto, la flecha apunta a la izquierda */
+      .vr-info-wrapper.panel-open .info-close svg {
+        animation: arrowLeft 1.6s ease-in-out infinite;
+      }
+      .vr-info-wrapper.panel-open .info-close:hover svg {
+        animation-play-state: paused; opacity: 1; transform: none;
+      }
+      .vr-info {
+        width: 100%; height: 100%;
+        overflow-y: auto; overflow-x: hidden;
+        border-right: none;
+        background: #0d0d0f;
+        padding-bottom: 60px; 
+      }
+      .vr-scroll-panel { height: 100% !important; overflow-y: auto !important; }
+    }
+
+    /* ── Auto-layout: corrige grid-row spans en contextos de 1 columna ── */
+    @media (max-width: 1100px) {
+      /* jtbd-grid ya es 1-col aquí; row-span genera doble altura innecesaria */
+      .vr-scroll-panel .jtbd-grid .jtbd-card.dark { grid-row: auto !important; }
     }
   </style>
 </head>
@@ -950,11 +1167,19 @@
 <div id="nav-container"></div>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 
+<!-- Tab handle: rectangle sticking out from left edge (visible 901–1440px) -->
+<button class="info-tab" id="infoToggle" aria-label="Ver ficha del proyecto">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 18 15 12 9 6"/>
+  </svg>
+</button>
+
 <div class="vr-stage">
 
-  <!-- ═══ LEFT PANEL ═══ -->
-  <div class="vr-info">
-    <span class="vr-num">05 / 07 &nbsp;—&nbsp; FarmalaxIA</span>
+  <!-- ═══ LEFT PANEL WRAPPER ═══ -->
+  <div class="vr-info-wrapper" id="infoWrapper">
+    <div class="vr-info">
+      <span class="vr-num">05 / 07 &nbsp;—&nbsp; FarmalaxIA</span>
     <div class="vr-center">
       <p class="vr-category">Branding · Identidad Visual · Manual de Marca</p>
       <h1 class="vr-title">FarmalaxIA</h1>
@@ -989,13 +1214,22 @@
         </span>
       </div>
       <div class="vr-btns">
-        <a class="btn-primary" id="verCaso" href="#descripcion">Ver caso completo →</a>
+        <a class="btn-primary" id="verCaso" href="https://screeching-garden-7af.notion.site/FarmalaxIA-Case-Study-de-Identidad-Visual-15855bf1f74a83f98b0581f3835a630c?source=copy_link" target="_blank" rel="noopener noreferrer">Ver caso completo →</a>
+        <a class="btn-secondary" href="https://www.farmalaxia.com" target="_blank" rel="noopener noreferrer">Visitar sitio ↗</a>
         <a class="btn-secondary" href="../proyectos.html">← Proyectos</a>
       </div>
     </div>
-  </div>
+  </div> <!-- /.vr-info -->
+  
+  <!-- Close button: anclado al wrapper -->
+  <button class="info-close" id="infoClose" aria-label="Cerrar panel">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  </button>
+</div> <!-- /.vr-info-wrapper -->
 
-  <!-- ═══ RIGHT PANEL: scrollable case study ═══ -->
+  <!-- ═══ RIGHT SCROLL PANEL ═══ -->
   <div class="vr-scroll-panel" id="scrollPanel">
     <div id="fmProgress" aria-hidden="true"></div>
 
@@ -1005,7 +1239,6 @@
         <source src="../../assets/farmalaxia/video logo.mp4" type="video/mp4">
       </video>
       <div class="fm-overlay"></div>
-      <div class="fm-badge">FarmalaxIA · Manual de Marca v1</div>
       <div class="fm-sc"></div>
     </div>
 
@@ -1024,7 +1257,6 @@
           <div class="cover-meta">
             <div class="cover-meta-item"><span>Cliente</span><strong>FarmalaxIA</strong></div>
             <div class="cover-meta-item"><span>Rol</span><strong>Brand Identity</strong></div>
-            <div class="cover-meta-item"><span>Año</span><strong>2024</strong></div>
             <div class="cover-meta-item"><span>Tools</span><strong>Figma · Illustrator · Notion</strong></div>
           </div>
         </div>
@@ -1123,7 +1355,7 @@
     <!-- 02 PROBLEMA -->
     <section class="section" id="problema" style="position:relative;overflow:hidden;">
       <div class="container">
-        <div class="prob-header reveal">
+        <div class="prob-header reveal" style="grid-template-columns:1fr;">
           <div>
             <div class="chip">El Problema</div>
             <h2 class="st">Una marca invisible en un mercado invisible.</h2>
@@ -1484,14 +1716,6 @@
   });
 
   /* ── "Ver caso completo" ── */
-  var verCaso = document.getElementById('verCaso');
-  if (verCaso && scrollPanel) {
-    verCaso.addEventListener('click', function (e) {
-      e.preventDefault();
-      var t = document.getElementById('descripcion');
-      if (t) t.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
 
   if (!scrollPanel) return;
 
@@ -1629,6 +1853,42 @@
 
   /* Initial tick to establish states before first user scroll */
   requestAnimationFrame(tick);
+
+  /* ── Info panel slide-in (901–1440px) ── */
+  var infoTab     = document.getElementById('infoToggle');
+  var infoClose   = document.getElementById('infoClose');
+  var infoWrapper = document.getElementById('infoWrapper');
+  var stage       = document.querySelector('.vr-stage');
+
+  function openInfoPanel() {
+    infoWrapper.classList.add('panel-open');
+    stage.classList.add('panel-open');
+    infoTab.classList.add('panel-open');
+  }
+  function closeInfoPanel() {
+    infoWrapper.classList.remove('panel-open');
+    stage.classList.remove('panel-open');
+    infoTab.classList.remove('panel-open');
+  }
+  
+  infoTab.addEventListener('click', openInfoPanel);
+  
+  /* El botón close ahora actúa como tirador (abre y cierra) */
+  infoClose.addEventListener('click', function() {
+    if (infoWrapper.classList.contains('panel-open')) {
+      closeInfoPanel();
+    } else {
+      openInfoPanel();
+    }
+  });
+  stage.addEventListener('click', function (e) {
+    if (stage.classList.contains('panel-open') && !infoWrapper.contains(e.target)) {
+      closeInfoPanel();
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeInfoPanel();
+  });
 
 })();
 </script>
