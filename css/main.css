@@ -17,8 +17,7 @@ html, body {
 
 /* ── Cursor personalizado (solo en dispositivos con mouse preciso) ── */
 @media (pointer: fine) {
-  html, body { cursor: none; }
-  button, a, [role="button"] { cursor: none; }
+  * { cursor: none !important; }
 }
 
 /* ── Utilidades de accesibilidad ── */
