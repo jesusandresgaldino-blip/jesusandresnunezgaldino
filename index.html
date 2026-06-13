@@ -445,10 +445,10 @@
         justify-content: center; text-align: center;
       }
 
-      /* LEFT: centrado verticalmente, texto visible */
+      /* LEFT: esquina superior izquierda en mobile */
       .svc {
         left: clamp(14px, 5vw, 28px);
-        top: 50%;
+        top: clamp(60px, 12vh, 100px);
         max-width: clamp(180px, 55vw, 260px);
       }
       .svc-num {
@@ -466,11 +466,11 @@
       .svc-rule { display: none; }
       .svc-tag  { font-size: 9px; letter-spacing: 2px; }
 
-      /* RIGHT: centrado verticalmente, cita pequeña */
+      /* RIGHT: esquina inferior derecha en mobile */
       .svc-r {
         right: clamp(14px, 5vw, 28px);
-        top: 50%;
-        bottom: auto;
+        top: auto;
+        bottom: clamp(60px, 12vh, 100px);
         max-width: clamp(120px, 42vw, 200px);
         text-align: right;
       }
@@ -1378,7 +1378,9 @@ window._darkMode = true;
       op = 0; ty = invert ? fo : -fo;
     }
     ch.el.style.opacity = op.toFixed(4);
-    ch.el.style.transform = 'translateY(calc(-50% + ' + ty.toFixed(1) + 'px))';
+    ch.el.style.transform = window.innerWidth < 768
+      ? 'translateY(' + ty.toFixed(1) + 'px)'
+      : 'translateY(calc(-50% + ' + ty.toFixed(1) + 'px))';
     return op;
   }
 
