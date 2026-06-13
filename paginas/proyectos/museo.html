@@ -5,263 +5,345 @@
   <meta name="base-depth" content="2">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Museo — Andrés Galdino</title>
-  <meta name="description" content="Colección y archivo de obras visuales — un museo personal en formato digital.">
-  <meta property="og:title" content="Museo — Andrés Galdino">
-  <meta property="og:image" content="/assets/og-image.jpg">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="description" content="Archivo personal de trabajo visual — fotografía, identidad, diseño y experimentación.">
+  <meta property="og:title"  content="Museo — Andrés Galdino">
+  <meta property="og:image"  content="/assets/og-image.jpg">
+  <meta name="twitter:card"  content="summary_large_image">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
   <link rel="stylesheet" href="../../css/tokens.css">
   <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="../../css/proyecto-page.css">
   <style>
-    html, body { height: 100%; overflow: hidden; background: #080810; }
-    .cursor { background: #fff !important; mix-blend-mode: difference !important; }
+    .vr-title { margin-bottom: 24px; }
+    .vr-info-wrapper { height: 100%; position: relative; }
+    .vr-info { height: 100%; }
 
-    .museo-bg {
-      position: fixed; inset: 0;
-      background-image: url('../../assets/museo.jpg');
-      background-size: cover; background-position: center;
-      filter: blur(5px) brightness(.50) saturate(0);
-      transform: scale(1.06); z-index: 0;
+    /* ── Flechas animadas ── */
+    @keyframes arrowRight      { 0%,100%{transform:translateX(0) scale(1);opacity:.55} 50%{transform:translateX(3px) scale(1.25);opacity:1} }
+    @keyframes arrowLeft       { 0%,100%{transform:translateX(0) scale(1);opacity:.55} 50%{transform:translateX(-3px) scale(1.25);opacity:1} }
+    @keyframes arrowRightHandle{ 0%,100%{transform:translateX(0) rotate(180deg) scale(1);opacity:.55} 50%{transform:translateX(3px) rotate(180deg) scale(1.25);opacity:1} }
+
+    /* ── Tab handle (901–1440px) ── */
+    .info-tab {
+      display: none;
+      position: fixed; left: 0; top: 50%; transform: translateY(-50%);
+      z-index: 400; width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: .5px solid rgba(255,255,255,.1); border-left: none;
+      color: rgba(255,255,255,.8);
+      align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: 3px 0 14px rgba(0,0,0,.55);
+      transition: background .2s, color .2s;
+    }
+    .info-tab:hover { background: #1c1c24; color: #fff; }
+    .info-tab svg { animation: arrowRight 1.6s ease-in-out infinite; }
+    .info-tab.panel-open { opacity: 0; pointer-events: none; }
+
+    /* ── Close button ── */
+    .info-close {
+      display: none;
+      position: absolute; right: -22px; top: 50%; transform: translateY(-50%);
+      z-index: 500; width: 22px; height: 48px;
+      background: #0d0d0f; border-radius: 0 14px 14px 0;
+      border: none; box-shadow: none;
+      color: rgba(255,255,255,.8);
+      align-items: center; justify-content: center;
+      cursor: pointer; transition: color .2s;
+    }
+    .info-close:hover { color: #fff; }
+    .info-close svg { animation: arrowRightHandle 1.6s ease-in-out infinite; }
+    .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
+
+    /* ── Panel slide 901–1440px ── */
+    @media (min-width: 901px) and (max-width: 1440px) {
+      .info-tab   { display: none !important; }
+      .info-close { display: flex; opacity: 1; pointer-events: all; }
+      .vr-stage   { grid-template-columns: 1fr !important; }
+      .vr-stage::after {
+        content: ''; position: fixed; inset: 0;
+        background: transparent; pointer-events: none;
+        transition: background .35s ease; z-index: 2;
+      }
+      .vr-stage.panel-open::after { background: rgba(0,0,0,.58); pointer-events: all; }
+      .vr-info-wrapper {
+        position: fixed !important;
+        top: var(--nh) !important; bottom: -20px !important; left: 0;
+        width: min(460px, 88vw); z-index: 3;
+        transform: translateX(-100%);
+        transition: transform .4s cubic-bezier(.16,1,.3,1), filter .4s ease;
+        filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+      }
+      .vr-info-wrapper.panel-open {
+        transform: translateX(0);
+        filter: drop-shadow(12px 0 40px rgba(0,0,0,.55));
+      }
+      .vr-info-wrapper.panel-open .info-close svg { animation: arrowLeft 1.6s ease-in-out infinite; }
+      .vr-info-wrapper.panel-open .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+      .vr-info { width: 100%; height: 100%; overflow-y: auto; overflow-x: hidden; border-right: none; background: #0d0d0f; padding-bottom: 60px; }
     }
 
-    /* ── Back ── */
-    .museo-back {
-      position: fixed; top: calc(var(--nh) + 20px); left: 24px; z-index: 200;
-      font-size: 10px; font-weight: 600; letter-spacing: .14em;
-      text-transform: uppercase; color: rgba(255,255,255,.28);
-      text-decoration: none; cursor: none;
-      background: rgba(255,255,255,.06);
-      border: .5px solid rgba(255,255,255,.1);
-      border-radius: 999px; padding: 8px 16px;
-      transition: color .2s, background .2s;
-    }
-    .museo-back:hover { color: rgba(255,255,255,.7); background: rgba(255,255,255,.1); }
+    /* ════════════════════════════════════════
+       GALERÍA
+    ════════════════════════════════════════ */
+    .vr-video-panel { height: 100%; }
 
-    /* ── Sidebar ── */
-    .museo-sidebar {
-      position: fixed; left: 24px;
-      top: calc(var(--nh) + (100vh - var(--nh)) / 2);
-      transform: translateY(-50%);
-      display: flex; flex-direction: column; gap: 4px;
-      background: rgba(255,255,255,.06);
-      border: .5px solid rgba(255,255,255,.1);
-      border-radius: 999px; padding: 12px 8px; z-index: 200;
-    }
-    .sidebar-btn {
-      width: 34px; height: 34px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      background: none; border: none; color: rgba(255,255,255,.4);
-      cursor: none; transition: color .2s, background .2s;
-    }
-    .sidebar-btn:hover { color: #fff; background: rgba(255,255,255,.1); }
-
-    /* ── Layout ── */
-    .museo-wrap {
-      position: fixed;
-      top: var(--nh); left: 0; right: 0; bottom: 0;
+    .ms-stage {
+      width: 100%; height: 100%;
+      background: #06060d;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 12px 0 16px;
-      gap: 0; z-index: 1;
+      position: relative; overflow: hidden;
+      padding: 20px 0 18px; gap: 0;
+    }
+
+    /* Grid sutil de fondo */
+    .ms-stage::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Glow central */
+    .ms-glow {
+      position: absolute; width: 700px; height: 700px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(100,60,220,.07) 0%, transparent 65%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none; z-index: 0;
     }
 
     /* ── Carrusel ── */
-    .carousel-wrap {
-      flex: 1; width: 100%;
+    .ms-carousel-wrap {
+      flex: 1; min-height: 0; width: 100%;
       display: flex; align-items: center; justify-content: center;
-      perspective: 1200px;
-      position: relative;
+      perspective: 1400px; position: relative; z-index: 1;
     }
-    .carousel {
+    .ms-carousel {
       position: relative; width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
     }
 
-    /* Cards — GPU acelerado, transición suave */
-    .museo-card {
+    /* Cards */
+    .ms-card {
       position: absolute;
-      width: clamp(300px, 32vw, 480px);
-      border-radius: 20px; overflow: hidden;
-      cursor: none;
+      width: clamp(260px, 34vw, 500px);
+      border-radius: 14px; overflow: hidden; cursor: pointer;
       will-change: transform, opacity;
-      transition:
-        transform  .7s cubic-bezier(.25,.8,.25,1),
-        opacity    .7s cubic-bezier(.25,.8,.25,1);
-      border: .5px solid rgba(255,255,255,.14);
-      transform-style: preserve-3d;
+      transition: transform .72s cubic-bezier(.16,1,.3,1), opacity .72s cubic-bezier(.16,1,.3,1);
+      border: .5px solid rgba(255,255,255,.1);
     }
-
-    /* Overlay oscuro para las cards laterales — evita animar filter (pesado) */
-    .museo-card::after {
-      content: '';
-      position: absolute; inset: 0;
+    .ms-card::after {
+      content: ''; position: absolute; inset: 0;
       background: rgba(0,0,0,0);
-      transition: background .7s cubic-bezier(.25,.8,.25,1);
+      transition: background .72s cubic-bezier(.16,1,.3,1);
       pointer-events: none; z-index: 10;
     }
 
-    .museo-card.pos-active {
-      transform: translate3d(0,0,0) scale(1) rotateY(0deg);
-      z-index: 10; opacity: 1;
-      box-shadow: 0 40px 80px rgba(0,0,0,.65);
-    }
-    .museo-card.pos-active::after { background: rgba(0,0,0,0); }
+    .ms-card.pos-active  { transform: translate3d(0,0,0) scale(1); z-index: 10; opacity: 1; box-shadow: 0 28px 64px rgba(0,0,0,.72), 0 0 0 .5px rgba(255,255,255,.1); }
+    .ms-card.pos-active::after { background: rgba(0,0,0,0); }
+    .ms-card.pos-left    { transform: translate3d(-54%,0,-140px) rotateY(12deg) scale(.76); z-index: 5; opacity: 1; }
+    .ms-card.pos-left::after { background: rgba(0,0,0,.58); }
+    .ms-card.pos-right   { transform: translate3d(54%,0,-140px) rotateY(-12deg) scale(.76); z-index: 5; opacity: 1; }
+    .ms-card.pos-right::after { background: rgba(0,0,0,.58); }
+    .ms-card.pos-far-left  { transform: translate3d(-85%,0,-250px) rotateY(22deg) scale(.52); z-index: 2; opacity: 0; pointer-events: none; }
+    .ms-card.pos-far-right { transform: translate3d(85%,0,-250px) rotateY(-22deg) scale(.52); z-index: 2; opacity: 0; pointer-events: none; }
+    .ms-card.pos-hidden    { transform: translate3d(0,0,-340px) scale(.3); z-index: 0; opacity: 0; pointer-events: none; }
 
-    .museo-card.pos-left {
-      transform: translate3d(-52%,0,-120px) rotateY(14deg) scale(.82);
-      z-index: 5; opacity: 1;
-    }
-    .museo-card.pos-left::after { background: rgba(0,0,0,.52); }
+    .ms-card-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
 
-    .museo-card.pos-right {
-      transform: translate3d(52%,0,-120px) rotateY(-14deg) scale(.82);
-      z-index: 5; opacity: 1;
+    /* Label de la card */
+    .ms-card-label {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 5;
+      background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.5) 55%, transparent 100%);
+      padding: 36px 13px 13px;
     }
-    .museo-card.pos-right::after { background: rgba(0,0,0,.52); }
+    .ms-card-cat  { font-size: 6.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,.38); margin-bottom: 4px; }
+    .ms-card-name { font-size: clamp(10px,1vw,13px); font-weight: 700; color: #fff; letter-spacing: -.01em; }
 
-    .museo-card.pos-far-left {
-      transform: translate3d(-80%,0,-220px) rotateY(22deg) scale(.6);
-      z-index: 2; opacity: 0; pointer-events: none;
-    }
-    .museo-card.pos-far-right {
-      transform: translate3d(80%,0,-220px) rotateY(-22deg) scale(.6);
-      z-index: 2; opacity: 0; pointer-events: none;
-    }
-    .museo-card.pos-hidden {
-      transform: translate3d(0,0,-300px) scale(.4);
-      z-index: 0; opacity: 0; pointer-events: none;
+    /* ── Barra inferior ── */
+    .ms-bottom {
+      flex-shrink: 0; width: 100%; max-width: 460px;
+      padding: 0 24px; z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
     }
 
-    .card-image { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
-
-    .card-glass {
-      background: rgb(40, 40, 40);
-      border-top: .5px solid rgba(255,255,255,.1);
-      padding: 14px 16px 16px;
+    /* Info de la pieza activa */
+    .ms-meta { width: 100%; text-align: center; }
+    .ms-meta-title {
+      font-size: clamp(13px,1.3vw,16px); font-weight: 700;
+      color: rgba(255,255,255,.9); letter-spacing: -.01em; margin-bottom: 3px;
     }
-    .card-title { font-size: clamp(12px,1.3vw,15px); font-weight: 700; color: #fff; letter-spacing: -.02em; margin-bottom: 4px; }
-    .card-date  { font-size: 9px; font-weight: 400; color: rgba(255,255,255,.28); margin-left: 6px; }
-    .card-quote { font-size: 10px; color: rgba(255,255,255,.42); line-height: 1.6; font-style: italic; margin-bottom: 8px; }
-    .card-meta  { font-size: 9px; color: rgba(255,255,255,.24); line-height: 1.7; }
-
-    .card-top-btns { position: absolute; top: 10px; right: 10px; z-index: 11; }
-    .card-expand-btn {
-      background: rgba(255,255,255,.12); border: .5px solid rgba(255, 255, 255, 0.2);
-      border-radius: 999px; padding: 5px 11px;
-      font-family: var(--font); font-size: 9.5px; font-weight: 600;
-      color: rgba(255,255,255,.8); cursor: none;
-      display: flex; align-items: center; gap: 4px;
-      transition: background .15s;
+    .ms-meta-sub {
+      font-size: 8.5px; font-weight: 500; letter-spacing: .08em;
+      color: rgba(255,255,255,.25); text-transform: uppercase;
     }
-    .card-expand-btn:hover { background: rgba(255,255,255,.22); }
-
-    /* ── Music player — compacto ── */
-    .music-player {
-      flex-shrink: 0;
-      display: flex; align-items: center; gap: 10px;
-      background: rgba(255,255,255,.07);
-      border: .5px solid rgba(255,255,255,.11);
-      border-radius: 999px;
-      padding: 7px 16px;
-      margin: 14px 0 10px;
+    .ms-meta-quote {
+      font-size: 10px; font-weight: 300; font-style: italic;
+      color: rgba(255,255,255,.3); line-height: 1.65; margin-top: 7px;
     }
-    .mp-icon { color: rgba(255,255,255,.35); display: flex; align-items: center; }
-    .mp-label { font-size: 10px; font-weight: 500; color: rgba(255,255,255,.38); letter-spacing: .06em; }
-    .mp-btn {
-      background: rgba(255,255,255,.1); border: .5px solid rgba(255,255,255,.15);
-      border-radius: 50%; width: 24px; height: 24px;
+
+    /* Reproductor */
+    .ms-music {
+      display: flex; align-items: center; gap: 9px;
+      background: rgba(255,255,255,.04);
+      border: .5px solid rgba(255,255,255,.08);
+      border-radius: 999px; padding: 6px 14px;
+    }
+    .ms-music-icon { color: rgba(255,255,255,.28); display: flex; align-items: center; }
+    .ms-music-label { font-size: 9px; font-weight: 500; color: rgba(255,255,255,.25); letter-spacing: .05em; }
+    .ms-play-btn {
+      background: rgba(255,255,255,.1); border: .5px solid rgba(255,255,255,.14);
+      border-radius: 50%; width: 22px; height: 22px;
       display: flex; align-items: center; justify-content: center;
-      cursor: none; color: rgba(255,255,255,.7); transition: background .15s;
+      cursor: pointer; color: rgba(255,255,255,.7); transition: background .15s;
     }
-    .mp-btn:hover { background: rgba(255,255,255,.2); color: #fff; }
-    .mp-bar-wrap { width: 80px; height: 2px; background: rgba(255,255,255,.14); border-radius: 999px; overflow: hidden; }
-    .mp-bar-fill { height: 100%; background: rgba(255,255,255,.55); width: 0%; border-radius: 999px; transition: width .5s linear; }
-    .mp-sep { width: .5px; height: 14px; background: rgba(255,255,255,.1); }
-    input[type=range].mp-vol {
+    .ms-play-btn:hover { background: rgba(255,255,255,.22); color: #fff; }
+    .ms-bar-wrap { width: 68px; height: 2px; background: rgba(255,255,255,.1); border-radius: 999px; overflow: hidden; }
+    .ms-bar-fill { height: 100%; background: rgba(255,255,255,.48); width: 0%; border-radius: 999px; transition: width .5s linear; }
+    .ms-sep { width: .5px; height: 12px; background: rgba(255,255,255,.1); }
+    input[type=range].ms-vol {
       -webkit-appearance: none; appearance: none;
-      width: 54px; height: 2px;
-      background: rgba(255,255,255,.18); border-radius: 999px;
-      outline: none; cursor: pointer;
+      width: 46px; height: 2px;
+      background: rgba(255,255,255,.15); border-radius: 999px; outline: none; cursor: pointer;
     }
-    input[type=range].mp-vol::-webkit-slider-thumb {
-      -webkit-appearance: none; width: 10px; height: 10px;
+    input[type=range].ms-vol::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 9px; height: 9px;
       background: rgba(255,255,255,.8); border-radius: 50%; cursor: pointer;
     }
 
-    /* ── Dots ── */
-    .museo-dots {
-      flex-shrink: 0;
-      display: flex; gap: 10px; align-items: center;
-      margin-bottom: 10px;
-    }
-    .museo-dot {
-      height: 3px; border-radius: 999px;
-      background: rgba(255,255,255,.18); width: 16px; cursor: none;
-      transition: all .4s cubic-bezier(.25,.8,.25,1);
-    }
-    .museo-dot.active { background: rgba(255,255,255,.8); width: 30px; }
-
-    /* ── Lightbox — negro sólido, sin blur ── */
-    @keyframes lbIn { from { opacity:0; } to { opacity:1; } }
-    .lightbox {
-      position: fixed; inset: 0; z-index: 9999;
-      background: #000;
-      isolation: isolate;
-      display: none; align-items: center; justify-content: center;
-    }
+    /* ── Lightbox ── */
+    @keyframes lbIn { from{opacity:0}to{opacity:1} }
+    .lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,.96); display: none; align-items: center; justify-content: center; }
     .lightbox.open { display: flex; animation: lbIn .3s ease; }
-    .lightbox-img { max-width: 88vw; max-height: 88vh; object-fit: contain; border-radius: 12px; }
+    .lightbox-img { max-width: 88vw; max-height: 88vh; object-fit: contain; border-radius: 10px; }
     .lightbox-close {
       position: fixed; top: 20px; right: 24px;
       background: rgba(255,255,255,.07); border: .5px solid rgba(255,255,255,.12);
       border-radius: 999px; padding: 8px 18px;
       font-family: var(--font); font-size: 10px; font-weight: 600;
-      color: rgba(255,255,255,.5); cursor: none;
+      color: rgba(255,255,255,.5); cursor: pointer;
       transition: background .15s, color .15s;
     }
     .lightbox-close:hover { background: rgba(255,255,255,.14); color: #fff; }
+
+    /* ── Mobile ≤ 900px ── */
+    @media (max-width: 900px) {
+      html, body { height: auto !important; overflow: auto !important; min-height: 100%; }
+      .vr-stage {
+        position: relative !important; inset: auto !important;
+        display: flex !important; flex-direction: column !important;
+        height: auto !important; overflow: visible !important;
+      }
+      .vr-info-wrapper { height: auto !important; }
+      .vr-info {
+        min-height: 100svh; height: auto !important;
+        overflow: visible !important; padding: 16px 36px 72px; position: relative !important;
+      }
+      .vr-num    { margin-bottom: auto; }
+      .vr-center { justify-content: flex-end; }
+      .vr-video-panel { display: block !important; position: relative !important; height: 100svh; min-height: 500px; width: 100%; }
+      .vr-title  { font-size: clamp(42px, 9vw, 68px); }
+      .vr-desc   { max-width: 100%; font-size: 12.5px; }
+      .ms-card   { width: clamp(200px, 72vw, 360px); }
+      .ms-meta-quote { display: none; }
+      .ms-bottom { max-width: 100%; padding: 0 16px; gap: 7px; }
+      .ms-stage  { padding: 12px 0 14px; }
+    }
+    @media (max-width: 768px) {
+      .vr-info { padding: 16px 28px 64px; }
+    }
+    @media (max-width: 640px) {
+      .vr-info { padding: 16px 20px 56px; }
+    }
+    @media (max-width: 390px) {
+      .vr-info { padding: 16px 16px 48px; }
+    }
   </style>
 </head>
 <body>
 <div id="nav-container"></div>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
-<div class="museo-bg"></div>
 
-<a class="museo-back" href="../proyectos.html">← Proyectos</a>
+<button class="info-tab" id="infoToggle" aria-label="Ver ficha del proyecto">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 18 15 12 9 6"/>
+  </svg>
+</button>
 
-<div class="museo-sidebar">
-  <button class="sidebar-btn" id="favBtn" aria-label="Me gusta">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-  </button>
-  <button class="sidebar-btn" aria-label="Sobre mí" onclick="window.location='../sobre-mi.html'">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-  </button>
-</div>
+<div class="vr-stage">
 
-<div class="museo-wrap">
-  <div class="carousel-wrap">
-    <div class="carousel" id="carousel"></div>
-  </div>
+  <!-- ═══ LEFT PANEL ═══ -->
+  <div class="vr-info-wrapper" id="infoWrapper">
+    <div class="vr-info">
+      <span class="vr-num">07 / 07 &nbsp;—&nbsp; Museo</span>
+      <div class="vr-center">
+        <p class="vr-category">Fotografía · Diseño Gráfico · Archivo Personal</p>
+        <h1 class="vr-title">Museo</h1>
+        <p class="vr-desc">
+          Una exposición personal de obras que marcaron mi trayecto en la industria del arte y el diseño.
+          Fotografía de moda, identidad visual, campañas y piezas que existen
+          simplemente porque valía la pena crearlas.
+        </p>
+        <div class="vr-btns">
+          <a class="btn-secondary" href="../proyectos.html">← Proyectos</a>
+        </div>
+      </div>
+    </div>
 
-  <!-- Reproductor compacto -->
-  <div class="music-player">
-    <div class="mp-icon"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z"/></svg></div>
-    <span class="mp-label">Ambiente</span>
-    <button class="mp-btn" id="musicPlay" aria-label="Play/Pausa">
-      <svg id="icPlay"  width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-      <svg id="icPause" width="9" height="9" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+    <button class="info-close" id="infoClose" aria-label="Cerrar panel">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
     </button>
-    <div class="mp-bar-wrap"><div class="mp-bar-fill" id="mpFill"></div></div>
-    <div class="mp-sep"></div>
-    <input type="range" class="mp-vol" id="volSlider" min="0" max="1" step="0.05" value="0.5">
-    <audio id="museumAudio" loop src="../../assets/museo-ambient.mp3" preload="auto"></audio>
   </div>
 
-  <!-- Dots -->
-  <div class="museo-dots" id="museoDots"></div>
+  <!-- ═══ RIGHT PANEL: Galería ═══ -->
+  <div class="vr-video-panel">
+    <div class="ms-stage">
+      <div class="ms-glow"></div>
+
+      <!-- Carrusel -->
+      <div class="ms-carousel-wrap">
+        <div class="ms-carousel" id="msCarousel"></div>
+      </div>
+
+      <!-- Barra inferior -->
+      <div class="ms-bottom">
+
+        <!-- Info pieza activa -->
+        <div class="ms-meta">
+          <div class="ms-meta-title" id="msTitle">—</div>
+          <div class="ms-meta-sub"   id="msSub">—</div>
+          <div class="ms-meta-quote" id="msQuote"></div>
+        </div>
+
+        <!-- Reproductor -->
+        <div class="ms-music">
+          <div class="ms-music-icon">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3z"/></svg>
+          </div>
+          <span class="ms-music-label">Ambiente</span>
+          <button class="ms-play-btn" id="msPlayBtn" aria-label="Play/Pausa">
+            <svg id="msIcPlay"  width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            <svg id="msIcPause" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          </button>
+          <div class="ms-bar-wrap"><div class="ms-bar-fill" id="msFill"></div></div>
+          <div class="ms-sep"></div>
+          <input type="range" class="ms-vol" id="msVol" min="0" max="1" step="0.05" value="0.5">
+          <audio id="msAudio" loop src="../../assets/museo-ambient.mp3" preload="auto"></audio>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <!-- Lightbox -->
@@ -275,137 +357,152 @@
 (function () {
   'use strict';
 
+  /* ── Piezas ── */
   var pieces = [
-    { img: '../../assets/modelo.jpg', title: 'Amazonas Fashion week',         date: '2019', quote: '"De la selva amazónica a una identidad visual que el mundo desea."', medium: 'Fotografía',       client: 'Moda Week International' },
-    { img: '../../assets/irene.jpg',      title: 'Amazonas Fashion Week',  date: '2019', quote: '"Moda, cultura y amazonía en un solo evento visual."',                medium: 'Fotografía · Producción',client: 'Moda Week International' },
-    { img: '../../assets/michell.jpg',      title: 'Amazonas Fashion Week',  date: '2019', quote: '"Moda, cultura y amazonía en un solo evento visual."',                medium: 'Fotografía · Producción',client: 'Moda Week International' },
-    { img: '../../assets/nativa.jpg',  title: 'Nativa',                 date: '2020', quote: '"marca de ropa pieza identidad visual"',   medium: 'Grafic design',     client: 'Nativa Store' },
-    { img: '../../assets/proj-04-chiper.jpg',         title: 'Chiper',                 date: '2022', quote: '"Piezas para las marcas más grandes de Colombia."',                   medium: 'Diseño Gráfico · Campañas',         client: 'Chiper · B2B Platform' },
-    { img: '../../assets/proj-05-farmalaxia.jpg',     title: 'Farmalaxia',             date: '2023', quote: '"Donde la medicina encuentra la inteligencia."',                      medium: 'Brand Identity · Manual de Marca',  client: 'Farmalaxia' },
-    { img: '../../assets/proj-06-dreams.jpg',         title: 'Dreams',                 date: '2025', quote: '"Un videojuego sobre exploración, construcción y sueños."',           medium: 'Game Design · Unity',               client: 'Proyecto Personal' },
-    { img: '../../assets/proj-07-museo.jpg',          title: 'El Espacio',             date: '2024', quote: '"La fotografía como forma de ver lo que otros ignoran."',             medium: 'Fotografía Editorial',              client: 'Archivo Personal' }
+    {
+      img:    '../../assets/modelo.jpg',
+      title:  'Amazonas en Pasarela',
+      year:   '2019',
+      cat:    'Fotografía · Moda',
+      quote:  '"La selva amazónica como escenario de alta costura."',
+      client: 'Moda Week International'
+    },
+    {
+      img:    '../../assets/irene.jpg',
+      title:  'Irene',
+      year:   '2019',
+      cat:    'Fotografía · Producción',
+      quote:  '"Cuando la imagen lo dice todo sin necesitar palabras."',
+      client: 'Moda Week International'
+    },
+    {
+      img:    '../../assets/michell.jpg',
+      title:  'Michell',
+      year:   '2019',
+      cat:    'Fotografía · Moda',
+      quote:  '"Identidad en movimiento. Amazonía en el cuerpo."',
+      client: 'Moda Week International'
+    },
+    {
+      img:    '../../assets/nativa.jpg',
+      title:  'Nativa',
+      year:   '2020',
+      cat:    'Identidad Visual',
+      quote:  '"Una marca de moda que no olvida sus raíces."',
+      client: 'Nativa Store'
+    },
   ];
 
-  var current    = 0;
-  var total      = pieces.length;
-  var isAnimating = false;          /* Debounce — evita trabarse */
-  var ANIM_MS    = 680;
+  var current  = 0;
+  var total    = pieces.length;
+  var isAnim   = false;
+  var ANIM_MS  = 820;
+  var AUTO_MS  = 4200;
+  var autoTimer = null;
 
-  var carousel = document.getElementById('carousel');
-  var dotsEl   = document.getElementById('museoDots');
-  var lightbox = document.getElementById('lightbox');
-  var lbImg    = document.getElementById('lightboxImg');
+  var carouselEl = document.getElementById('msCarousel');
+  var lightbox   = document.getElementById('lightbox');
+  var lbImg      = document.getElementById('lightboxImg');
+  var titleEl    = document.getElementById('msTitle');
+  var subEl      = document.getElementById('msSub');
+  var quoteEl    = document.getElementById('msQuote');
 
-  /* ── Cards ── */
+  /* ── Construir cards ── */
   pieces.forEach(function (p, i) {
     var card = document.createElement('div');
-    card.className = 'museo-card';
+    card.className = 'ms-card';
     card.dataset.index = i;
     card.innerHTML =
-      '<div class="card-top-btns">' +
-        '<button class="card-expand-btn" data-expand>' +
-          '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>' +
-          'Expandir' +
-        '</button>' +
-      '</div>' +
-      '<img class="card-image" src="' + p.img + '" alt="' + p.title + '" loading="lazy">' +
-      '<div class="card-glass">' +
-        '<div class="card-title">' + p.title + '<span class="card-date">' + p.date + '</span></div>' +
-        '<p class="card-quote">' + p.quote + '</p>' +
-        '<div class="card-meta">' + p.medium + '<br>' + p.client + '</div>' +
+      '<img class="ms-card-img" src="' + p.img + '" alt="' + p.title + '" loading="lazy">' +
+      '<div class="ms-card-label">' +
+        '<div class="ms-card-cat">' + p.cat + '</div>' +
+        '<div class="ms-card-name">' + p.title + ' &nbsp;·&nbsp; ' + p.year + '</div>' +
       '</div>';
-
-    card.querySelector('[data-expand]').addEventListener('click', function (e) {
-      e.stopPropagation();
-      lbImg.src = p.img; lbImg.alt = p.title;
-      lightbox.classList.add('open');
-    });
 
     card.addEventListener('click', function () {
       var idx = parseInt(card.dataset.index);
-      if (idx !== current) goTo(idx);
+      if (idx === current) {
+        lbImg.src = p.img; lbImg.alt = p.title;
+        lightbox.classList.add('open');
+        stopAuto();
+      } else {
+        goTo(idx);
+        resetAuto();
+      }
     });
 
-    carousel.appendChild(card);
+    carouselEl.appendChild(card);
   });
 
-  /* ── Dots ── */
-  pieces.forEach(function (_, i) {
-    var d = document.createElement('div');
-    d.className = 'museo-dot';
-    d.addEventListener('click', function () { goTo(i); });
-    dotsEl.appendChild(d);
-  });
-
-  /* ── Posiciones ── */
+  /* ── Posición en el carrusel ── */
   function getPos(i) {
     var diff = i - current;
-    if (diff === 0)  return 'pos-active';
+    if (diff ===  0) return 'pos-active';
     if (diff === -1) return 'pos-left';
-    if (diff === 1)  return 'pos-right';
+    if (diff ===  1) return 'pos-right';
     if (diff <= -2)  return 'pos-far-left';
     return 'pos-far-right';
   }
 
   function goTo(n) {
-    if (isAnimating || n < 0 || n >= total) return;
-    isAnimating = true;
-    current = n;
+    if (isAnim) return;
+    isAnim = true;
+    current = ((n % total) + total) % total;
 
-    carousel.querySelectorAll('.museo-card').forEach(function (c, i) {
-      c.className = 'museo-card ' + getPos(i);
-    });
-    dotsEl.querySelectorAll('.museo-dot').forEach(function (d, i) {
-      d.classList.toggle('active', i === current);
+    carouselEl.querySelectorAll('.ms-card').forEach(function (c, i) {
+      c.className = 'ms-card ' + getPos(i);
     });
 
-    /* Desbloquear después de que termine la animación */
-    setTimeout(function () { isAnimating = false; }, ANIM_MS);
+    var p = pieces[current];
+    titleEl.textContent = p.title;
+    subEl.textContent   = p.cat + ' · ' + p.client;
+    quoteEl.textContent = p.quote;
+
+    setTimeout(function () { isAnim = false; }, ANIM_MS);
   }
 
-  /* Teclado + swipe */
+  /* ── Autoplay ── */
+  function startAuto() {
+    autoTimer = setInterval(function () {
+      if (!lightbox.classList.contains('open')) goTo(current + 1);
+    }, AUTO_MS);
+  }
+  function stopAuto()  { clearInterval(autoTimer); autoTimer = null; }
+  function resetAuto() { stopAuto(); startAuto(); }
+
+  /* Teclado */
   document.addEventListener('keydown', function (e) {
-    if (lightbox.classList.contains('open')) { if (e.key === 'Escape') lightbox.classList.remove('open'); return; }
-    if (e.key === 'ArrowRight') goTo(current + 1);
-    if (e.key === 'ArrowLeft')  goTo(current - 1);
-  });
-  var tx = 0;
-  document.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
-  document.addEventListener('touchend',   function (e) {
-    var dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 50) goTo(dx < 0 ? current + 1 : current - 1);
+    if (lightbox.classList.contains('open')) {
+      if (e.key === 'Escape') { lightbox.classList.remove('open'); resetAuto(); }
+      return;
+    }
+    if (e.key === 'ArrowRight') { goTo(current + 1); resetAuto(); }
+    if (e.key === 'ArrowLeft')  { goTo(current - 1); resetAuto(); }
   });
 
-  document.getElementById('lightboxClose').addEventListener('click', function () { lightbox.classList.remove('open'); });
-  lightbox.addEventListener('click', function (e) { if (e.target === lightbox) lightbox.classList.remove('open'); });
+  /* Swipe táctil (solo dentro del panel) */
+  var msStage = document.querySelector('.ms-stage');
+  var tx = 0;
+  msStage.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+  msStage.addEventListener('touchend',   function (e) {
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 44) { goTo(dx < 0 ? current + 1 : current - 1); resetAuto(); }
+  });
+
+  /* Lightbox */
+  document.getElementById('lightboxClose').addEventListener('click', function () { lightbox.classList.remove('open'); resetAuto(); });
+  lightbox.addEventListener('click', function (e) { if (e.target === lightbox) { lightbox.classList.remove('open'); resetAuto(); } });
 
   goTo(0);
-
-  /* ── Cursor ── */
-  var cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', function (e) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-  window.addEventListener('load', function () {
-    document.querySelectorAll('a, button, .museo-card, .museo-dot').forEach(function (el) {
-      el.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
-      el.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
-    });
-  });
-
-  /* ── Favorito ── */
-  document.getElementById('favBtn').addEventListener('click', function () {
-    var svg = this.querySelector('svg');
-    var on  = svg.getAttribute('fill') !== 'none';
-    svg.setAttribute('fill',   on ? 'none' : 'rgba(255,80,80,.85)');
-    svg.setAttribute('stroke', on ? 'currentColor' : 'rgba(255,80,80,.85)');
-  });
+  startAuto();
 
   /* ── Audio ── */
-  var audio     = document.getElementById('museumAudio');
-  var playBtn   = document.getElementById('musicPlay');
-  var icPlay    = document.getElementById('icPlay');
-  var icPause   = document.getElementById('icPause');
-  var volSlider = document.getElementById('volSlider');
-  var mpFill    = document.getElementById('mpFill');
+  var audio   = document.getElementById('msAudio');
+  var playBtn = document.getElementById('msPlayBtn');
+  var icPlay  = document.getElementById('msIcPlay');
+  var icPause = document.getElementById('msIcPause');
+  var volEl   = document.getElementById('msVol');
+  var fillEl  = document.getElementById('msFill');
 
   audio.volume = 0.5;
 
@@ -418,28 +515,72 @@
     audio.paused ? audio.play().catch(function(){}) : audio.pause();
     syncIcon();
   });
-
-  volSlider.addEventListener('input',  function () { audio.volume = parseFloat(this.value); });
-  volSlider.addEventListener('change', function () { audio.volume = parseFloat(this.value); });
-
+  volEl.addEventListener('input', function () { audio.volume = parseFloat(this.value); });
   audio.addEventListener('timeupdate', function () {
-    if (audio.duration) mpFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+    if (audio.duration) fillEl.style.width = (audio.currentTime / audio.duration * 100) + '%';
   });
 
   audio.play().then(syncIcon).catch(function () {
-    function unlock() { audio.play().catch(function(){}); syncIcon(); document.removeEventListener('click', unlock); document.removeEventListener('touchstart', unlock); }
+    function unlock() { audio.play().catch(function(){}); syncIcon(); document.removeEventListener('click', unlock); }
     document.addEventListener('click', unlock);
-    document.addEventListener('touchstart', unlock);
   });
 
-  var wasPlaying = false;
   document.addEventListener('visibilitychange', function () {
-    if (document.hidden) { wasPlaying = !audio.paused; if (wasPlaying) audio.pause(); }
-    else { if (wasPlaying) audio.play().catch(function(){}); }
+    if (document.hidden) {
+      audio._was = !audio.paused; if (audio._was) audio.pause();
+      stopAuto();
+    } else {
+      if (audio._was) audio.play().catch(function(){});
+      startAuto();
+    }
     syncIcon();
   });
 
   syncIcon();
+
+  /* ── Cursor (solo mouse) ── */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', function (e) {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    window.addEventListener('load', function () {
+      document.querySelectorAll('a, button, .ms-card').forEach(function (el) {
+        el.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
+        el.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
+      });
+    });
+  }
+
+  /* ── Panel toggle (901–1440px) ── */
+  var infoTab     = document.getElementById('infoToggle');
+  var infoClose   = document.getElementById('infoClose');
+  var infoWrapper = document.getElementById('infoWrapper');
+  var stage       = document.querySelector('.vr-stage');
+
+  function openPanel()  {
+    infoWrapper.classList.add('panel-open');
+    stage.classList.add('panel-open');
+    if (infoTab) infoTab.classList.add('panel-open');
+  }
+  function closePanel() {
+    infoWrapper.classList.remove('panel-open');
+    stage.classList.remove('panel-open');
+    if (infoTab) infoTab.classList.remove('panel-open');
+  }
+
+  if (infoTab) infoTab.addEventListener('click', openPanel);
+  if (infoClose) infoClose.addEventListener('click', function () {
+    infoWrapper.classList.contains('panel-open') ? closePanel() : openPanel();
+  });
+  stage.addEventListener('click', function (e) {
+    if (stage.classList.contains('panel-open') && !infoWrapper.contains(e.target)) closePanel();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !lightbox.classList.contains('open')) closePanel();
+  });
+
 })();
 </script>
 </body>
