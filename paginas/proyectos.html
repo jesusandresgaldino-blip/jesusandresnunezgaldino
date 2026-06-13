@@ -251,7 +251,41 @@
       .strip-content { padding: 0 14px 10px; }
     }
 
-    /* ── Landscape phone ── */
+    /* ── Mobile landscape (voltear el cel) ── */
+    @media (max-width: 767px) and (orientation: landscape) {
+      body { overflow: hidden; }
+      .proj-stage {
+        position: fixed;
+        flex-direction: row;
+        min-height: unset;
+      }
+      .strips {
+        flex-direction: row;
+        height: calc(100svh - var(--nh));
+        overflow: hidden;
+        touch-action: none;
+      }
+      .strip {
+        clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
+        margin-right: -22px;
+        margin-bottom: 0;
+      }
+      .strip:last-child {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        margin-right: 0;
+      }
+      .strip-bg { filter: grayscale(1) brightness(.52); }
+      .strip-overlay {
+        background: linear-gradient(to top, rgba(0,0,0,.84) 0%, rgba(0,0,0,.26) 50%, rgba(0,0,0,.05) 100%);
+      }
+      .strip-tag    { color: rgba(255,255,255,0); }
+      .strip-num    { font-size: clamp(12px, 3.5vh, 22px); margin-bottom: 3px; }
+      .strip-title  { font-size: 7px; letter-spacing: .05em; color: rgba(255,255,255,.55); }
+      .strip-desc   { display: none; }
+      .strip-content { padding: 0 10px 12px; align-items: flex-start; text-align: left; }
+    }
+
+    /* ── Landscape phone (tablet pequeña / phone ≥ 768px ancho) ── */
     @media (max-height: 480px) and (min-width: 768px) {
       .proj-sidebar { width: 64px; padding: 16px 0 20px; }
       .sb-name-wrap { padding: 0 8px; gap: 2px; }
