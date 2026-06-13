@@ -1319,6 +1319,20 @@ window._darkMode = true;
   vid.addEventListener('play', function() {
     vid.pause();
   });
+
+  /* ⏰ DESPERTADOR PARA iOS: Reconecta el video al desbloquear la pantalla */
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && vid) {
+      // Obligamos a Safari a recargar el motor de video en la memoria RAM
+      var playPromise = vid.play();
+      if (playPromise !== undefined) {
+        playPromise.then(function() {
+          vid.pause();
+        }).catch(function(e) { /* Ignorar errores de autoplay */ });
+      }
+    }
+  });
+  
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
   /* Left chapters — evenly distributed, one per 20% of scroll */
