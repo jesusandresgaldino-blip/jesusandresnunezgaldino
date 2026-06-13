@@ -223,19 +223,9 @@
       /* min-height excluye el nav-container (44px) para que body no quede scrolleable */
       .proj-stage { position: static; flex-direction: column; min-height: calc(100svh - var(--nh)); }
 
-      .proj-sidebar {
-        width: 100%; flex-direction: row;
-        align-items: center; justify-content: space-between;
-        height: 48px; padding: 0 20px;
-        border-right: none; border-bottom: .5px solid rgba(255,255,255,.06);
-        position: sticky; top: var(--nh); z-index: 30;
-      }
-      .sb-rule, .sb-mid { display: none; }
-      .sb-name-wrap { flex-direction: row; gap: 5px; align-items: baseline; padding: 0; }
-      .sb-first, .sb-last { font-size: 9px; }
-      .sb-bottom { padding: 0; }
+      .proj-sidebar { display: none; }
 
-      .strips { flex-direction: column; height: calc(100svh - var(--nh) - 48px); overflow: hidden; touch-action: none; }
+      .strips { flex-direction: column; height: calc(100svh - var(--nh)); overflow: hidden; touch-action: none; }
 
       .strip { clip-path: none; margin-right: 0; margin-bottom: 1px; }
       .strip:last-child { clip-path: none; margin-bottom: 0; }
