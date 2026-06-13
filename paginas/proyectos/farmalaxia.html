@@ -993,14 +993,17 @@
       .vr-scroll-panel .wf-cards > *, .vr-scroll-panel .learning-grid > * { grid-column: span 1 !important; }
       .vr-scroll-panel .prob-row { grid-template-columns: 1fr; gap: .3rem; padding: 1.2rem 0; }
       .vr-scroll-panel .prob-row-val { padding-left: .8rem; border-left: 2px solid rgba(16,50,146,0.15); font-size: .77rem; }
-      .vr-scroll-panel .wf-card { padding: 1.4rem; }
-      .vr-scroll-panel .strat-card { padding: 1.8rem 1.4rem; }
-      .vr-scroll-panel .research-card { padding: 1.8rem 1.4rem; }
-      .vr-scroll-panel .campaign-card { padding: 1.8rem 1.4rem; }
-      .vr-scroll-panel .metric-card { padding: 2rem 1.6rem; }
-      .vr-scroll-panel .learning-card { padding: 1.8rem 1.4rem; }
+      .vr-scroll-panel .wf-card,
+      .vr-scroll-panel .strat-card,
+      .vr-scroll-panel .research-card,
+      .vr-scroll-panel .campaign-card,
+      .vr-scroll-panel .metric-card,
+      .vr-scroll-panel .learning-card,
+      .vr-scroll-panel .bq { padding: 1.25rem; }
+      .vr-scroll-panel .wf-cards,
+      .vr-scroll-panel .metrics-grid,
+      .vr-scroll-panel .learning-grid { gap: 0.75rem; }
       .vr-scroll-panel .mc-n { font-size: clamp(2.2rem, 11vw, 3.6rem); }
-      .vr-scroll-panel .bq { padding: 1.8rem 1.4rem; }
       .vr-scroll-panel .bq-text { font-size: .82rem; line-height: 1.7; }
       .vr-scroll-panel .bq-mark { font-size: 4rem; }
       .vr-scroll-panel .rc-body, .vr-scroll-panel .rc-item,
@@ -1018,6 +1021,13 @@
       .vr-scroll-panel h2.st { font-size: 1.4rem; }
       .vr-scroll-panel .cover-h1 { font-size: 2.4rem; }
       .vr-scroll-panel .sb { font-size: .77rem; }
+      .vr-scroll-panel .wf-card,
+      .vr-scroll-panel .strat-card,
+      .vr-scroll-panel .research-card,
+      .vr-scroll-panel .campaign-card,
+      .vr-scroll-panel .metric-card,
+      .vr-scroll-panel .learning-card,
+      .vr-scroll-panel .bq { padding: 1rem; }
     }
 
     @media (orientation: landscape) and (max-height: 500px) {
