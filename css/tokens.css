@@ -1,0 +1,42 @@
+/**
+ * tokens.css — Design Tokens globales
+ * Portafolio Andrés Galdino
+ *
+ * La fuente Poppins se carga via <link rel="stylesheet"> en cada HTML,
+ * no aquí — los <link> en <head> son no-bloqueantes; @import sí bloquea.
+ */
+
+:root {
+  /* ── Colores base ── */
+  --text:     #111111;
+  --muted:    #777777;
+  --faint:    #bbbbbb;
+  --bg-white: #ffffff;
+  --bg-black: #000000;
+
+  /* ── Tipografía ── */
+  --font: 'Poppins', system-ui, sans-serif;
+  --pill: 999px;
+
+  /* ── Navegación ── */
+  --nh:    44px;
+  --nbg:   rgba(18, 18, 20, 0.97);
+  --ndbg:  rgba(14, 14, 16, 0.96);
+  --nfg:   rgba(245, 245, 247, 0.84);
+  --nmuted:rgba(245, 245, 247, 0.38);
+  --nbdr:  rgba(255, 255, 255, 0.07);
+  --nblur: blur(24px) saturate(180%);
+  --nf:    var(--font);
+}
+
+/* ── Tokens de color para hero oscuro (index.html) ── */
+html.dark-hero {
+  --text:  #f5f5f7;
+  --muted: rgba(245, 245, 247, .6);
+  --faint: rgba(245, 245, 247, .3);
+}
+html.dark-hero body.light-mode {
+  --text:  #111111;
+  --muted: rgba(17, 17, 17, .6);
+  --faint: rgba(17, 17, 17, .3);
+}

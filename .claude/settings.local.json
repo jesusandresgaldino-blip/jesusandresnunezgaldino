@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/andresgaldino/Documents/1/Portafolio final/components/**)",
+      "Read(//Users/andresgaldino/Downloads/portafolio-ann/components/**)",
+      "Read(//Users/andresgaldino/Downloads/files 4/mnt/user-data/outputs/portafolio-final/components/**)",
+      "Bash(curl -s \"http://127.0.0.1:5500/components/nav.html\")",
+      "Bash(curl -sI \"http://127.0.0.1:5500/\")",
+      "Bash(ffmpeg -version)",
+      "Bash(brew list *)",
+      "Bash(pip3 list *)",
+      "Bash(sysctl -n machdep.cpu.brand_string)",
+      "Bash(sysctl -n hw.memsize)",
+      "Bash(awk '{print $1/1073741824 \" GB RAM\"}')",
+      "Bash(system_profiler SPDisplaysDataType)"
+    ]
+  }
+}

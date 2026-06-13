@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="base-depth" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Andrés Galdino — Product & Creative Designer</title>
+  <meta name="description" content="Portafolio de Andrés Galdino, Product & Creative Designer. Proyectos de branding, UX/UI, motion y sistemas de diseño.">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Andrés Galdino — Product & Creative Designer">
+  <meta property="og:description" content="Branding, UX/UI, Motion y Sistemas de diseño. Bogotá · Colombia · Remote.">
+  <meta property="og:url"         content="https://andres-galdino.com/">
+  <meta property="og:image"       content="/assets/og-image.jpg">
+  <meta name="twitter:card"       content="summary_large_image">
+
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <style>
+    /* ── Cinema letterbox ── */
+    #cinemaWrap {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: #000;
+      overflow: hidden;
+      transition: opacity 1.2s ease;
+    }
+    #cinemaWrap.fade-out { opacity: 0; pointer-events: none; }
+    #heroVideo {
+      position: absolute;
+      inset: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cbar {
+      position: absolute;
+      left: 0; right: 0; height: 50%;
+      background: #000;
+      z-index: 2;
+      transition: transform 1.4s cubic-bezier(.76,0,.24,1);
+    }
+    #cbarTop    { top: 0; }
+    #cbarBottom { bottom: 0; }
+    #cinemaWrap.open #cbarTop    { transform: translateY(-100%); }
+    #cinemaWrap.open #cbarBottom { transform: translateY(100%); }
+
+    html, body { background: #000; }
+    body.cinema-on { overflow: hidden; height: 100%; }
+    .hero { min-height: 100vh; max-height: 100vh; overflow: hidden; }
+    .cursor { background: #fff !important; mix-blend-mode: difference !important; }
+
+    /* ── Botón omitir intro ── */
+    #skipBtn {
+      position: absolute; bottom: 2.2rem; right: 2.2rem; z-index: 10;
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--font); font-size: 11px; font-weight: 600;
+      letter-spacing: .5px;
+      color: rgba(255,255,255,.65);
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 100px; padding: 9px 18px;
+      cursor: none;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity .5s ease, transform .5s ease, background .2s, color .2s;
+    }
+    #skipBtn.visible { opacity: 1; transform: translateY(0); }
+    #skipBtn:hover   { background: rgba(255,255,255,.16); color: rgba(255,255,255,.9); }
+    #skipBtn svg     { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* ── Canvases de fondo ── */
+    #dot-grid {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 3;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative; z-index: 4;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: clamp(70px,10vh,110px) clamp(24px,5vw,80px) clamp(40px,8vh,80px);
+    }
+
+    /* Palabras rotatorias */
+    .rotating-words {
+      font-size: 11px; font-weight: 600; color: var(--faint);
+      letter-spacing: 2.5px; text-transform: uppercase;
+      margin-bottom: 8px; height: 18px; overflow: hidden;
+      opacity: 0; will-change: transform, opacity;
+    }
+    .word-track { display: flex; flex-direction: column; animation: wordScroll 8s linear infinite; }
+    .word-item  { height: 18px; line-height: 18px; }
+    @keyframes wordScroll {
+      0%,22%  { transform: translateY(0); }
+      25%,47% { transform: translateY(-18px); }
+      50%,72% { transform: translateY(-36px); }
+      75%,97% { transform: translateY(-54px); }
+      100%    { transform: translateY(-72px); }
+    }
+
+    /* Nombre — canvas FuzzyText */
+    .hero-name {
+      margin-bottom: clamp(10px,1.5vh,18px);
+      display: block; cursor: none;
+      opacity: 0; will-change: transform, opacity;
+    }
+
+    /* Subtítulo */
+    .hero-sub {
+      font-size: clamp(13px,1.5vw,17px); font-weight: 400;
+      color: rgba(245,245,247,0.72); margin-bottom: clamp(20px,3.5vh,40px);
+      opacity: 0; will-change: transform, opacity;
+    }
+
+    /* Botones */
+    .hero-btns {
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+      opacity: 0; will-change: transform, opacity;
+    }
+
+    /* Entrada del hero — animaciones escalonadas al terminar la intro */
+    .hero--in .rotating-words { animation: fadeUp 0.8s 0.00s both; }
+    .hero--in .hero-name       { animation: fadeUp 1.0s 0.10s both; }
+    .hero--in .hero-sub        { animation: fadeUp 0.8s 0.28s both; }
+    .hero--in .hero-btns       { animation: fadeUp 0.7s 0.46s both; }
+    .btn-dark {
+      font-family: var(--font); font-size: clamp(12px,1.3vw,14px); font-weight: 600;
+      color: #000; background: #f5f5f7; padding: 12px 28px;
+      border-radius: var(--pill); border: none;
+      transition: opacity .2s, transform .2s; white-space: nowrap;
+      text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .btn-dark:hover { opacity: .82; transform: scale(.98); }
+    .btn-light {
+      font-family: var(--font); font-size: clamp(12px,1.3vw,14px); font-weight: 400;
+      color: rgba(245,245,247,.85); background: rgba(255,255,255,.08);
+      backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.14);
+      padding: 12px 28px; border-radius: var(--pill);
+      transition: background .2s; white-space: nowrap;
+      text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .btn-light:hover { background: rgba(255,255,255,.15); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Typewriter cursor ── */
+    .tw-cursor {
+      display: inline-block;
+      width: 1.5px; height: 1em;
+      background: currentColor;
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink .65s step-end infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+
+    /* ── Scroll-cinematic video ── */
+    #scrollVideo {
+      position: relative;
+      height: 800vh;
+      margin-top: -1px;
+    }
+    #svSticky {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 3;
+      overflow: hidden;
+      perspective: 1100px;
+      perspective-origin: 50% 48%;
+      background: #000;
+    }
+    #svScene {
+      position: absolute;
+      inset: -3%;
+      will-change: transform;
+    }
+    #svVideo {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    #svOverlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 35%, rgba(0,0,0,0.4) 100%);
+      pointer-events: none;
+    }
+
+    /* ── Parallax story overlay ── */
+    #svText {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+    #svTextGrad {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 65%;
+      background: linear-gradient(to right, rgba(0,0,0,0.52) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .svc {
+      position: absolute;
+      left: clamp(36px, 9vw, 140px);
+      top: 50%;
+      opacity: 0;
+      will-change: opacity, transform;
+      max-width: clamp(260px, 34vw, 500px);
+    }
+    .svc-num {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(72px, 11vw, 148px);
+      font-weight: 800;
+      color: rgba(255,255,255,0.04);
+      line-height: 0.88;
+      letter-spacing: -0.05em;
+      margin-left: -4px;
+      user-select: none;
+      display: block;
+    }
+    .svc-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      margin-top: -10px;
+    }
+    .svc-rule {
+      width: 26px; height: 1px;
+      background: rgba(255,255,255,0.38);
+      flex-shrink: 0;
+    }
+    .svc-tag {
+      font-family: 'Poppins', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+    }
+    .svc-h {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(32px, 4.2vw, 62px);
+      font-weight: 700;
+      color: #f5f5f7;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .svc-p {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(12px, 1.2vw, 14px);
+      font-weight: 300;
+      color: rgba(245,245,247,0.82);
+      line-height: 1.75;
+      max-width: 340px;
+    }
+
+    /* ── Right-side reflection text ── */
+    #svTextGradR {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 55%;
+      background: linear-gradient(to left, rgba(0,0,0,0.46) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .svc-r {
+      position: absolute;
+      right: clamp(36px, 9vw, 140px);
+      top: 50%;
+      opacity: 0;
+      will-change: opacity, transform;
+      max-width: clamp(220px, 26vw, 360px);
+      text-align: right;
+    }
+    .svc-r .svc-line {
+      justify-content: flex-end;
+    }
+    .svc-r .svc-rule {
+      order: 2;
+    }
+    .svc-r .svc-tag {
+      order: 1;
+    }
+    .svc-r-q {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(16px, 2vw, 26px);
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(245,245,247,0.8);
+      line-height: 1.55;
+      letter-spacing: -0.01em;
+    }
+    .svc-r-q em {
+      font-style: normal;
+      color: #f5f5f7;
+      font-weight: 500;
+    }
+
+    /* ── Progress dots — horizontal, bottom center ── */
+    #svProgress {
+      position: absolute;
+      bottom: clamp(28px, 5vh, 52px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 6;
+      pointer-events: none;
+      display: flex;
+      flex-direction: row;
+      gap: 18px;
+      align-items: center;
+    }
+    .svp-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      transition: background 0.4s ease, transform 0.4s ease;
+      flex-shrink: 0;
+    }
+    .svp-dot.active {
+      background: rgba(245,245,247,0.88);
+      transform: scale(1.6);
+    }
+
+    /* ── Ink section ── */
+    #inkSection {
+      position: relative;
+      z-index: 10;
+      background: #f5f5f7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #inkQuote {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: clamp(40px, 8vw, 80px);
+      max-width: 760px;
+      pointer-events: none;
+      mix-blend-mode: difference;
+      color: #fff;
+    }
+    .ink-q-eyebrow {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 32px;
+    }
+    .ink-q-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(26px, 4.2vw, 56px);
+      font-weight: 300;
+      color: #fff;
+      line-height: 1.22;
+      letter-spacing: -0.025em;
+      quotes: none;
+      margin: 0 0 28px 0;
+    }
+    .ink-q-text strong {
+      font-weight: 700;
+      color: #fff;
+    }
+    .ink-q-sep {
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: #fff;
+      margin: 0 auto 20px;
+    }
+    .ink-q-cite {
+      display: block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: #fff;
+      letter-spacing: 1.5px;
+      font-style: normal;
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════════
+       TABLET  768 – 1023 px
+    ═══════════════════════════════════════════ */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .hero { padding: clamp(70px,10vh,100px) clamp(20px,4vw,60px) clamp(36px,6vh,64px); }
+      .svc  { left: clamp(24px,5vw,60px); max-width: clamp(200px,38vw,420px); }
+      .svc-num { font-size: clamp(56px,9vw,110px); }
+      .svc-h   { font-size: clamp(26px,3.8vw,46px); }
+      .svc-r   { right: clamp(24px,5vw,60px); max-width: clamp(180px,30vw,320px); }
+      .svc-r-q { font-size: clamp(14px,1.9vw,22px); }
+      #inkQuote  { padding: clamp(36px,7vw,70px); }
+      .ink-q-text{ font-size: clamp(24px,4vw,52px); }
+    }
+
+    /* ═══════════════════════════════════════════
+       MOBILE  ≤ 767 px
+    ═══════════════════════════════════════════ */
+    @media (max-width: 767px) {
+      /* Hero */
+      .hero { padding: 80px 20px 36px; }
+      .hero-sub { font-size: 14px; }
+      .hero-btns { flex-direction: column; align-items: center; gap: 8px; }
+      .btn-dark, .btn-light {
+        font-size: 13px; padding: 12px 0; width: 210px;
+        justify-content: center; text-align: center;
+      }
+
+      /* LEFT: centrado verticalmente, texto visible */
+      .svc {
+        left: clamp(14px, 5vw, 28px);
+        top: 50%;
+        max-width: clamp(180px, 55vw, 260px);
+      }
+      .svc-num {
+        font-size: clamp(52px, 15vw, 80px);
+        color: rgba(255,255,255,0.06);
+      }
+      .svc-h {
+        display: block;
+        font-size: clamp(20px, 5.5vw, 30px);
+        margin-bottom: 0;
+        line-height: 1.12;
+      }
+      .svc-p { display: none; }
+      .svc-line { margin-top: 2px; margin-bottom: 6px; gap: 8px; }
+      .svc-rule { display: none; }
+      .svc-tag  { font-size: 9px; letter-spacing: 2px; }
+
+      /* RIGHT: centrado verticalmente, cita pequeña */
+      .svc-r {
+        right: clamp(14px, 5vw, 28px);
+        top: 50%;
+        bottom: auto;
+        max-width: clamp(120px, 42vw, 200px);
+        text-align: right;
+      }
+      .svc-r .svc-line { display: none; }
+      .svc-r-q { font-size: clamp(11px, 3vw, 15px); line-height: 1.55; }
+
+      /* Gradientes */
+      #svTextGrad  { width: 50%; background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, transparent 100%); }
+      #svTextGradR { width: 55%; background: linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 100%); }
+
+      /* Dots */
+      #svProgress { bottom: 20px; gap: 10px; }
+
+      /* Ink */
+      #inkQuote   { padding: clamp(24px,6vw,44px); max-width: 100%; }
+      .ink-q-text { font-size: clamp(22px, 6.5vw, 36px); }
+      .ink-q-eyebrow { margin-bottom: 18px; }
+    }
+  </style>
+</head>
+<body class="cinema-on">
+
+<!-- Cinema letterbox: barras se abren revelando el video -->
+<div id="cinemaWrap">
+  <video id="heroVideo" src="assets/videohero.mp4" autoplay muted playsinline></video>
+  <div class="cbar" id="cbarTop"></div>
+  <div class="cbar" id="cbarBottom"></div>
+  <button id="skipBtn" aria-label="Omitir introducción">
+    Omitir
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+    </svg>
+  </button>
+</div>
+
+<div id="nav-container"></div>
+
+<canvas id="dot-grid" aria-hidden="true"></canvas>
+
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<main class="hero">
+  <div class="rotating-words" aria-hidden="true">
+    <div class="word-track">
+      <div class="word-item">Designer &nbsp;·&nbsp; Creator &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Thinker</div>
+      <div class="word-item">Product &nbsp;·&nbsp; Branding &nbsp;·&nbsp; Motion &nbsp;·&nbsp; Systems</div>
+      <div class="word-item">Bogotá &nbsp;·&nbsp; Colombia &nbsp;·&nbsp; Remote &nbsp;·&nbsp; Global</div>
+      <div class="word-item">Ideas &nbsp;·&nbsp; Craft &nbsp;·&nbsp; Impact &nbsp;·&nbsp; Detail</div>
+      <div class="word-item">Designer &nbsp;·&nbsp; Creator &nbsp;·&nbsp; Builder &nbsp;·&nbsp; Thinker</div>
+    </div>
+  </div>
+
+  <canvas class="hero-name" id="heroName" aria-label="Andrés Galdino"></canvas>
+  <p class="hero-sub" id="heroSub"></p>
+
+  <div class="hero-btns">
+    <a class="btn-dark" href="paginas/proyectos.html">Ver proyectos →</a>
+    <a class="btn-light" href="assets/cv-andres-galdino.pdf" download>Descargar Perfil</a>
+  </div>
+</main>
+
+<!-- Scroll-cinematic video -->
+<section id="scrollVideo" aria-hidden="true">
+  <div id="svSticky">
+    <div id="svScene">
+      <video id="svVideo" src="assets/parallax.mp4#t=0.001" muted playsinline preload="auto"></video>
+      <div id="svOverlay"></div>
+    </div>
+
+    <div id="svText">
+      <div id="svTextGrad"></div>
+      <div id="svTextGradR"></div>
+
+      <!-- LEFT -->
+      <div class="svc" id="svc0">
+        <span class="svc-num">01</span>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Identidad visual</span></div>
+        <h2 class="svc-h">Marcas<br>construidas<br>para durar</h2>
+        <p class="svc-p">Logos, sistemas y lenguaje visual<br>que sobreviven al tiempo.</p>
+      </div>
+      <div class="svc" id="svc1">
+        <span class="svc-num">02</span>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Diseño de producto</span></div>
+        <h2 class="svc-h">Interfaces<br>que<br>desaparecen</h2>
+        <p class="svc-p">UX que se siente obvio<br>desde el primer toque.</p>
+      </div>
+      <div class="svc" id="svc2">
+        <span class="svc-num">03</span>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Dirección creativa</span></div>
+        <h2 class="svc-h">La historia<br>detrás de<br>cada pieza</h2>
+        <p class="svc-p">Traduzco objetivos de negocio<br>en lenguaje visual honesto.</p>
+      </div>
+      <div class="svc" id="svc3">
+        <span class="svc-num">04</span>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Sistemas & escala</span></div>
+        <h2 class="svc-h">Diseño<br>que vive<br>y crece</h2>
+        <p class="svc-p">Arquitecturas visuales para equipos<br>y productos en expansión.</p>
+      </div>
+      <div class="svc" id="svc4">
+        <span class="svc-num">05</span>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Arte & experimento</span></div>
+        <h2 class="svc-h">Cuando las<br>reglas son<br>el inicio</h2>
+        <p class="svc-p">Motion, fotografía y código<br>como forma de pensar.</p>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="svc-r" id="svcr0">
+        <div class="svc-line"><span class="svc-tag">La marca</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">Una buena marca<br>no necesita que<br><em>la expliques.</em></p>
+      </div>
+      <div class="svc-r" id="svcr1">
+        <div class="svc-line"><span class="svc-tag">El usuario</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">El mejor diseño<br>es invisible.<br><em>Solo se siente.</em></p>
+      </div>
+      <div class="svc-r" id="svcr2">
+        <div class="svc-line"><span class="svc-tag">El proceso</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">Cada proyecto empieza<br>con la <em>pregunta correcta,</em><br>no con la respuesta.</p>
+      </div>
+      <div class="svc-r" id="svcr3">
+        <div class="svc-line"><span class="svc-tag">La escala</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">No construyo piezas.<br>Construyo sistemas<br><em>que piensan solos.</em></p>
+      </div>
+      <div class="svc-r" id="svcr4">
+        <div class="svc-line"><span class="svc-tag">La filosofía</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">El diseño es<br>la forma más honesta<br><em>que encontré de ver el mundo.</em></p>
+      </div>
+    </div>
+
+    <div id="svProgress">
+      <div class="svp-dot"></div>
+      <div class="svp-dot"></div>
+      <div class="svp-dot"></div>
+      <div class="svp-dot"></div>
+      <div class="svp-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Ink section -->
+<section id="inkSection">
+  <div id="inkQuote">
+    <span class="ink-q-eyebrow">Design Philosophy</span>
+    <blockquote class="ink-q-text">
+      "Todo gran diseño empieza<br>con el valor de <strong>no saber</strong><br>qué vas a crear."
+    </blockquote>
+    <span class="ink-q-sep"></span>
+    <cite class="ink-q-cite">Andrés Galdino</cite>
+  </div>
+</section>
+
+<script src="js/loader.js"></script>
+
+<script>
+window._darkMode = true;
+
+(function () {
+  'use strict';
+
+  var cursor = document.getElementById('cursor');
+  var mx = window.innerWidth / 2;
+  var my = window.innerHeight / 2;
+  var dotAnimId;
+
+  document.addEventListener('mousemove', function (e) {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+
+  function bindCursorHover() {
+    document.querySelectorAll('button, a, .hero-letter').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
+      el.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
+    });
+  }
+  window.addEventListener('load', bindCursorHover);
+
+  /* ── Hero parallax — cada elemento sube a su propia velocidad al hacer scroll ── */
+  (function () {
+    var hero     = document.querySelector('.hero');
+    if (!hero) return;
+    var marquee  = hero.querySelector('.rotating-words');
+    var heroName = hero.querySelector('.hero-name');
+    var heroSub  = hero.querySelector('.hero-sub');
+    var heroBtns = hero.querySelector('.hero-btns');
+
+    function applyEl(el, ty, op) {
+      if (!el) return;
+      el.style.transform = ty === 0 ? '' : 'translateY(' + ty.toFixed(1) + 'px)';
+      el.style.opacity   = op.toFixed(4);
+    }
+
+    function onScroll() {
+      var sy = window.scrollY;
+      if (sy < 1) {
+        /* reset so hero--in animations are clean at top */
+        [marquee, heroName, heroSub, heroBtns].forEach(function (el) {
+          if (el) { el.style.transform = ''; }
+        });
+        return;
+      }
+      var h = hero.offsetHeight || window.innerHeight;
+      applyEl(marquee,  sy * -0.55, Math.max(0, 1 - (sy / h) * 3.2));
+      applyEl(heroName, sy * -0.36, Math.max(0, 1 - (sy / h) * 2.4));
+      applyEl(heroSub,  sy * -0.22, Math.max(0, 1 - (sy / h) * 1.9));
+      applyEl(heroBtns, sy * -0.12, Math.max(0, 1 - (sy / h) * 1.5));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  /* ── Dot grid — puntos blancos sobre fondo negro ── */
+  var dc = document.getElementById('dot-grid');
+  var dx = dc.getContext('2d');
+  var prevMx = mx, prevMy = my;
+
+  function resizeDot() { dc.width = window.innerWidth; dc.height = window.innerHeight; }
+  resizeDot();
+  window.addEventListener('resize', resizeDot);
+
+  function drawDots() {
+    if (mx === prevMx && my === prevMy) {
+      dotAnimId = requestAnimationFrame(drawDots);
+      return;
+    }
+    prevMx = mx; prevMy = my;
+
+    dx.clearRect(0, 0, dc.width, dc.height);
+    var sp = 38;
+    var cols = Math.ceil(dc.width  / sp) + 1;
+    var rows = Math.ceil(dc.height / sp) + 1;
+    for (var i = 0; i < cols; i++) {
+      for (var j = 0; j < rows; j++) {
+        var x = i * sp, y = j * sp;
+        var ddx = x - mx, ddy = y - my;
+        var dist  = Math.sqrt(ddx * ddx + ddy * ddy);
+        var force = Math.max(0, 1 - dist / 140);
+        x += ddx * force * -0.45;
+        y += ddy * force * -0.45;
+        dx.beginPath();
+        dx.arc(x, y, 1 + force * 2.2, 0, Math.PI * 2);
+        dx.fillStyle = 'rgba(255,255,255,' + (0.07 + force * 0.28) + ')';
+        dx.fill();
+      }
+    }
+    dotAnimId = requestAnimationFrame(drawDots);
+  }
+  drawDots();
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      cancelAnimationFrame(dotAnimId);
+    } else {
+      dotAnimId = requestAnimationFrame(drawDots);
+    }
+  });
+
+  /* ── FuzzyText — Andrés Galdino ── */
+  (function () {
+    var canvas = document.getElementById('heroName');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var cursor2 = document.getElementById('cursor');
+    var TEXT = 'Andrés Galdino';
+    var WEIGHT = 300;
+    var FAMILY = 'Poppins, system-ui, sans-serif';
+    var COLOR  = '#f5f5f7';    var BASE_I = 0.06;
+    var HOVER_I = 0.38;
+    var FUZZ   = 14;
+    var animId, offscreen, offCtx, tightHeight, textWidth, hMargin;
+    var intensity = BASE_I;
+    var hovering = false;
+
+    function getFS() {
+      var mob = window.innerWidth < 768;
+      var t = document.createElement('span');
+      t.style.cssText = (mob
+        ? 'font-size:clamp(44px,12.5vw,72px)'
+        : 'font-size:clamp(72px,11vw,152px)') +
+        ';position:fixed;visibility:hidden;pointer-events:none';
+      document.body.appendChild(t);
+      var fs = parseFloat(window.getComputedStyle(t).fontSize);
+      document.body.removeChild(t);
+      return fs;
+    }
+
+    function build() {
+      var fs  = getFS() || 80;
+      var mob = window.innerWidth < 768;
+      var lines   = mob ? ['Andrés', 'Galdino'] : [TEXT];
+      var fontStr = WEIGHT + ' ' + fs + 'px ' + FAMILY;
+      offscreen = document.createElement('canvas');
+      offCtx    = offscreen.getContext('2d');
+      offCtx.font          = fontStr;
+      offCtx.textBaseline  = 'alphabetic';
+      var lms = lines.map(function(l) {
+        var m = offCtx.measureText(l);
+        return { text: l, w: m.width,
+          asc:  m.actualBoundingBoxAscent  || fs * 0.8,
+          desc: m.actualBoundingBoxDescent || fs * 0.2 };
+      });
+      var lineH   = Math.ceil(lms[0].asc + lms[0].desc) || Math.ceil(fs * 1.2);
+      var lineGap = mob ? Math.round(fs * 0.08) : 0;
+      textWidth   = Math.ceil(Math.max.apply(null, lms.map(function(l){return l.w;})));
+      tightHeight = lines.length * lineH + (lines.length - 1) * lineGap;
+      offscreen.width  = textWidth + 10;
+      offscreen.height = tightHeight;
+      offCtx.font         = fontStr;
+      offCtx.textBaseline = 'alphabetic';
+      offCtx.fillStyle    = COLOR;
+      lms.forEach(function(lm, i) {
+        var xOff = mob ? Math.round((textWidth - lm.w) / 2) : 0;
+        offCtx.fillText(lm.text, 5 + xOff, lm.asc + i * (lineH + lineGap));
+      });
+      hMargin = FUZZ + 20;
+      canvas.width  = offscreen.width + hMargin * 2;
+      canvas.height = tightHeight;
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.translate(hMargin, 0);
+      samplePixels();
+    }
+
+    var CODE = [
+      '0','1','0','1','1','0','0','1',
+      'if','fn','{}','()','=>','/*','&&','||','!=','==','++','<>','//','::',
+      '01','10','11','00','function','return','const','import','render'
+    ];
+    var textPixels = [];
+    var charMap    = [];
+    var charTimer  = 0;
+
+    function samplePixels() {
+      var step = 8;
+      var d = offCtx.getImageData(0, 0, offscreen.width, offscreen.height).data;
+      textPixels = []; charMap = [];
+      for (var y = 0; y < offscreen.height; y += step) {
+        for (var x = 0; x < offscreen.width; x += step) {
+          var idx = (y * offscreen.width + x) * 4;
+          if (d[idx + 3] > 50) {
+            textPixels.push({ x: x, y: y });
+            charMap.push(CODE[Math.floor(Math.random() * CODE.length)]);
+          }
+        }
+      }
+    }
+
+    function draw() {
+      var target = hovering ? HOVER_I : BASE_I;
+      intensity += (target - intensity) * 0.1;
+      var w = offscreen.width, h = tightHeight;
+      ctx.clearRect(-hMargin, 0, canvas.width, h);
+
+      /* Texto fuzzy base — se atenúa al hacer hover */
+      var fuzzyBlend = hovering ? Math.max(0, 1 - (intensity - BASE_I) / (HOVER_I - BASE_I)) : 1;
+      ctx.save();
+      ctx.globalAlpha = fuzzyBlend;
+      for (var j = 0; j < h; j++) {
+        var shift = Math.floor(intensity * (Math.random() - 0.5) * FUZZ * 2);
+        ctx.drawImage(offscreen, 0, j, w, 1, shift, j, w, 1);
+      }
+      ctx.restore();
+
+      /* Código que forma la silueta del nombre */
+      if (hovering || intensity > BASE_I + 0.02) {
+        charTimer++;
+        /* Renovar ~20% de chars cada 2 frames = parpadeo rápido */
+        if (charTimer % 2 === 0) {
+          var refreshCount = Math.ceil(charMap.length * 0.2);
+          for (var k = 0; k < refreshCount; k++) {
+            var ri = Math.floor(Math.random() * charMap.length);
+            charMap[ri] = CODE[Math.floor(Math.random() * CODE.length)];
+          }
+        }
+        var codeAlpha = Math.min(1, (intensity - BASE_I) / (HOVER_I - BASE_I) * 1.4);
+        ctx.save();
+        ctx.font = '700 8px "Courier New", monospace';
+        ctx.textBaseline = 'top';
+        for (var pi = 0; pi < textPixels.length; pi++) {
+          var p = textPixels[pi];
+          var flicker = 0.55 + Math.random() * 0.45;
+        ctx.fillStyle = 'rgba(245,245,247,' + (codeAlpha * flicker) + ')';
+          ctx.fillText(charMap[pi], p.x, p.y);
+        }
+        ctx.restore();
+      } else {
+        charTimer = 0;
+      }
+
+      animId = requestAnimationFrame(draw);
+    }
+
+    canvas.addEventListener('mousemove', function (e) {
+      var r = canvas.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      var inside = x >= hMargin && x <= hMargin + textWidth && y >= 0 && y <= tightHeight;
+      hovering = inside;
+      if (cursor2) cursor2.classList.toggle('big', inside);
+    });
+    canvas.addEventListener('mouseleave', function () {
+      hovering = false;
+      if (cursor2) cursor2.classList.remove('big');
+    });
+
+    function start() {
+      COLOR = '#f5f5f7';
+      build(); if (animId) cancelAnimationFrame(animId); draw();
+    }
+    window._fuzzyRebuild = start; /* expuesto para el toggle de tema */
+
+    /* Cargar Poppins explícitamente antes de dibujar */
+    document.fonts.load(WEIGHT + ' 80px ' + FAMILY).then(start).catch(start);
+
+    window.addEventListener('resize', function () {
+      cancelAnimationFrame(animId);
+      start();
+    });
+  })();
+})();
+</script>
+
+<!-- Simulación de fluido WebGL — tinta blanca sobre negro -->
+<script>
+(function () {
+  'use strict';
+
+  var canvas = document.createElement('canvas');
+  canvas.setAttribute('aria-hidden', 'true');
+  /* ← screen en vez de multiply para que la tinta se vea sobre negro */
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2;mix-blend-mode:screen;';
+  document.body.appendChild(canvas);
+  window._fluidCanvas = canvas;
+  window._reinitFBOs  = reinitFBOs; /* para limpiar tinta al cambiar tema */
+
+  var isMobile = window.matchMedia('(max-width: 768px) or (pointer: coarse)').matches;
+  var config = {
+    SIM_RESOLUTION:       128,
+    DYE_RESOLUTION:       isMobile ? 512 : 768,
+    DENSITY_DISSIPATION:  3.5,
+    VELOCITY_DISSIPATION: 0.96,
+    PRESSURE:             0.5,
+    PRESSURE_ITERATIONS:  25,
+    CURL:                 5,
+    SPLAT_RADIUS:         0.13,
+    SPLAT_FORCE:          3000,
+    SHADING:              true,
+    COLOR_UPDATE_SPEED:   10,
+    TRANSPARENT:          true,
+  };
+
+  function pointerPrototype() {
+    this.id = -1; this.texcoordX = 0; this.texcoordY = 0;
+    this.prevTexcoordX = 0; this.prevTexcoordY = 0;
+    this.deltaX = 0; this.deltaY = 0;
+    this.down = false; this.moved = false; this.color = [0,0,0];
+  }
+  var pointers = [new pointerPrototype()];
+
+  var params = { alpha:true, depth:false, stencil:false, antialias:false, preserveDrawingBuffer:false };
+  var gl = canvas.getContext('webgl2', params);
+  var isWebGL2 = !!gl;
+  if (!gl) gl = canvas.getContext('webgl', params) || canvas.getContext('experimental-webgl', params);
+
+  if (!gl) {
+    canvas.style.display = 'none';
+    console.info('[fluid] WebGL no disponible — efecto desactivado');
+    return;
+  }
+
+  var halfFloat, supportLinearFiltering;
+  if (isWebGL2) {
+    gl.getExtension('EXT_color_buffer_float');
+    supportLinearFiltering = gl.getExtension('OES_texture_float_linear');
+  } else {
+    halfFloat = gl.getExtension('OES_texture_half_float');
+    supportLinearFiltering = gl.getExtension('OES_texture_half_float_linear');
+  }
+  gl.clearColor(0, 0, 0, 1);
+
+  var halfFloatTexType = isWebGL2 ? gl.HALF_FLOAT : (halfFloat && halfFloat.HALF_FLOAT_OES);
+  var formatRGBA, formatRG, formatR;
+  if (isWebGL2) {
+    formatRGBA = getSupportedFormat(gl, gl.RGBA16F, gl.RGBA, halfFloatTexType);
+    formatRG   = getSupportedFormat(gl, gl.RG16F,   gl.RG,   halfFloatTexType);
+    formatR    = getSupportedFormat(gl, gl.R16F,    gl.RED,  halfFloatTexType);
+  } else {
+    formatRGBA = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
+    formatRG   = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
+    formatR    = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
+  }
+
+  function getSupportedFormat(gl, iF, f, t) {
+    if (!supportRenderTextureFormat(gl, iF, f, t)) {
+      if (iF === gl.R16F)  return getSupportedFormat(gl, gl.RG16F,   gl.RG,   t);
+      if (iF === gl.RG16F) return getSupportedFormat(gl, gl.RGBA16F, gl.RGBA, t);
+      return null;
+    }
+    return { internalFormat: iF, format: f };
+  }
+  function supportRenderTextureFormat(gl, iF, f, t) {
+    var tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, iF, 4, 4, 0, f, t, null);
+    var fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+    return gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+  }
+
+  function compileShader(type, source, keywords) {
+    if (keywords) keywords.forEach(function(k) { source = '#define ' + k + '\n' + source; });
+    var s = gl.createShader(type); gl.shaderSource(s, source); gl.compileShader(s); return s;
+  }
+  function createProgram(v, f) {
+    var p = gl.createProgram(); gl.attachShader(p, v); gl.attachShader(p, f); gl.linkProgram(p); return p;
+  }
+  function getUniforms(p) {
+    var u = {}, n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS);
+    for (var i = 0; i < n; i++) { var name = gl.getActiveUniform(p, i).name; u[name] = gl.getUniformLocation(p, name); }
+    return u;
+  }
+  function Program(v, f) { this.program = createProgram(v, f); this.uniforms = getUniforms(this.program); }
+  Program.prototype.bind = function() { gl.useProgram(this.program); };
+  function Material(v, fs) { this.vert = v; this.fragSrc = fs; this.programs = []; this.activeProgram = null; this.uniforms = []; }
+  Material.prototype.setKeywords = function(kw) {
+    var hash = 0;
+    kw.forEach(function(k) { for (var i=0;i<k.length;i++){hash=(hash<<5)-hash+k.charCodeAt(i);hash|=0;} });
+    var p = this.programs[hash];
+    if (!p) { var frag = compileShader(gl.FRAGMENT_SHADER, this.fragSrc, kw); p = createProgram(this.vert, frag); this.programs[hash] = p; }
+    if (p === this.activeProgram) return;
+    this.uniforms = getUniforms(p); this.activeProgram = p;
+  };
+  Material.prototype.bind = function() { gl.useProgram(this.activeProgram); };
+
+  var baseVert   = compileShader(gl.VERTEX_SHADER,   'precision highp float;attribute vec2 aPosition;varying vec2 vUv,vL,vR,vT,vB;uniform vec2 texelSize;void main(){vUv=aPosition*0.5+0.5;vL=vUv-vec2(texelSize.x,0.0);vR=vUv+vec2(texelSize.x,0.0);vT=vUv+vec2(0.0,texelSize.y);vB=vUv-vec2(0.0,texelSize.y);gl_Position=vec4(aPosition,0.0,1.0);}');
+  var copyProg   = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv;uniform sampler2D uTexture;void main(){gl_FragColor=texture2D(uTexture,vUv);}'));
+  var clearProg  = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv;uniform sampler2D uTexture;uniform float value;void main(){gl_FragColor=value*texture2D(uTexture,vUv);}'));
+  var splatProg  = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision highp float;precision highp sampler2D;varying vec2 vUv;uniform sampler2D uTarget;uniform float aspectRatio;uniform vec3 color;uniform vec2 point;uniform float radius;void main(){vec2 p=vUv-point.xy;p.x*=aspectRatio;vec3 splat=exp(-dot(p,p)/radius)*color;vec3 base=texture2D(uTarget,vUv).xyz;gl_FragColor=vec4(base+splat,1.0);}'));
+  var divProg    = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv,vL,vR,vT,vB;uniform sampler2D uVelocity;void main(){float L=texture2D(uVelocity,vL).x,R=texture2D(uVelocity,vR).x,T=texture2D(uVelocity,vT).y,B=texture2D(uVelocity,vB).y;vec2 C=texture2D(uVelocity,vUv).xy;if(vL.x<0.0){L=-C.x;}if(vR.x>1.0){R=-C.x;}if(vT.y>1.0){T=-C.y;}if(vB.y<0.0){B=-C.y;}gl_FragColor=vec4(0.5*(R-L+T-B),0,0,1);}'));
+  var curlProg   = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv,vL,vR,vT,vB;uniform sampler2D uVelocity;void main(){float L=texture2D(uVelocity,vL).y,R=texture2D(uVelocity,vR).y,T=texture2D(uVelocity,vT).x,B=texture2D(uVelocity,vB).x;gl_FragColor=vec4(0.5*(R-L-T+B),0,0,1);}'));
+  var vortProg   = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision highp float;precision highp sampler2D;varying vec2 vUv,vL,vR,vT,vB;uniform sampler2D uVelocity,uCurl;uniform float curl,dt;void main(){float L=texture2D(uCurl,vL).x,R=texture2D(uCurl,vR).x,T=texture2D(uCurl,vT).x,B=texture2D(uCurl,vB).x,C=texture2D(uCurl,vUv).x;vec2 force=0.5*vec2(abs(T)-abs(B),abs(R)-abs(L));force/=length(force)+0.0001;force*=curl*C;force.y*=-1.0;vec2 vel=texture2D(uVelocity,vUv).xy+force*dt;vel=min(max(vel,-1000.0),1000.0);gl_FragColor=vec4(vel,0,1);}'));
+  var presProg   = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv,vL,vR,vT,vB;uniform sampler2D uPressure,uDivergence;void main(){float L=texture2D(uPressure,vL).x,R=texture2D(uPressure,vR).x,T=texture2D(uPressure,vT).x,B=texture2D(uPressure,vB).x,div=texture2D(uDivergence,vUv).x;gl_FragColor=vec4((L+R+B+T-div)*0.25,0,0,1);}'));
+  var gradProg   = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv,vL,vR,vT,vB;uniform sampler2D uPressure,uVelocity;void main(){float L=texture2D(uPressure,vL).x,R=texture2D(uPressure,vR).x,T=texture2D(uPressure,vT).x,B=texture2D(uPressure,vB).x;vec2 vel=texture2D(uVelocity,vUv).xy-vec2(R-L,T-B);gl_FragColor=vec4(vel,0,1);}'));
+  var advProg    = new Program(baseVert, compileShader(gl.FRAGMENT_SHADER, 'precision highp float;precision highp sampler2D;varying vec2 vUv;uniform sampler2D uVelocity,uSource;uniform vec2 texelSize,dyeTexelSize;uniform float dt,dissipation;vec4 bilerp(sampler2D sam,vec2 uv,vec2 ts){vec2 st=uv/ts-0.5;vec2 iuv=floor(st);vec2 fuv=fract(st);vec4 a=texture2D(sam,(iuv+vec2(0.5,0.5))*ts);vec4 b=texture2D(sam,(iuv+vec2(1.5,0.5))*ts);vec4 c=texture2D(sam,(iuv+vec2(0.5,1.5))*ts);vec4 d=texture2D(sam,(iuv+vec2(1.5,1.5))*ts);return mix(mix(a,b,fuv.x),mix(c,d,fuv.x),fuv.y);}void main(){vec2 coord=vUv-dt*texture2D(uVelocity,vUv).xy*texelSize;vec4 result=texture2D(uSource,coord);gl_FragColor=result/(1.0+dissipation*dt);}'));
+  var displayMat = new Material(baseVert, 'precision highp float;precision highp sampler2D;varying vec2 vUv,vL,vR,vT,vB;uniform sampler2D uTexture;uniform vec2 texelSize;void main(){vec3 c=texture2D(uTexture,vUv).rgb;float a=max(c.r,max(c.g,c.b));\n#ifdef LIGHT_MODE\ngl_FragColor=vec4(vec3(1.0)-c,a);\n#else\ngl_FragColor=vec4(c,a);\n#endif\n}');
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,-1,1,1,1,1,-1]), gl.STATIC_DRAW);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array([0,1,2,0,2,3]), gl.STATIC_DRAW);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+  gl.enableVertexAttribArray(0);
+
+  function blit(target, clear) {
+    if (target == null) { gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight); gl.bindFramebuffer(gl.FRAMEBUFFER, null); }
+    else { gl.viewport(0,0,target.width,target.height); gl.bindFramebuffer(gl.FRAMEBUFFER, target.fbo); }
+    if (clear) { gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT); }
+    gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+  }
+
+  var dye, velocity, divergence, curl, pressure;
+
+  function createFBO(w, h, iF, f, t, param) {
+    gl.activeTexture(gl.TEXTURE0);
+    var tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, param);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, param);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, iF, w, h, 0, f, t, null);
+    var fbo = gl.createFramebuffer(); gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+    gl.viewport(0,0,w,h); gl.clear(gl.COLOR_BUFFER_BIT);
+    return { texture:tex, fbo:fbo, width:w, height:h, texelSizeX:1/w, texelSizeY:1/h,
+      attach: function(id) { gl.activeTexture(gl.TEXTURE0+id); gl.bindTexture(gl.TEXTURE_2D, tex); return id; } };
+  }
+  function createDoubleFBO(w, h, iF, f, t, p) {
+    var f1 = createFBO(w,h,iF,f,t,p), f2 = createFBO(w,h,iF,f,t,p);
+    return { width:w, height:h, texelSizeX:f1.texelSizeX, texelSizeY:f1.texelSizeY,
+      get read(){return f1;}, set read(v){f1=v;},
+      get write(){return f2;}, set write(v){f2=v;},
+      swap: function(){var tmp=f1;f1=f2;f2=tmp;} };
+  }
+  function getResolution(res) {
+    var ar = gl.drawingBufferWidth / gl.drawingBufferHeight;
+    if (ar < 1) ar = 1 / ar;
+    var mn = Math.round(res), mx = Math.round(res * ar);
+    return gl.drawingBufferWidth > gl.drawingBufferHeight ? {width:mx,height:mn} : {width:mn,height:mx};
+  }
+  function destroyFBO(fbo) {
+    if (!fbo) return;
+    if (fbo.fbo)     gl.deleteFramebuffer(fbo.fbo);
+    if (fbo.texture) gl.deleteTexture(fbo.texture);
+  }
+  function destroyDoubleFBO(dfbo) {
+    if (!dfbo) return;
+    destroyFBO(dfbo.read);
+    destroyFBO(dfbo.write);
+  }
+
+  function initFBOs() {
+    var sR = getResolution(config.SIM_RESOLUTION), dR = getResolution(config.DYE_RESOLUTION);
+    var tt = halfFloatTexType, filt = supportLinearFiltering ? gl.LINEAR : gl.NEAREST;
+    gl.disable(gl.BLEND);
+    if (!dye)      dye      = createDoubleFBO(dR.width,dR.height,formatRGBA.internalFormat,formatRGBA.format,tt,filt);
+    if (!velocity) velocity = createDoubleFBO(sR.width,sR.height,formatRG.internalFormat,formatRG.format,tt,filt);
+    divergence = createFBO(sR.width,sR.height,formatR.internalFormat,formatR.format,tt,gl.NEAREST);
+    curl       = createFBO(sR.width,sR.height,formatR.internalFormat,formatR.format,tt,gl.NEAREST);
+    pressure   = createDoubleFBO(sR.width,sR.height,formatR.internalFormat,formatR.format,tt,gl.NEAREST);
+  }
+
+  function reinitFBOs() {
+    destroyDoubleFBO(dye);
+    destroyDoubleFBO(velocity);
+    destroyFBO(divergence);
+    destroyFBO(curl);
+    destroyDoubleFBO(pressure);
+    dye = velocity = divergence = curl = pressure = null;
+    initFBOs();
+  }
+
+  function HSVtoRGB(h,s,v) {
+    var r,g,b,i=Math.floor(h*6),f=h*6-i,p=v*(1-s),q=v*(1-f*s),t=v*(1-(1-f)*s);
+    switch(i%6){case 0:r=v;g=t;b=p;break;case 1:r=q;g=v;b=p;break;case 2:r=p;g=v;b=t;break;case 3:r=p;g=q;b=v;break;case 4:r=t;g=p;b=v;break;case 5:r=v;g=p;b=q;break;}
+    return {r:r,g:g,b:b};
+  }
+
+  function generateColor() {
+    /* Mismo valor oscuro en ambos modos.
+       dark (screen sobre negro): acumula hacia blanco brillante.
+       light (difference sobre blanco): acumula hacia negro visible. */
+    var v = 0.04 + Math.random() * 0.05;
+    return { r: v, g: v, b: v };
+  }
+
+  function scaleByPixelRatio(v) { return Math.floor(v * (window.devicePixelRatio || 1)); }
+  function correctDeltaX(d) { var ar=canvas.width/canvas.height; if(ar<1)d*=ar; return d; }
+  function correctDeltaY(d) { var ar=canvas.width/canvas.height; if(ar>1)d/=ar; return d; }
+  function correctRadius(r) { var ar=canvas.width/canvas.height; if(ar>1)r*=ar; return r; }
+
+  function updatePtrDown(ptr, id, px, py) {
+    ptr.id=id; ptr.down=true; ptr.moved=false;
+    ptr.texcoordX=px/canvas.width; ptr.texcoordY=1-py/canvas.height;
+    ptr.prevTexcoordX=ptr.texcoordX; ptr.prevTexcoordY=ptr.texcoordY;
+    ptr.deltaX=0; ptr.deltaY=0; ptr.color=generateColor();
+  }
+  function updatePtrMove(ptr, px, py) {
+    ptr.prevTexcoordX=ptr.texcoordX; ptr.prevTexcoordY=ptr.texcoordY;
+    ptr.texcoordX=px/canvas.width; ptr.texcoordY=1-py/canvas.height;
+    ptr.deltaX=correctDeltaX(ptr.texcoordX-ptr.prevTexcoordX);
+    ptr.deltaY=correctDeltaY(ptr.texcoordY-ptr.prevTexcoordY);
+    ptr.moved=Math.abs(ptr.deltaX)>0||Math.abs(ptr.deltaY)>0;
+  }
+
+  function splat(x, y, dx, dy, color) {
+    splatProg.bind();
+    gl.uniform1i(splatProg.uniforms.uTarget, velocity.read.attach(0));
+    gl.uniform1f(splatProg.uniforms.aspectRatio, canvas.width/canvas.height);
+    gl.uniform2f(splatProg.uniforms.point, x, y);
+    gl.uniform3f(splatProg.uniforms.color, dx, dy, 0);
+    gl.uniform1f(splatProg.uniforms.radius, correctRadius(config.SPLAT_RADIUS/100));
+    blit(velocity.write); velocity.swap();
+    gl.uniform1i(splatProg.uniforms.uTarget, dye.read.attach(0));
+    gl.uniform3f(splatProg.uniforms.color, color.r, color.g, color.b);
+    blit(dye.write); dye.swap();
+  }
+  function splatPointer(ptr) { splat(ptr.texcoordX, ptr.texcoordY, ptr.deltaX*config.SPLAT_FORCE, ptr.deltaY*config.SPLAT_FORCE, ptr.color); }
+  function clickSplat(ptr)   { var c=generateColor(); c.r*=2.5;c.g*=2.5;c.b*=2.5; splat(ptr.texcoordX,ptr.texcoordY,6*(Math.random()-.5),16*(Math.random()-.5),c); }
+
+  function step(dt) {
+    gl.disable(gl.BLEND);
+    curlProg.bind(); gl.uniform2f(curlProg.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY); gl.uniform1i(curlProg.uniforms.uVelocity,velocity.read.attach(0)); blit(curl);
+    vortProg.bind(); gl.uniform2f(vortProg.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY); gl.uniform1i(vortProg.uniforms.uVelocity,velocity.read.attach(0)); gl.uniform1i(vortProg.uniforms.uCurl,curl.attach(1)); gl.uniform1f(vortProg.uniforms.curl,config.CURL); gl.uniform1f(vortProg.uniforms.dt,dt); blit(velocity.write); velocity.swap();
+    divProg.bind(); gl.uniform2f(divProg.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY); gl.uniform1i(divProg.uniforms.uVelocity,velocity.read.attach(0)); blit(divergence);
+    clearProg.bind(); gl.uniform1i(clearProg.uniforms.uTexture,pressure.read.attach(0)); gl.uniform1f(clearProg.uniforms.value,config.PRESSURE); blit(pressure.write); pressure.swap();
+    presProg.bind(); gl.uniform2f(presProg.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY); gl.uniform1i(presProg.uniforms.uDivergence,divergence.attach(0));
+    for (var i=0;i<config.PRESSURE_ITERATIONS;i++) { gl.uniform1i(presProg.uniforms.uPressure,pressure.read.attach(1)); blit(pressure.write); pressure.swap(); }
+    gradProg.bind(); gl.uniform2f(gradProg.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY); gl.uniform1i(gradProg.uniforms.uPressure,pressure.read.attach(0)); gl.uniform1i(gradProg.uniforms.uVelocity,velocity.read.attach(1)); blit(velocity.write); velocity.swap();
+    advProg.bind(); gl.uniform2f(advProg.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY); gl.uniform2f(advProg.uniforms.dyeTexelSize,velocity.texelSizeX,velocity.texelSizeY);
+    var vId=velocity.read.attach(0); gl.uniform1i(advProg.uniforms.uVelocity,vId); gl.uniform1i(advProg.uniforms.uSource,vId); gl.uniform1f(advProg.uniforms.dt,dt); gl.uniform1f(advProg.uniforms.dissipation,config.VELOCITY_DISSIPATION); blit(velocity.write); velocity.swap();
+    gl.uniform2f(advProg.uniforms.dyeTexelSize,dye.texelSizeX,dye.texelSizeY); gl.uniform1i(advProg.uniforms.uVelocity,velocity.read.attach(0)); gl.uniform1i(advProg.uniforms.uSource,dye.read.attach(1)); gl.uniform1f(advProg.uniforms.dissipation,config.DENSITY_DISSIPATION); blit(dye.write); dye.swap();
+  }
+  function render() {
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.enable(gl.BLEND);
+    displayMat.bind();
+    /* No LIGHT_MODE: shader siempre emite c directamente.
+       dark mode: screen sobre negro → acumula blanco
+       light mode: difference sobre blanco → acumula negro */
+    displayMat.setKeywords(['SHADING']);
+    gl.uniform2f(displayMat.uniforms.texelSize, 1/gl.drawingBufferWidth, 1/gl.drawingBufferHeight);
+    gl.uniform1i(displayMat.uniforms.uTexture, dye.read.attach(0)); blit(null);
+  }
+
+  initFBOs();
+
+  var lastTime = Date.now(), colorTimer = 0;
+  var fluidAnimId;
+  var isRunning = true;
+
+  /* ── Destellos autónomos — integrado en el loop a 60fps ── */
+  var aX  = 0.3 + Math.random() * 0.4;
+  var aY  = 0.3 + Math.random() * 0.4;
+  /* Velocidad alta = trazos largos, no puntitos */
+  var aVX = (Math.random() - 0.5) * 0.009;
+  var aVY = (Math.random() - 0.5) * 0.009;
+  var aKickTimer = 0;   /* contador para cambios de dirección */
+
+  function frame() {
+    if (!isRunning) return;
+    var now = Date.now(), dt = Math.min((now - lastTime) / 1000, 0.016666); lastTime = now;
+    var w = scaleByPixelRatio(canvas.clientWidth), h = scaleByPixelRatio(canvas.clientHeight);
+    if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; reinitFBOs(); }
+    colorTimer += dt * config.COLOR_UPDATE_SPEED;
+    if (colorTimer >= 1) { colorTimer %= 1; pointers.forEach(function(p){ p.color = generateColor(); }); }
+    pointers.forEach(function(p){ if(p.moved){ p.moved=false; splatPointer(p); } });
+
+  /* ── Destello autónomo: corre cada frame a 60fps ── */
+    aKickTimer++;
+    /* Cambio de dirección suave cada ~5–8s (300–480 frames) */
+    if (aKickTimer > 300 + Math.random() * 180) {
+      aKickTimer = 0;
+      aVX = (Math.random() - 0.5) * 0.012;
+      aVY = (Math.random() - 0.5) * 0.012;
+    }
+    aVX += (Math.random() - 0.5) * 0.0002;
+    aVY += (Math.random() - 0.5) * 0.0002;
+    var spd = Math.sqrt(aVX*aVX + aVY*aVY);
+    var maxSpd = 0.011;
+    if (spd > maxSpd) { aVX = aVX/spd*maxSpd; aVY = aVY/spd*maxSpd; }
+    /* Mover y rebotar suave */
+    aX += aVX; aY += aVY;
+    if (aX <= 0.02 || aX >= 0.98) { aVX *= -0.7; aX = Math.max(0.02, Math.min(0.98, aX)); }
+    if (aY <= 0.02 || aY >= 0.98) { aVY *= -0.7; aY = Math.max(0.02, Math.min(0.98, aY)); }
+    /* Radio pequeño solo para el auto — el mouse usa config.SPLAT_RADIUS normal */
+    var savedR = config.SPLAT_RADIUS;
+    config.SPLAT_RADIUS = 0.035;
+    splat(aX, aY, aVX * config.SPLAT_FORCE, aVY * config.SPLAT_FORCE, generateColor());
+    config.SPLAT_RADIUS = savedR;
+
+    step(dt); render();
+    fluidAnimId = requestAnimationFrame(frame);
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      isRunning = false;
+      cancelAnimationFrame(fluidAnimId);
+    } else {
+      isRunning = true;
+      lastTime = Date.now();
+      frame();
+    }
+  });
+
+  frame();
+
+  window.addEventListener('mousedown', function (e) {
+    var p = pointers[0];
+    updatePtrDown(p, -1, scaleByPixelRatio(e.clientX), scaleByPixelRatio(e.clientY));
+    clickSplat(p);
+  });
+  var firstMove = false;
+  window.addEventListener('mousemove', function (e) {
+    var p = pointers[0];
+    if (!firstMove) { firstMove = true; p.color = generateColor(); }
+    updatePtrMove(p, scaleByPixelRatio(e.clientX), scaleByPixelRatio(e.clientY));
+  });
+  window.addEventListener('touchstart', function (e) {
+    var p = pointers[0], t = e.targetTouches[0];
+    updatePtrDown(p, t.identifier, scaleByPixelRatio(t.clientX), scaleByPixelRatio(t.clientY));
+  });
+  window.addEventListener('touchmove', function (e) {
+    var p = pointers[0], t = e.targetTouches[0];
+    updatePtrMove(p, scaleByPixelRatio(t.clientX), scaleByPixelRatio(t.clientY));
+  }, { passive: true });
+
+})();
+</script>
+<!-- Cinema letterbox handler -->
+<script>
+(function () {
+  var wrap    = document.getElementById('cinemaWrap');
+  var video   = document.getElementById('heroVideo');
+  var skipBtn = document.getElementById('skipBtn');
+  if (!wrap || !video) return;
+
+  /* Bloquear scroll en html Y body durante la intro */
+  document.documentElement.style.overflow = 'hidden';
+
+  /* Abrir las barras al arrancar */
+  setTimeout(function () { wrap.classList.add('open'); }, 200);
+
+  /* Mostrar skip button cuando las barras ya están abiertas */
+  setTimeout(function () {
+    if (skipBtn) skipBtn.classList.add('visible');
+  }, 1600);
+
+  function startTypewriter() {
+    var el = document.getElementById('heroSub');
+    if (!el || el._twDone) return;
+    el._twDone = true;
+    var text = 'Product & Creative Designer';
+    var cur = document.createElement('span');
+    cur.className = 'tw-cursor';
+    cur.setAttribute('aria-hidden', 'true');
+    el.appendChild(cur);
+    var i = 0;
+    var iv = setInterval(function () {
+      el.insertBefore(document.createTextNode(text[i]), cur);
+      i++;
+      if (i >= text.length) {
+        clearInterval(iv);
+        setTimeout(function () { cur.style.display = 'none'; }, 1200);
+      }
+    }, 55);
+  }
+
+  function dismiss() {
+    if (skipBtn) { skipBtn.classList.remove('visible'); skipBtn.style.pointerEvents = 'none'; }
+    wrap.classList.remove('open');
+    setTimeout(function () {
+      wrap.classList.add('fade-out');
+      setTimeout(function () {
+        wrap.style.display = 'none';
+        document.body.classList.remove('cinema-on');
+        document.documentElement.style.overflow = '';
+        startTypewriter();
+        var heroEl = document.querySelector('.hero');
+        if (heroEl) heroEl.classList.add('hero--in');
+      }, 1200);
+    }, 600);
+  }
+
+  if (skipBtn) skipBtn.addEventListener('click', dismiss);
+  video.addEventListener('ended', dismiss);
+  video.addEventListener('error', function () {
+    wrap.style.display = 'none';
+    document.body.classList.remove('cinema-on');
+    document.documentElement.style.overflow = '';
+    startTypewriter();
+    var heroEl = document.querySelector('.hero');
+    if (heroEl) heroEl.classList.add('hero--in');
+  });
+})();
+</script>
+
+<!-- Scroll-cinematic video driver -->
+<script>
+(function () {
+  'use strict';
+
+  var section = document.getElementById('scrollVideo');
+  var sticky  = document.getElementById('svSticky');
+  var scene   = document.getElementById('svScene');
+  var vid     = document.getElementById('svVideo');
+  if (!section || !sticky || !vid || !scene) return;
+  vid.pause(); // Lo pausamos apenas carga
+  vid.addEventListener('play', function() {
+    vid.pause();
+  });
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  /* Left chapters — evenly distributed, one per 20% of scroll */
+  var CHAPTERS = [
+    { el: document.getElementById('svc0'),  from: 0.06, peak: 0.14, to: 0.24 },
+    { el: document.getElementById('svc1'),  from: 0.24, peak: 0.33, to: 0.43 },
+    { el: document.getElementById('svc2'),  from: 0.43, peak: 0.53, to: 0.62 },
+    { el: document.getElementById('svc3'),  from: 0.62, peak: 0.72, to: 0.81 },
+    { el: document.getElementById('svc4'),  from: 0.81, peak: 0.90, to: 1.02 }
+  ];
+  /* Right chapters — appear ~4% after left, linger slightly longer */
+  var RCHAPTERS = [
+    { el: document.getElementById('svcr0'), from: 0.10, peak: 0.18, to: 0.27 },
+    { el: document.getElementById('svcr1'), from: 0.28, peak: 0.37, to: 0.46 },
+    { el: document.getElementById('svcr2'), from: 0.47, peak: 0.57, to: 0.65 },
+    { el: document.getElementById('svcr3'), from: 0.66, peak: 0.76, to: 0.84 },
+    { el: document.getElementById('svcr4'), from: 0.85, peak: 0.93, to: 1.04 }
+  ];
+  var dots = document.querySelectorAll('.svp-dot');
+
+  var targetP = 0;
+  var smoothP = 0;
+  var rafId   = null;
+
+  function animateChapter(ch, invert) {
+    if (!ch.el) return;
+    var fi = 20, fo = 14;
+    var op, ty;
+    if (smoothP <= ch.from) {
+      op = 0; ty = invert ? -fi : fi;
+    } else if (smoothP <= ch.peak) {
+      var t0 = (smoothP - ch.from) / (ch.peak - ch.from);
+      op = t0; ty = (invert ? -fi : fi) * (1 - t0);
+    } else if (smoothP <= ch.to) {
+      var t1 = (smoothP - ch.peak) / (ch.to - ch.peak);
+      op = 1 - t1; ty = (invert ? fo : -fo) * t1;
+    } else {
+      op = 0; ty = invert ? fo : -fo;
+    }
+    ch.el.style.opacity = op.toFixed(4);
+    ch.el.style.transform = 'translateY(calc(-50% + ' + ty.toFixed(1) + 'px))';
+    return op;
+  }
+
+  function tick() {
+    smoothP += (targetP - smoothP) * 0.042;
+
+    if (vid.readyState >= 2 && vid.duration) {
+      vid.currentTime = smoothP * vid.duration;
+    }
+
+    var rotY  = Math.sin(smoothP * Math.PI) * 1.6;
+    var scale = 1.0 + Math.sin(smoothP * Math.PI) * 0.012;
+    scene.style.transform =
+      'scale(' + scale.toFixed(5) + ') rotateY(' + rotY.toFixed(4) + 'deg)';
+
+    for (var ci = 0; ci < CHAPTERS.length; ci++) {
+      var op = animateChapter(CHAPTERS[ci], false);
+      /* right chapters slide in from the opposite direction */
+      animateChapter(RCHAPTERS[ci], true);
+      if (dots[ci]) {
+        if (op > 0.4) { dots[ci].classList.add('active'); }
+        else          { dots[ci].classList.remove('active'); }
+      }
+    }
+
+    if (Math.abs(targetP - smoothP) > 0.00015) {
+      rafId = requestAnimationFrame(tick);
+    } else {
+      rafId = null;
+    }
+  }
+
+  function update(sy) {
+    var totalRange = section.offsetTop + section.offsetHeight - window.innerHeight;
+    targetP = clamp(sy / totalRange, 0, 1);
+    if (!rafId) rafId = requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('scroll', function () { update(window.scrollY); }, { passive: true });
+  window.addEventListener('resize', function () { update(window.scrollY); });
+  update(window.scrollY);
+})();
+</script>
+
+<!-- Tinta china WebGL — mismo motor que el hero, LIGHT_MODE sobre blanco -->
+<script>
+(function () {
+  'use strict';
+  var section = document.getElementById('inkSection');
+  if (!section) return;
+
+  var canvas = document.createElement('canvas');
+  canvas.setAttribute('aria-hidden', 'true');
+  canvas.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:normal;';
+  section.insertBefore(canvas, section.firstChild);
+
+  var isMobile = window.matchMedia('(max-width:768px) or (pointer:coarse)').matches;
+  var cfg = {
+    SIM_RESOLUTION:       128,
+    DYE_RESOLUTION:       isMobile ? 512 : 768,
+    DENSITY_DISSIPATION:  1.8,
+    VELOCITY_DISSIPATION: 0.9,
+    PRESSURE:             0.5,
+    PRESSURE_ITERATIONS:  25,
+    CURL:                 14,
+    SPLAT_RADIUS:         0.22,
+    SPLAT_FORCE:          6500,
+    COLOR_UPDATE_SPEED:   10,
+  };
+
+  var params = { alpha:true, depth:false, stencil:false, antialias:false, preserveDrawingBuffer:false };
+  var gl = canvas.getContext('webgl2', params);
+  var isWebGL2 = !!gl;
+  if (!gl) gl = canvas.getContext('webgl', params) || canvas.getContext('experimental-webgl', params);
+  if (!gl) { canvas.style.display = 'none'; return; }
+
+  var halfFloat, linFilt;
+  if (isWebGL2) { gl.getExtension('EXT_color_buffer_float'); linFilt = gl.getExtension('OES_texture_float_linear'); }
+  else { halfFloat = gl.getExtension('OES_texture_half_float'); linFilt = gl.getExtension('OES_texture_half_float_linear'); }
+  gl.clearColor(0,0,0,1);
+
+  var hfType = isWebGL2 ? gl.HALF_FLOAT : (halfFloat && halfFloat.HALF_FLOAT_OES);
+  function supFmt(gl,iF,f,t){var tx=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tx);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texImage2D(gl.TEXTURE_2D,0,iF,4,4,0,f,t,null);var fb=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,fb);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tx,0);return gl.checkFramebufferStatus(gl.FRAMEBUFFER)===gl.FRAMEBUFFER_COMPLETE;}
+  function getFmt(gl,iF,f,t){if(!supFmt(gl,iF,f,t)){if(iF===gl.R16F)return getFmt(gl,gl.RG16F,gl.RG,t);if(iF===gl.RG16F)return getFmt(gl,gl.RGBA16F,gl.RGBA,t);return null;}return{internalFormat:iF,format:f};}
+  var fmtRGBA,fmtRG,fmtR;
+  if(isWebGL2){fmtRGBA=getFmt(gl,gl.RGBA16F,gl.RGBA,hfType);fmtRG=getFmt(gl,gl.RG16F,gl.RG,hfType);fmtR=getFmt(gl,gl.R16F,gl.RED,hfType);}
+  else{fmtRGBA=getFmt(gl,gl.RGBA,gl.RGBA,hfType);fmtRG=getFmt(gl,gl.RGBA,gl.RGBA,hfType);fmtR=getFmt(gl,gl.RGBA,gl.RGBA,hfType);}
+
+  function cShader(type,src,kw){if(kw)kw.forEach(function(k){src='#define '+k+'\n'+src;});var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+  function cProg(v,f){var p=gl.createProgram();gl.attachShader(p,v);gl.attachShader(p,f);gl.linkProgram(p);return p;}
+  function getU(p){var u={},n=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);for(var i=0;i<n;i++){var nm=gl.getActiveUniform(p,i).name;u[nm]=gl.getUniformLocation(p,nm);}return u;}
+  function Prog(v,f){this.program=cProg(v,f);this.uniforms=getU(this.program);}
+  Prog.prototype.bind=function(){gl.useProgram(this.program);};
+  function Mat(v,fs){this.vert=v;this.fragSrc=fs;this.programs=[];this.activeProgram=null;this.uniforms=[];}
+  Mat.prototype.setKeywords=function(kw){var h=0;kw.forEach(function(k){for(var i=0;i<k.length;i++){h=(h<<5)-h+k.charCodeAt(i);h|=0;}});var p=this.programs[h];if(!p){var fg=cShader(gl.FRAGMENT_SHADER,this.fragSrc,kw);p=cProg(this.vert,fg);this.programs[h]=p;}if(p===this.activeProgram)return;this.uniforms=getU(p);this.activeProgram=p;};
+  Mat.prototype.bind=function(){gl.useProgram(this.activeProgram);};
+
+  var bv=cShader(gl.VERTEX_SHADER,'precision highp float;attribute vec2 aPosition;varying vec2 vUv,vL,vR,vT,vB;uniform vec2 texelSize;void main(){vUv=aPosition*0.5+0.5;vL=vUv-vec2(texelSize.x,0.0);vR=vUv+vec2(texelSize.x,0.0);vT=vUv+vec2(0.0,texelSize.y);vB=vUv-vec2(0.0,texelSize.y);gl_Position=vec4(aPosition,0.0,1.0);}');
+  var clrP=new Prog(bv,cShader(gl.FRAGMENT_SHADER,'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv;uniform sampler2D uTexture;uniform float value;void main(){gl_FragColor=value*texture2D(uTexture,vUv);}'));
+  var splP=new Prog(bv,cShader(gl.FRAGMENT_SHADER,'precision highp float;precision highp sampler2D;varying vec2 vUv;uniform sampler2D uTarget;uniform float aspectRatio;uniform vec3 color;uniform vec2 point;uniform float radius;void main(){vec2 p=vUv-point.xy;p.x*=aspectRatio;vec3 splat=exp(-dot(p,p)/radius)*color;vec3 base=texture2D(uTarget,vUv).xyz;gl_FragColor=vec4(base+splat,1.0);}'));
+  var divP=new Prog(bv,cShader(gl.FRAGMENT_SHADER,'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv,vL,vR,vT,vB;uniform sampler2D uVelocity;void main(){float L=texture2D(uVelocity,vL).x,R=texture2D(uVelocity,vR).x,T=texture2D(uVelocity,vT).y,B=texture2D(uVelocity,vB).y;vec2 C=texture2D(uVelocity,vUv).xy;if(vL.x<0.0){L=-C.x;}if(vR.x>1.0){R=-C.x;}if(vT.y>1.0){T=-C.y;}if(vB.y<0.0){B=-C.y;}gl_FragColor=vec4(0.5*(R-L+T-B),0,0,1);}'));
+  var cuP=new Prog(bv,cShader(gl.FRAGMENT_SHADER,'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv,vL,vR,vT,vB;uniform sampler2D uVelocity;void main(){float L=texture2D(uVelocity,vL).y,R=texture2D(uVelocity,vR).y,T=texture2D(uVelocity,vT).x,B=texture2D(uVelocity,vB).x;gl_FragColor=vec4(0.5*(R-L-T+B),0,0,1);}'));
+  var voP=new Prog(bv,cShader(gl.FRAGMENT_SHADER,'precision highp float;precision highp sampler2D;varying vec2 vUv,vL,vR,vT,vB;uniform sampler2D uVelocity,uCurl;uniform float curl,dt;void main(){float L=texture2D(uCurl,vL).x,R=texture2D(uCurl,vR).x,T=texture2D(uCurl,vT).x,B=texture2D(uCurl,vB).x,C=texture2D(uCurl,vUv).x;vec2 force=0.5*vec2(abs(T)-abs(B),abs(R)-abs(L));force/=length(force)+0.0001;force*=curl*C;force.y*=-1.0;vec2 vel=texture2D(uVelocity,vUv).xy+force*dt;vel=min(max(vel,-1000.0),1000.0);gl_FragColor=vec4(vel,0,1);}'));
+  var prP=new Prog(bv,cShader(gl.FRAGMENT_SHADER,'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv,vL,vR,vT,vB;uniform sampler2D uPressure,uDivergence;void main(){float L=texture2D(uPressure,vL).x,R=texture2D(uPressure,vR).x,T=texture2D(uPressure,vT).x,B=texture2D(uPressure,vB).x,div=texture2D(uDivergence,vUv).x;gl_FragColor=vec4((L+R+B+T-div)*0.25,0,0,1);}'));
+  var grP=new Prog(bv,cShader(gl.FRAGMENT_SHADER,'precision mediump float;precision mediump sampler2D;varying highp vec2 vUv,vL,vR,vT,vB;uniform sampler2D uPressure,uVelocity;void main(){float L=texture2D(uPressure,vL).x,R=texture2D(uPressure,vR).x,T=texture2D(uPressure,vT).x,B=texture2D(uPressure,vB).x;vec2 vel=texture2D(uVelocity,vUv).xy-vec2(R-L,T-B);gl_FragColor=vec4(vel,0,1);}'));
+  var adP=new Prog(bv,cShader(gl.FRAGMENT_SHADER,'precision highp float;precision highp sampler2D;varying vec2 vUv;uniform sampler2D uVelocity,uSource;uniform vec2 texelSize,dyeTexelSize;uniform float dt,dissipation;vec4 bilerp(sampler2D sam,vec2 uv,vec2 ts){vec2 st=uv/ts-0.5;vec2 iuv=floor(st);vec2 fuv=fract(st);vec4 a=texture2D(sam,(iuv+vec2(0.5,0.5))*ts);vec4 b=texture2D(sam,(iuv+vec2(1.5,0.5))*ts);vec4 c=texture2D(sam,(iuv+vec2(0.5,1.5))*ts);vec4 d=texture2D(sam,(iuv+vec2(1.5,1.5))*ts);return mix(mix(a,b,fuv.x),mix(c,d,fuv.x),fuv.y);}void main(){vec2 coord=vUv-dt*texture2D(uVelocity,vUv).xy*texelSize;vec4 result=texture2D(uSource,coord);gl_FragColor=result/(1.0+dissipation*dt);}'));
+  /* LIGHT_MODE: invierte near-white → near-dark; sin él emite blanco (invisible sobre blanco) */
+  var dispM=new Mat(bv,'precision highp float;precision highp sampler2D;varying vec2 vUv;uniform sampler2D uTexture;uniform vec2 texelSize;void main(){vec3 c=texture2D(uTexture,vUv).rgb;float a=max(c.r,max(c.g,c.b));\n#ifdef LIGHT_MODE\ngl_FragColor=vec4(vec3(1.0)-c,a);\n#else\ngl_FragColor=vec4(c,a);\n#endif\n}');
+
+  gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,-1,1,1,1,1,-1]),gl.STATIC_DRAW);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,gl.createBuffer());
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array([0,1,2,0,2,3]),gl.STATIC_DRAW);
+  gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+  gl.enableVertexAttribArray(0);
+
+  function blit(tgt){if(tgt==null){gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight);gl.bindFramebuffer(gl.FRAMEBUFFER,null);}else{gl.viewport(0,0,tgt.width,tgt.height);gl.bindFramebuffer(gl.FRAMEBUFFER,tgt.fbo);}gl.drawElements(gl.TRIANGLES,6,gl.UNSIGNED_SHORT,0);}
+
+  var dye,velocity,divergence,curl,pressure;
+  function mkFBO(w,h,iF,f,t,pm){gl.activeTexture(gl.TEXTURE0);var tx=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,tx);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,pm);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,pm);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);gl.texImage2D(gl.TEXTURE_2D,0,iF,w,h,0,f,t,null);var fb=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,fb);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,tx,0);gl.viewport(0,0,w,h);gl.clear(gl.COLOR_BUFFER_BIT);return{texture:tx,fbo:fb,width:w,height:h,texelSizeX:1/w,texelSizeY:1/h,attach:function(id){gl.activeTexture(gl.TEXTURE0+id);gl.bindTexture(gl.TEXTURE_2D,tx);return id;}};}
+  function mkDFBO(w,h,iF,f,t,pm){var f1=mkFBO(w,h,iF,f,t,pm),f2=mkFBO(w,h,iF,f,t,pm);return{width:w,height:h,texelSizeX:f1.texelSizeX,texelSizeY:f1.texelSizeY,get read(){return f1;},set read(v){f1=v;},get write(){return f2;},set write(v){f2=v;},swap:function(){var tmp=f1;f1=f2;f2=tmp;}};}
+  function getRes(r){var ar=gl.drawingBufferWidth/gl.drawingBufferHeight;if(ar<1)ar=1/ar;var mn=Math.round(r),mx=Math.round(r*ar);return gl.drawingBufferWidth>gl.drawingBufferHeight?{width:mx,height:mn}:{width:mn,height:mx};}
+
+  function initFBOs(){var sR=getRes(cfg.SIM_RESOLUTION),dR=getRes(cfg.DYE_RESOLUTION),tt=hfType,fi=linFilt?gl.LINEAR:gl.NEAREST;gl.disable(gl.BLEND);dye=mkDFBO(dR.width,dR.height,fmtRGBA.internalFormat,fmtRGBA.format,tt,fi);velocity=mkDFBO(sR.width,sR.height,fmtRG.internalFormat,fmtRG.format,tt,fi);divergence=mkFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);curl=mkFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);pressure=mkDFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);}
+
+  function genColor(){var v=0.78+Math.random()*0.14;return{r:v,g:v,b:v};}
+  function spr(){return Math.floor(window.devicePixelRatio||1);}
+  function cdx(d){var ar=canvas.width/canvas.height;if(ar<1)d*=ar;return d;}
+  function cdy(d){var ar=canvas.width/canvas.height;if(ar>1)d/=ar;return d;}
+  function cr(r){var ar=canvas.width/canvas.height;if(ar>1)r*=ar;return r;}
+
+  var ptr={id:-1,texcoordX:0,texcoordY:0,prevTexcoordX:0,prevTexcoordY:0,deltaX:0,deltaY:0,down:false,moved:false,color:{r:0,g:0,b:0}};
+
+  function pDown(px,py){ptr.down=true;ptr.moved=false;ptr.texcoordX=px/canvas.width;ptr.texcoordY=1-py/canvas.height;ptr.prevTexcoordX=ptr.texcoordX;ptr.prevTexcoordY=ptr.texcoordY;ptr.deltaX=0;ptr.deltaY=0;ptr.color=genColor();}
+  function pMove(px,py){ptr.prevTexcoordX=ptr.texcoordX;ptr.prevTexcoordY=ptr.texcoordY;ptr.texcoordX=px/canvas.width;ptr.texcoordY=1-py/canvas.height;ptr.deltaX=cdx(ptr.texcoordX-ptr.prevTexcoordX);ptr.deltaY=cdy(ptr.texcoordY-ptr.prevTexcoordY);ptr.moved=Math.abs(ptr.deltaX)>0||Math.abs(ptr.deltaY)>0;}
+
+  function splat(x,y,dx,dy,col){splP.bind();gl.uniform1i(splP.uniforms.uTarget,velocity.read.attach(0));gl.uniform1f(splP.uniforms.aspectRatio,canvas.width/canvas.height);gl.uniform2f(splP.uniforms.point,x,y);gl.uniform3f(splP.uniforms.color,dx,dy,0);gl.uniform1f(splP.uniforms.radius,cr(cfg.SPLAT_RADIUS/100));blit(velocity.write);velocity.swap();gl.uniform1i(splP.uniforms.uTarget,dye.read.attach(0));gl.uniform3f(splP.uniforms.color,col.r,col.g,col.b);blit(dye.write);dye.swap();}
+  function splatPtr(){splat(ptr.texcoordX,ptr.texcoordY,ptr.deltaX*cfg.SPLAT_FORCE,ptr.deltaY*cfg.SPLAT_FORCE,ptr.color);}
+
+  function step(dt){gl.disable(gl.BLEND);cuP.bind();gl.uniform2f(cuP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(cuP.uniforms.uVelocity,velocity.read.attach(0));blit(curl);voP.bind();gl.uniform2f(voP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(voP.uniforms.uVelocity,velocity.read.attach(0));gl.uniform1i(voP.uniforms.uCurl,curl.attach(1));gl.uniform1f(voP.uniforms.curl,cfg.CURL);gl.uniform1f(voP.uniforms.dt,dt);blit(velocity.write);velocity.swap();divP.bind();gl.uniform2f(divP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(divP.uniforms.uVelocity,velocity.read.attach(0));blit(divergence);clrP.bind();gl.uniform1i(clrP.uniforms.uTexture,pressure.read.attach(0));gl.uniform1f(clrP.uniforms.value,cfg.PRESSURE);blit(pressure.write);pressure.swap();prP.bind();gl.uniform2f(prP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(prP.uniforms.uDivergence,divergence.attach(0));for(var i=0;i<cfg.PRESSURE_ITERATIONS;i++){gl.uniform1i(prP.uniforms.uPressure,pressure.read.attach(1));blit(pressure.write);pressure.swap();}grP.bind();gl.uniform2f(grP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(grP.uniforms.uPressure,pressure.read.attach(0));gl.uniform1i(grP.uniforms.uVelocity,velocity.read.attach(1));blit(velocity.write);velocity.swap();adP.bind();gl.uniform2f(adP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform2f(adP.uniforms.dyeTexelSize,velocity.texelSizeX,velocity.texelSizeY);var vId=velocity.read.attach(0);gl.uniform1i(adP.uniforms.uVelocity,vId);gl.uniform1i(adP.uniforms.uSource,vId);gl.uniform1f(adP.uniforms.dt,dt);gl.uniform1f(adP.uniforms.dissipation,cfg.VELOCITY_DISSIPATION);blit(velocity.write);velocity.swap();gl.uniform2f(adP.uniforms.dyeTexelSize,dye.texelSizeX,dye.texelSizeY);gl.uniform1i(adP.uniforms.uVelocity,velocity.read.attach(0));gl.uniform1i(adP.uniforms.uSource,dye.read.attach(1));gl.uniform1f(adP.uniforms.dissipation,cfg.DENSITY_DISSIPATION);blit(dye.write);dye.swap();}
+
+  function render(){gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.enable(gl.BLEND);dispM.bind();dispM.setKeywords(['SHADING','LIGHT_MODE']);gl.uniform2f(dispM.uniforms.texelSize,1/gl.drawingBufferWidth,1/gl.drawingBufferHeight);gl.uniform1i(dispM.uniforms.uTexture,dye.read.attach(0));blit(null);}
+
+  initFBOs();
+
+  /* Autonomous ink — mismo patrón que el hero */
+  var aX=0.3+Math.random()*0.4, aY=0.3+Math.random()*0.4;
+  var aVX=(Math.random()-0.5)*0.022, aVY=(Math.random()-0.5)*0.022;
+  var aKick=0;
+  var lastT=Date.now(), clrT=0, animId=null, running=false;
+
+  function frame(){
+    if(!running)return;
+    var now=Date.now(), dt=Math.min((now-lastT)/1000,0.016666);lastT=now;
+    var w=Math.floor(canvas.clientWidth*(window.devicePixelRatio||1));
+    var h=Math.floor(canvas.clientHeight*(window.devicePixelRatio||1));
+    if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;
+      /* reinit FBOs on resize */
+      dye=null;velocity=null;divergence=null;curl=null;pressure=null;initFBOs();}
+    clrT+=dt*cfg.COLOR_UPDATE_SPEED;
+    if(clrT>=1){clrT%=1;ptr.color=genColor();}
+    if(ptr.moved){ptr.moved=false;splatPtr();}
+    /* autonomous movement */
+    aKick++;
+    if(aKick>180+Math.random()*120){aKick=0;aVX=(Math.random()-0.5)*0.030;aVY=(Math.random()-0.5)*0.030;}
+    aVX+=(Math.random()-0.5)*0.0005;aVY+=(Math.random()-0.5)*0.0005;
+    var sp=Math.sqrt(aVX*aVX+aVY*aVY),ms=0.024;
+    if(sp>ms){aVX=aVX/sp*ms;aVY=aVY/sp*ms;}
+    aX+=aVX;aY+=aVY;
+    if(aX<=0.02||aX>=0.98){aVX*=-0.7;aX=Math.max(0.02,Math.min(0.98,aX));}
+    if(aY<=0.02||aY>=0.98){aVY*=-0.7;aY=Math.max(0.02,Math.min(0.98,aY));}
+    var sr=cfg.SPLAT_RADIUS;cfg.SPLAT_RADIUS=0.07;
+    splat(aX,aY,aVX*cfg.SPLAT_FORCE,aVY*cfg.SPLAT_FORCE,genColor());
+    cfg.SPLAT_RADIUS=sr;
+    step(dt);render();
+    animId=requestAnimationFrame(frame);
+  }
+
+  /* Mouse events — coordinates relative to canvas */
+  document.addEventListener('mousemove', function(e){
+    var rect=canvas.getBoundingClientRect();
+    if(e.clientY<rect.top||e.clientY>rect.bottom||e.clientX<rect.left||e.clientX>rect.right)return;
+    var px=Math.floor((e.clientX-rect.left)*(window.devicePixelRatio||1));
+    var py=Math.floor((e.clientY-rect.top)*(window.devicePixelRatio||1));
+    pMove(px,py);
+  });
+  document.addEventListener('mousedown', function(e){
+    var rect=canvas.getBoundingClientRect();
+    if(e.clientY<rect.top||e.clientY>rect.bottom||e.clientX<rect.left||e.clientX>rect.right)return;
+    var px=Math.floor((e.clientX-rect.left)*(window.devicePixelRatio||1));
+    var py=Math.floor((e.clientY-rect.top)*(window.devicePixelRatio||1));
+    pDown(px,py);
+    var c=genColor();c.r*=5;c.g*=5;c.b*=5;
+    splat(ptr.texcoordX,ptr.texcoordY,10*(Math.random()-.5),30*(Math.random()-.5),c);
+  });
+
+  /* Touch events — misma lógica que mouse, para móvil y tablet */
+  document.addEventListener('touchmove', function(e){
+    var t=e.touches[0];
+    var rect=canvas.getBoundingClientRect();
+    if(t.clientY<rect.top||t.clientY>rect.bottom||t.clientX<rect.left||t.clientX>rect.right)return;
+    var px=Math.floor((t.clientX-rect.left)*(window.devicePixelRatio||1));
+    var py=Math.floor((t.clientY-rect.top)*(window.devicePixelRatio||1));
+    pMove(px,py);
+  },{passive:true});
+  document.addEventListener('touchstart', function(e){
+    var t=e.touches[0];
+    var rect=canvas.getBoundingClientRect();
+    if(t.clientY<rect.top||t.clientY>rect.bottom||t.clientX<rect.left||t.clientX>rect.right)return;
+    var px=Math.floor((t.clientX-rect.left)*(window.devicePixelRatio||1));
+    var py=Math.floor((t.clientY-rect.top)*(window.devicePixelRatio||1));
+    pDown(px,py);
+    var c=genColor();c.r*=5;c.g*=5;c.b*=5;
+    splat(ptr.texcoordX,ptr.texcoordY,10*(Math.random()-.5),30*(Math.random()-.5),c);
+  },{passive:true});
+
+  /* Only run when section is visible */
+  var obs=new IntersectionObserver(function(entries){
+    if(entries[0].isIntersecting){
+      if(!running){running=true;lastT=Date.now();frame();}
+    } else {
+      running=false;cancelAnimationFrame(animId);
+    }
+  },{threshold:0.05});
+  obs.observe(section);
+})();
+</script>
+
+</body>
+</html>

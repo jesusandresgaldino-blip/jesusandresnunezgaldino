@@ -1,0 +1,2 @@
+# Reemplaza este archivo con una imagen real de 1200x630 px
+# llamada og-image.jpg para que aparezca el preview en redes sociales.

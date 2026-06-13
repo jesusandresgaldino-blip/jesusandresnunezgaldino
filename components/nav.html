@@ -1,0 +1,154 @@
+<style>
+.cn{position:fixed;inset:0 0 auto 0;height:var(--nh);background:var(--nbg);backdrop-filter:var(--nblur);-webkit-backdrop-filter:var(--nblur);border-bottom:.5px solid var(--nbdr);z-index:900;font-family:var(--nf)}
+.cn-w{max-width:960px;margin:0 auto;height:100%;padding:0 20px;display:flex;align-items:center}
+.cn-logo{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;transition:border-color .2s}
+.cn-logo:hover{border-color:rgba(255,255,255,.42)}
+.cn-logo span{color:#f5f5f7;font-size:12px;font-weight:600}
+.cn-list{list-style:none;margin:0 auto;padding:0;display:flex}
+.cn-btn{display:flex;align-items:center;height:var(--nh);padding:0 9px;color:var(--nfg);font-family:var(--nf);font-size:12px;font-weight:400;text-decoration:none;letter-spacing:.01em;white-space:nowrap;cursor:pointer;transition:color .2s;background:none;border:none;user-select:none}
+.cn-item:hover>.cn-btn{color:var(--nmuted)}
+.cn-sbtn{background:none;border:none;cursor:pointer;color:var(--nfg);padding:8px;display:flex;align-items:center;flex-shrink:0;margin-left:4px;transition:color .2s}
+.cn-sbtn:hover{color:#f5f5f7}
+.cn-ham{display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:8px;margin-left:auto;flex-shrink:0}
+.cn-ham span{display:block;width:20px;height:1.5px;background:var(--nfg);border-radius:2px;transform-origin:center;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .25s}
+.cn-ham.is-open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.cn-ham.is-open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.cn-ham.is-open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.cn-drop{position:fixed;top:var(--nh);left:0;right:0;background:var(--ndbg);backdrop-filter:var(--nblur);-webkit-backdrop-filter:var(--nblur);border-bottom:.5px solid var(--nbdr);padding:28px 0 40px;z-index:899;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-14px);transition:opacity .1s,transform .1s,visibility 0s linear .1s}
+.cn-item:hover>.cn-drop{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);transition:opacity .48s cubic-bezier(.16,1,.3,1),transform .48s cubic-bezier(.16,1,.3,1),visibility 0s}
+.cn.sp-open .cn-item:hover>.cn-drop{opacity:0!important;visibility:hidden!important;pointer-events:none!important;transition:none!important}
+.cn-dw{max-width:960px;margin:0 auto;padding:0 20px;display:flex;gap:56px}
+.cn-lbl{display:block;font-size:10px;font-weight:500;letter-spacing:.08em;color:rgba(245,245,247,.24);text-transform:uppercase;margin-bottom:12px}
+.cn-lg a{display:block;color:rgba(245,245,247,.9);text-decoration:none;font-family:var(--nf);font-size:19px;font-weight:600;letter-spacing:-.02em;line-height:1.4;padding:2px 0;transition:color .14s}
+.cn-lg a:hover{color:var(--nmuted)}
+.cn-sm a{display:block;color:rgba(245,245,247,.76);text-decoration:none;font-family:var(--nf);font-size:13px;font-weight:400;line-height:1.5;padding:4px 0;transition:color .14s}
+.cn-sm a:hover{color:var(--nmuted)}
+
+/* Animaciones de entrada escalonada para submenú */
+@keyframes cnItemIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.cn-item:hover .cn-drop .cn-lbl{animation:cnItemIn .4s cubic-bezier(.16,1,.3,1) both .08s}
+.cn-item:hover .cn-drop .cn-lg a:nth-of-type(1){animation:cnItemIn .45s cubic-bezier(.16,1,.3,1) both .13s}
+.cn-item:hover .cn-drop .cn-lg a:nth-of-type(2){animation:cnItemIn .45s cubic-bezier(.16,1,.3,1) both .19s}
+.cn-item:hover .cn-drop .cn-lg a:nth-of-type(3){animation:cnItemIn .45s cubic-bezier(.16,1,.3,1) both .25s}
+.cn-item:hover .cn-drop .cn-lg a:nth-of-type(4){animation:cnItemIn .45s cubic-bezier(.16,1,.3,1) both .31s}
+.cn-item:hover .cn-drop .cn-lg a:nth-of-type(5){animation:cnItemIn .45s cubic-bezier(.16,1,.3,1) both .37s}
+.cn-item:hover .cn-drop .cn-lg a:nth-of-type(6){animation:cnItemIn .45s cubic-bezier(.16,1,.3,1) both .43s}
+.cn-item:hover .cn-drop .cn-lg a:nth-of-type(7){animation:cnItemIn .45s cubic-bezier(.16,1,.3,1) both .49s}
+
+.cn-mob{position:fixed;top:var(--nh);left:0;right:0;bottom:0;background:rgba(12,12,14,.98);backdrop-filter:var(--nblur);-webkit-backdrop-filter:var(--nblur);z-index:898;display:flex;flex-direction:column;padding:24px 24px 48px;overflow-y:auto;opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .12s,transform .12s}
+.cn-mob.is-open{opacity:1;pointer-events:auto;transform:translateY(0);transition:opacity .42s cubic-bezier(.16,1,.3,1),transform .42s cubic-bezier(.16,1,.3,1)}
+@keyframes cnMobIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+.cn-mob-row{opacity:0;border-bottom:.5px solid rgba(255,255,255,.06)}
+.cn-mob.is-open .cn-mob-row{animation:cnMobIn .55s cubic-bezier(.16,1,.3,1) both}
+.cn-mob.is-open .cn-mob-row:nth-child(1){animation-delay:.05s}
+.cn-mob.is-open .cn-mob-row:nth-child(2){animation-delay:.11s}
+.cn-mob.is-open .cn-mob-row:nth-child(3){animation-delay:.17s}
+.cn-mob.is-open .cn-mob-row:nth-child(4){animation-delay:.23s}
+.cn-mob-link{display:flex;align-items:center;justify-content:space-between;width:100%;padding:16px 0;font-family:var(--nf);font-size:clamp(24px,6vw,34px);font-weight:600;color:rgba(245,245,247,.88);text-decoration:none;letter-spacing:-.02em;cursor:pointer;background:none;border:none;text-align:left;line-height:1;transition:color .15s}
+.cn-mob-link:hover{color:var(--nmuted)}
+.cn-mob-acc{overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(.16,1,.3,1)}
+.cn-mob-acc.is-open{max-height:300px}
+.cn-mob-acc-link{display:block;padding:7px 0;font-family:var(--nf);font-size:13px;color:rgba(245,245,247,.45);text-decoration:none;transition:color .15s}
+.cn-mob-acc-link:hover{color:rgba(245,245,247,.82)}
+.cn-mob-footer{margin-top:auto;padding-top:28px;font-family:var(--nf);font-size:11px;color:rgba(245,245,247,.18)}
+/* Panel búsqueda */
+.cn-sp{position:fixed;top:var(--nh);left:0;right:0;background:var(--ndbg);backdrop-filter:var(--nblur);-webkit-backdrop-filter:var(--nblur);border-bottom:.5px solid var(--nbdr);z-index:901;opacity:0;pointer-events:none;transform:translateY(-8px);transition:opacity .1s,transform .1s}
+.cn-sp-top{padding:11px 20px;display:flex;align-items:center;gap:10px;border-bottom:.5px solid rgba(255,255,255,.05)}
+.cn-sp-ic{color:rgba(245,245,247,.26);flex-shrink:0}
+.cn-sp-input{flex:1;background:none;border:none;color:#f5f5f7;font-family:var(--nf);font-size:13px;outline:none}
+.cn-sp-input::placeholder{color:rgba(245,245,247,.24)}
+.cn-sp-cls{background:none;border:none;color:rgba(245,245,247,.38);cursor:pointer;font-family:var(--nf);font-size:12px;padding:4px 8px;transition:color .15s}
+.cn-sp-cls:hover{color:#f5f5f7}
+.cn-sp-sugg{padding:14px 20px 18px}
+.cn-sp-results{padding:14px 20px 18px;display:none}
+.cn-sp-sugg-lbl{display:block;font-size:10px;font-weight:500;letter-spacing:.08em;color:rgba(245,245,247,.24);text-transform:uppercase;margin-bottom:12px}
+.cn-sp-chips{display:flex;flex-wrap:wrap;gap:8px}
+.cn-sp-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(255,255,255,.06);border:.5px solid rgba(255,255,255,.1);border-radius:999px;color:rgba(245,245,247,.68);font-family:var(--nf);font-size:12px;text-decoration:none;transition:background .15s,color .15s;white-space:nowrap}
+.cn-sp-chip:hover{background:rgba(255,255,255,.12);color:#f5f5f7}
+/* Nav container: reservar altura para evitar CLS */
+#nav-container{min-height:var(--nh,44px)}
+@media(max-width:767px){.cn-list{display:none!important}.cn-sbtn{display:none!important}.cn-ham{display:flex!important}}
+@media(min-width:768px){.cn-ham{display:none!important}.cn-mob{display:none!important}}
+</style>
+
+<nav class="cn" role="navigation" aria-label="Navegación principal">
+  <div class="cn-w">
+    <a class="cn-logo" href="/index.html" aria-label="Inicio — Andrés Galdino"><span aria-hidden="true">A</span></a>
+    <ul class="cn-list" role="list">
+      <li class="cn-item"><a class="cn-btn" href="/index.html">Inicio</a></li>
+      <li class="cn-item">
+        <a class="cn-btn" href="/paginas/proyectos.html" aria-haspopup="true">Proyectos</a>
+        <div class="cn-drop" role="menu">
+          <div class="cn-dw">
+            <div class="cn-lg">
+              <span class="cn-lbl">Proyectos</span>
+              <a href="/paginas/proyectos/universitario.html" role="menuitem">Universidad</a>
+              <a href="/paginas/proyectos/victoria-regia.html" role="menuitem">Victoria Regia</a>
+              <a href="/paginas/proyectos/moda-week-international.html" role="menuitem">Moda Week</a>
+              <a href="/paginas/proyectos/chiper.html" role="menuitem">Chiper</a>
+              <a href="/paginas/proyectos/farmalaxia.html" role="menuitem">Farmalaxia</a>
+              <a href="/paginas/proyectos/dreams.html" role="menuitem">Dreams</a>
+              <a href="/paginas/proyectos/museo.html" role="menuitem">Museo</a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="cn-item">
+        <a class="cn-btn" href="/paginas/sobre-mi.html">Perfil</a>
+      </li>
+      <li class="cn-item">
+        <a class="cn-btn" href="/paginas/contacto.html">Contacto</a>
+      </li>
+    </ul>
+    <button class="cn-sbtn" id="cnSBtn" aria-label="Abrir búsqueda">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button id="cnHam" class="cn-ham" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="cn-mob" id="cnMob" role="dialog" aria-label="Menú móvil">
+  <div class="cn-mob-row"><a class="cn-mob-link" href="/index.html">Inicio</a></div>
+  <div class="cn-mob-row">
+    <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+      <a class="cn-mob-link" href="/paginas/proyectos.html" style="padding-right:0;">Proyectos</a>
+      <button id="cnMobProyBtn" aria-expanded="false" style="background:none; border:none; color:rgba(245,245,247,.88); padding:16px;">
+        <svg id="cnChev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="pointer-events:none;transition:transform .35s cubic-bezier(.16,1,.3,1)"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+    </div>
+    <div class="cn-mob-acc" id="cnAcc">
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/universitario.html">Universidad</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/victoria-regia.html">Victoria Regia</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/moda-week-international.html">Moda Week</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/chiper.html">Chiper</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/farmalaxia.html">Farmalaxia</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/dreams.html">Dreams</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/museo.html">Museo</a>
+    </div>
+  </div>
+  <div class="cn-mob-row"><a class="cn-mob-link" href="/paginas/sobre-mi.html">Perfil</a></div>
+  <div class="cn-mob-row"><a class="cn-mob-link" href="/paginas/contacto.html">Contacto</a></div>
+  <div class="cn-mob-footer">Andrés Galdino · Portfolio</div>
+</div>
+
+<div class="cn-sp" id="cnSP" role="search">
+  <div class="cn-sp-top">
+    <svg class="cn-sp-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="cn-sp-input" id="cnSPIn" type="search" placeholder="Buscar proyectos, páginas..." autocomplete="off" aria-label="Buscar en el portafolio">
+    <button class="cn-sp-cls" id="cnSPCls" aria-label="Cerrar búsqueda">Cerrar</button>
+  </div>
+  <div class="cn-sp-sugg" id="cnSugg">
+    <span class="cn-sp-sugg-lbl">Accesos rápidos</span>
+    <div class="cn-sp-chips">
+      <a class="cn-sp-chip" href="/paginas/proyectos.html">Todos los Proyectos</a>
+      <a class="cn-sp-chip" href="/paginas/proyectos/moda-week-international.html">Moda Week</a>
+      <a class="cn-sp-chip" href="/paginas/proyectos/chiper.html">Chiper</a>
+      <a class="cn-sp-chip" href="/paginas/sobre-mi.html">Perfil</a>
+      <a class="cn-sp-chip" href="/paginas/contacto.html">Contacto</a>
+    </div>
+  </div>
+  <div class="cn-sp-results cn-sp-chips" id="cnSPResults" aria-live="polite" aria-label="Resultados de búsqueda"></div>
+</div>
+</body>
