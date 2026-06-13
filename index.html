@@ -523,7 +523,7 @@
 <section id="scrollVideo" aria-hidden="true">
   <div id="svSticky">
     <div id="svScene">
-      <video id="svVideo" src="assets/parallax.mp4" autoplay muted playsinline preload="auto"></video>
+      <video id="svVideo" src="assets/parallax.mp4#t=0.001" muted playsinline preload="auto"></video>
       <div id="svOverlay"></div>
     </div>
 
@@ -1315,7 +1315,10 @@ window._darkMode = true;
   var scene   = document.getElementById('svScene');
   var vid     = document.getElementById('svVideo');
   if (!section || !sticky || !vid || !scene) return;
-
+  vid.pause(); // Lo pausamos apenas carga
+  vid.addEventListener('play', function() {
+    vid.pause();
+  });
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
   /* Left chapters — evenly distributed, one per 20% of scroll */
