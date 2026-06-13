@@ -745,6 +745,7 @@ window._darkMode = true;
     }
 
     function build() {
+      FUZZ = window.innerWidth < 768 ? 0 : 14;
       var fs  = getFS() || 80;
       var mob = window.innerWidth < 768;
       var lines   = mob ? ['Andrés', 'Galdino'] : [TEXT];
@@ -805,6 +806,11 @@ window._darkMode = true;
     }
 
     function draw() {
+      if (window.innerWidth < 768) {
+        ctx.clearRect(-hMargin, 0, canvas.width, tightHeight);
+        ctx.drawImage(offscreen, 0, 0);
+        return;
+      }
       var target = hovering ? HOVER_I : BASE_I;
       intensity += (target - intensity) * 0.1;
       var w = offscreen.width, h = tightHeight;
