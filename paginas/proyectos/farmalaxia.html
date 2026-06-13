@@ -1011,6 +1011,42 @@
       .vr-scroll-panel .lc-n { font-size: 2rem; }
       .vr-scroll-panel .typo-row { grid-template-columns: 60px 1fr; }
       .vr-scroll-panel .typo-spec { display: none; }
+
+      /* ── Cards sin padding mobile previo ── */
+      .vr-scroll-panel .jtbd-card,
+      .vr-scroll-panel .hipo-card,
+      .vr-scroll-panel .hipo-featured { padding: 1.25rem; }
+
+      /* ── Gap interno uniforme en todos los cards ── */
+      .vr-scroll-panel .wf-card,
+      .vr-scroll-panel .strat-card,
+      .vr-scroll-panel .research-card,
+      .vr-scroll-panel .campaign-card,
+      .vr-scroll-panel .metric-card,
+      .vr-scroll-panel .learning-card,
+      .vr-scroll-panel .jtbd-card,
+      .vr-scroll-panel .hipo-card,
+      .vr-scroll-panel .hipo-featured { gap: 0.5rem; }
+
+      /* ── Separadores de sección: de 4-6rem → 1.5rem ── */
+      .vr-scroll-panel .wf-header,
+      .vr-scroll-panel .prob-header { margin-bottom: 1.5rem; }
+      .vr-scroll-panel .prob-rows { margin-bottom: 1.5rem; }
+      .vr-scroll-panel .jtbd-head { margin-bottom: 1.5rem; }
+      .vr-scroll-panel .nec-grid { margin-top: 1.5rem; }
+      .vr-scroll-panel .hipo-layout { margin-top: 1.5rem; }
+      .vr-scroll-panel .typo-layout { margin-top: 1.5rem; }
+      .vr-scroll-panel .typo-sub { margin-bottom: 0.75rem; }
+
+      /* ── Margin-bottom en hijos de cards ── */
+      .vr-scroll-panel .jtbd-chip,
+      .vr-scroll-panel .jtbd-card h4,
+      .vr-scroll-panel .hipo-n,
+      .vr-scroll-panel .strat-title,
+      .vr-scroll-panel .mc-label,
+      .vr-scroll-panel .lc-title,
+      .vr-scroll-panel .rc-title,
+      .vr-scroll-panel .cc-name { margin-bottom: 0.25rem; }
     }
 
     @media (max-width: 390px) {
@@ -1027,6 +1063,9 @@
       .vr-scroll-panel .campaign-card,
       .vr-scroll-panel .metric-card,
       .vr-scroll-panel .learning-card,
+      .vr-scroll-panel .jtbd-card,
+      .vr-scroll-panel .hipo-card,
+      .vr-scroll-panel .hipo-featured,
       .vr-scroll-panel .bq { padding: 1rem; }
     }
 
