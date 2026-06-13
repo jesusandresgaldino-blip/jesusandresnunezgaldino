@@ -717,7 +717,7 @@
       font-size: 15px;
       font-weight: 700;
       letter-spacing: .4px;
-      font-family: monospace;
+      font-family: var(--font);
     }
 
     .vr-scroll-panel .tw { color: #fff; }
@@ -769,6 +769,8 @@
       color: var(--ink);
       letter-spacing: -.3px;
       line-height: 1.1;
+      min-width: 0;
+      word-break: break-word;
     }
 
     .vr-scroll-panel .typo-spec {
@@ -1638,22 +1640,22 @@
               <div class="typo-sub">Tipografía oficial <span>→ Poppins</span></div>
               <div class="typo-row">
                 <span class="typo-level">Display</span>
-                <span class="typo-sample" style="font-size:52px;font-weight:900;">Salud Inteligente</span>
+                <span class="typo-sample" style="font-size:clamp(22px,7vw,52px);font-weight:900;">Salud Inteligente</span>
                 <span class="typo-spec">Black · 52px</span>
               </div>
               <div class="typo-row">
                 <span class="typo-level">H1</span>
-                <span class="typo-sample" style="font-size:40px;font-weight:700;">Tecnología Farmacéutica</span>
+                <span class="typo-sample" style="font-size:clamp(18px,5.5vw,40px);font-weight:700;">Tecnología Farmacéutica</span>
                 <span class="typo-spec">Bold · 40px</span>
               </div>
               <div class="typo-row">
                 <span class="typo-level">H2</span>
-                <span class="typo-sample" style="font-size:28px;font-weight:600;">Nuestros Servicios</span>
+                <span class="typo-sample" style="font-size:clamp(16px,4.5vw,28px);font-weight:600;">Nuestros Servicios</span>
                 <span class="typo-spec">SemiBold · 28px</span>
               </div>
               <div class="typo-row">
                 <span class="typo-level">H3</span>
-                <span class="typo-sample" style="font-size:20px;font-weight:500;">Soluciones para tu bienestar</span>
+                <span class="typo-sample" style="font-size:clamp(14px,3.5vw,20px);font-weight:500;">Soluciones para tu bienestar</span>
                 <span class="typo-spec">Medium · 20px</span>
               </div>
               <div class="typo-row">
