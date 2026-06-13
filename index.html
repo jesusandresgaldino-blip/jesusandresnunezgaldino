@@ -432,37 +432,41 @@
         justify-content: center; text-align: center;
       }
 
-      /* Números: esquina superior izquierda, debajo del nav */
+      /* LEFT: centrado verticalmente, texto visible */
       .svc {
-        left: 16px;
-        top: calc(var(--nh, 44px) + 12px);
-        max-width: 200px;
+        left: clamp(14px, 5vw, 28px);
+        top: 50%;
+        max-width: clamp(180px, 55vw, 260px);
       }
       .svc-num {
-        font-size: clamp(60px, 18vw, 88px);
-        color: rgba(255,255,255,0.10);
+        font-size: clamp(52px, 15vw, 80px);
+        color: rgba(255,255,255,0.06);
       }
-      .svc-h, .svc-p { display: none; }
-      .svc-line { margin-top: 2px; margin-bottom: 0; gap: 8px; }
+      .svc-h {
+        display: block;
+        font-size: clamp(20px, 5.5vw, 30px);
+        margin-bottom: 0;
+        line-height: 1.12;
+      }
+      .svc-p { display: none; }
+      .svc-line { margin-top: 2px; margin-bottom: 6px; gap: 8px; }
       .svc-rule { display: none; }
       .svc-tag  { font-size: 9px; letter-spacing: 2px; }
 
-      /* Frases: esquina inferior derecha
-         top: auto + bottom reemplaza top: 50%
-         JS usa translateY simple (sin -50%) en mobile */
+      /* RIGHT: centrado verticalmente, cita pequeña */
       .svc-r {
-        right: 16px;
-        top: auto;
-        bottom: 68px;
-        max-width: calc(60vw);
+        right: clamp(14px, 5vw, 28px);
+        top: 50%;
+        bottom: auto;
+        max-width: clamp(120px, 42vw, 200px);
         text-align: right;
       }
       .svc-r .svc-line { display: none; }
-      .svc-r-q { font-size: clamp(12px, 3.5vw, 17px); line-height: 1.5; }
+      .svc-r-q { font-size: clamp(11px, 3vw, 15px); line-height: 1.55; }
 
-      /* Gradientes: solo franjas laterales */
-      #svTextGrad  { width: 40%; }
-      #svTextGradR { width: 65%; background: linear-gradient(to left, rgba(0,0,0,0.55) 0%, transparent 100%); }
+      /* Gradientes */
+      #svTextGrad  { width: 50%; background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, transparent 100%); }
+      #svTextGradR { width: 55%; background: linear-gradient(to left, rgba(0,0,0,0.6) 0%, transparent 100%); }
 
       /* Dots */
       #svProgress { bottom: 20px; gap: 10px; }
@@ -478,7 +482,7 @@
 
 <!-- Cinema letterbox: barras se abren revelando el video -->
 <div id="cinemaWrap">
-  <video id="heroVideo" src="assets/videohero.MOV" autoplay muted playsinline></video>
+  <video id="heroVideo" src="assets/videohero.mp4" autoplay muted playsinline></video>
   <div class="cbar" id="cbarTop"></div>
   <div class="cbar" id="cbarBottom"></div>
   <button id="skipBtn" aria-label="Omitir introducción">
@@ -519,7 +523,7 @@
 <section id="scrollVideo" aria-hidden="true">
   <div id="svSticky">
     <div id="svScene">
-      <video id="svVideo" src="assets/video.MOV" muted playsinline preload="auto"></video>
+      <video id="svVideo" src="assets/parallax.mp4" muted playsinline preload="auto"></video>
       <div id="svOverlay"></div>
     </div>
 
@@ -527,58 +531,58 @@
       <div id="svTextGrad"></div>
       <div id="svTextGradR"></div>
 
-      <!-- LEFT: lo que ocurre en el video -->
+      <!-- LEFT -->
       <div class="svc" id="svc0">
         <span class="svc-num">01</span>
-        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">El adulto</span></div>
-        <h2 class="svc-h">Datos,<br>métricas,<br>pantallas</h2>
-        <p class="svc-p">Buscando respuestas<br>en el ruido digital.</p>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Identidad visual</span></div>
+        <h2 class="svc-h">Marcas<br>construidas<br>para durar</h2>
+        <p class="svc-p">Logos, sistemas y lenguaje visual<br>que sobreviven al tiempo.</p>
       </div>
       <div class="svc" id="svc1">
         <span class="svc-num">02</span>
-        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">El quiebre</span></div>
-        <h2 class="svc-h">El sistema<br>te absorbe</h2>
-        <p class="svc-p">La máquina falla.<br>Algo inesperado toma el control.</p>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Diseño de producto</span></div>
+        <h2 class="svc-h">Interfaces<br>que<br>desaparecen</h2>
+        <p class="svc-p">UX que se siente obvio<br>desde el primer toque.</p>
       </div>
       <div class="svc" id="svc2">
         <span class="svc-num">03</span>
-        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">La transformación</span></div>
-        <h2 class="svc-h">Vuelves<br>a ser niño</h2>
-        <p class="svc-p">Desaparece el adulto.<br>Aparece la curiosidad pura.</p>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Dirección creativa</span></div>
+        <h2 class="svc-h">La historia<br>detrás de<br>cada pieza</h2>
+        <p class="svc-p">Traduzco objetivos de negocio<br>en lenguaje visual honesto.</p>
       </div>
       <div class="svc" id="svc3">
         <span class="svc-num">04</span>
-        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">La creación</span></div>
-        <h2 class="svc-h">Un trazo.<br>Un símbolo.</h2>
-        <p class="svc-p">El niño no calcula.<br>Traza desde lo que siente.</p>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Sistemas & escala</span></div>
+        <h2 class="svc-h">Diseño<br>que vive<br>y crece</h2>
+        <p class="svc-p">Arquitecturas visuales para equipos<br>y productos en expansión.</p>
       </div>
       <div class="svc" id="svc4">
         <span class="svc-num">05</span>
-        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">El portal</span></div>
-        <h2 class="svc-h">La creatividad<br>no tiene<br>límites</h2>
-        <p class="svc-p">Ese símbolo abre un portal.<br>El diseño lleva a mundos que aún no existen.</p>
+        <div class="svc-line"><div class="svc-rule"></div><span class="svc-tag">Arte & experimento</span></div>
+        <h2 class="svc-h">Cuando las<br>reglas son<br>el inicio</h2>
+        <p class="svc-p">Motion, fotografía y código<br>como forma de pensar.</p>
       </div>
 
-      <!-- RIGHT: lo que significa — la reflexión -->
+      <!-- RIGHT -->
       <div class="svc-r" id="svcr0">
-        <div class="svc-line"><span class="svc-tag">Lo que todos sentimos</span><div class="svc-rule"></div></div>
-        <p class="svc-r-q">¿Cuándo fue la última vez<br>que creaste algo<br><em>sin miedo a equivocarte?</em></p>
+        <div class="svc-line"><span class="svc-tag">La marca</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">Una buena marca<br>no necesita que<br><em>la expliques.</em></p>
       </div>
       <div class="svc-r" id="svcr1">
-        <div class="svc-line"><span class="svc-tag">El regalo del error</span><div class="svc-rule"></div></div>
-        <p class="svc-r-q">Dentro de cada proceso roto<br>hay una invitación.<br><em>Reinventarse.</em></p>
+        <div class="svc-line"><span class="svc-tag">El usuario</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">El mejor diseño<br>es invisible.<br><em>Solo se siente.</em></p>
       </div>
       <div class="svc-r" id="svcr2">
-        <div class="svc-line"><span class="svc-tag">Así diseño yo</span><div class="svc-rule"></div></div>
-        <p class="svc-r-q">Cuando diseño<br>me siento <em>libre.</em><br>Como descubriendo algo nuevo<br>por primera vez.</p>
+        <div class="svc-line"><span class="svc-tag">El proceso</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">Cada proyecto empieza<br>con la <em>pregunta correcta,</em><br>no con la respuesta.</p>
       </div>
       <div class="svc-r" id="svcr3">
-        <div class="svc-line"><span class="svc-tag">El proceso creativo</span><div class="svc-rule"></div></div>
-        <p class="svc-r-q">La mejor idea no viene<br>del análisis. Viene cuando<br><em>te olvidas de quién debes ser.</em></p>
+        <div class="svc-line"><span class="svc-tag">La escala</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">No construyo piezas.<br>Construyo sistemas<br><em>que piensan solos.</em></p>
       </div>
       <div class="svc-r" id="svcr4">
-        <div class="svc-line"><span class="svc-tag">Mi filosofía</span><div class="svc-rule"></div></div>
-        <p class="svc-r-q">El diseño no es una profesión.<br>Es la forma en que<br><em>recuerdas quién eres.</em></p>
+        <div class="svc-line"><span class="svc-tag">La filosofía</span><div class="svc-rule"></div></div>
+        <p class="svc-r-q">El diseño es<br>la forma más honesta<br><em>que encontré de ver el mundo.</em></p>
       </div>
     </div>
 
@@ -1314,21 +1318,21 @@ window._darkMode = true;
 
   function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-  /* Left chapters — what happens in the video */
+  /* Left chapters — evenly distributed, one per 20% of scroll */
   var CHAPTERS = [
-    { el: document.getElementById('svc0'),  from: 0.10, peak: 0.17, to: 0.26 },
-    { el: document.getElementById('svc1'),  from: 0.26, peak: 0.36, to: 0.45 },
-    { el: document.getElementById('svc2'),  from: 0.45, peak: 0.55, to: 0.64 },
-    { el: document.getElementById('svc3'),  from: 0.64, peak: 0.73, to: 0.82 },
-    { el: document.getElementById('svc4'),  from: 0.82, peak: 0.91, to: 1.06 }
+    { el: document.getElementById('svc0'),  from: 0.06, peak: 0.14, to: 0.24 },
+    { el: document.getElementById('svc1'),  from: 0.24, peak: 0.33, to: 0.43 },
+    { el: document.getElementById('svc2'),  from: 0.43, peak: 0.53, to: 0.62 },
+    { el: document.getElementById('svc3'),  from: 0.62, peak: 0.72, to: 0.81 },
+    { el: document.getElementById('svc4'),  from: 0.81, peak: 0.90, to: 1.02 }
   ];
-  /* Right chapters — the reflection (fades in 0.05 after left, lingers a beat longer) */
+  /* Right chapters — appear ~4% after left, linger slightly longer */
   var RCHAPTERS = [
-    { el: document.getElementById('svcr0'), from: 0.15, peak: 0.21, to: 0.28 },
-    { el: document.getElementById('svcr1'), from: 0.31, peak: 0.40, to: 0.47 },
-    { el: document.getElementById('svcr2'), from: 0.50, peak: 0.58, to: 0.67 },
-    { el: document.getElementById('svcr3'), from: 0.69, peak: 0.77, to: 0.85 },
-    { el: document.getElementById('svcr4'), from: 0.87, peak: 0.94, to: 1.08 }
+    { el: document.getElementById('svcr0'), from: 0.10, peak: 0.18, to: 0.27 },
+    { el: document.getElementById('svcr1'), from: 0.28, peak: 0.37, to: 0.46 },
+    { el: document.getElementById('svcr2'), from: 0.47, peak: 0.57, to: 0.65 },
+    { el: document.getElementById('svcr3'), from: 0.66, peak: 0.76, to: 0.84 },
+    { el: document.getElementById('svcr4'), from: 0.85, peak: 0.93, to: 1.04 }
   ];
   var dots = document.querySelectorAll('.svp-dot');
 
@@ -1338,9 +1342,7 @@ window._darkMode = true;
 
   function animateChapter(ch, invert) {
     if (!ch.el) return;
-    var mob = window.innerWidth < 768;
-    var fi  = mob ? 14 : 22;
-    var fo  = mob ? 10 : 16;
+    var fi = 20, fo = 14;
     var op, ty;
     if (smoothP <= ch.from) {
       op = 0; ty = invert ? -fi : fi;
@@ -1354,14 +1356,12 @@ window._darkMode = true;
       op = 0; ty = invert ? fo : -fo;
     }
     ch.el.style.opacity = op.toFixed(4);
-    ch.el.style.transform = mob
-      ? 'translateY(' + ty.toFixed(1) + 'px)'
-      : 'translateY(calc(-50% + ' + ty.toFixed(1) + 'px))';
+    ch.el.style.transform = 'translateY(calc(-50% + ' + ty.toFixed(1) + 'px))';
     return op;
   }
 
   function tick() {
-    smoothP += (targetP - smoothP) * 0.028;
+    smoothP += (targetP - smoothP) * 0.042;
 
     if (vid.readyState >= 2 && vid.duration) {
       vid.currentTime = smoothP * vid.duration;
