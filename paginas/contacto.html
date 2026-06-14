@@ -60,12 +60,31 @@
         #ff0000, #ff8000, #ffee00, #00ee44, #00ccff, #aa00ff, #ff0080, #ff0000
       );
       filter: blur(1.5px);
-      -webkit-mask: radial-gradient(circle 80px at var(--pointer-x,50%) var(--pointer-y,50%),
+      -webkit-mask: radial-gradient(circle 180px at var(--pointer-x,50%) var(--pointer-y,50%),
         black 0%, black 40%, transparent 100%);
       mask: radial-gradient(circle 180px at var(--pointer-x,50%) var(--pointer-y,50%),
         black 0%, black 40%, transparent 100%);
       opacity: var(--border-glow, 0);
       transition: opacity .2s ease;
+    }
+
+    /* Touch / no-mouse: sin tilt, glow animado por JS */
+    .pc-shell.no-mouse {
+      transform: none !important;
+    }
+    .pc-shell.no-mouse::before {
+      transition: none;
+    }
+
+    /* Responsive */
+    @media(max-width:480px){
+      .contact-stage{
+        padding-top: calc(var(--nh) + 20px);
+        padding-bottom: 32px;
+      }
+    }
+    @media(max-height:660px) and (max-width:520px){
+      .pc-wrap{ max-width:230px; }
     }
 
     .pc {
@@ -212,19 +231,37 @@
 })();
 </script>
 
-<!-- Tilt + borde arcoíris en el borde -->
+<!-- Tilt + borde arcoíris -->
 <script>
 (function(){
   'use strict';
   var wrap  = document.querySelector('.pc-wrap');
-  var shell = document.querySelector('.pc-shell'); 
-  var card  = document.querySelector('.pc');       
+  var shell = document.querySelector('.pc-shell');
+  var card  = document.querySelector('.pc');
   if(!wrap||!shell||!card) return;
 
   var clamp  = function(v,mn,mx){ return Math.min(Math.max(v,mn||0),mx===undefined?100:mx); };
   var round  = function(v,p){ return parseFloat(v.toFixed(p||3)); };
   var adjust = function(v,fMin,fMax,tMin,tMax){ return round(tMin+((tMax-tMin)*(v-fMin))/(fMax-fMin)); };
 
+  /* Detectar si hay puntero preciso (mouse/trackpad). Si no, modo auto-órbita */
+  var hasPointer = window.matchMedia('(pointer: fine)').matches;
+
+  if(!hasPointer){
+    /* Touch / sin mouse: sin tilt, glow orbita automáticamente */
+    shell.classList.add('no-mouse');
+    wrap.style.setProperty('--border-glow','1');
+    var angle = 0;
+    (function autoGlow(){
+      angle += 0.018;
+      wrap.style.setProperty('--pointer-x', (50 + 55 * Math.cos(angle)).toFixed(2)+'%');
+      wrap.style.setProperty('--pointer-y', (50 + 55 * Math.sin(angle)).toFixed(2)+'%');
+      requestAnimationFrame(autoGlow);
+    })();
+    return;
+  }
+
+  /* Mouse: tilt + glow siguiendo el puntero */
   var curX=0,curY=0,tgtX=0,tgtY=0;
   var running=false,lastTs=0,initialUntil=0;
   var DEFAULT_TAU=0.14, INITIAL_TAU=0.6;
@@ -233,51 +270,43 @@
     var w=card.clientWidth||1, h=card.clientHeight||1;
     var px=clamp((100/w)*x,0,100), py=clamp((100/h)*y,0,100);
     var cx=px-50, cy=py-50;
-
-    wrap.style.setProperty('--pointer-x',         px+'%');
-    wrap.style.setProperty('--pointer-y',         py+'%');
-    wrap.style.setProperty('--background-x',      adjust(px,0,100,35,65)+'%');
-    wrap.style.setProperty('--background-y',      adjust(py,0,100,35,65)+'%');
+    wrap.style.setProperty('--pointer-x',          px+'%');
+    wrap.style.setProperty('--pointer-y',          py+'%');
+    wrap.style.setProperty('--background-x',       adjust(px,0,100,35,65)+'%');
+    wrap.style.setProperty('--background-y',       adjust(py,0,100,35,65)+'%');
     wrap.style.setProperty('--pointer-from-center',clamp(Math.hypot(py-50,px-50)/50,0,1));
-    wrap.style.setProperty('--pointer-from-top',  py/100);
-    wrap.style.setProperty('--pointer-from-left', px/100);
-    wrap.style.setProperty('--rotate-x',          round(-(cx/6))+'deg');
-    wrap.style.setProperty('--rotate-y',          round(cy/5)+'deg');
-
-    var fromCenter = Math.max(Math.abs(cx), Math.abs(cy)) / 50;
-    var glow = fromCenter > 0.1 ? Math.min(1, fromCenter * 1.2) : 0;
-    wrap.style.setProperty('--border-glow', round(glow, 3));
+    wrap.style.setProperty('--pointer-from-top',   py/100);
+    wrap.style.setProperty('--pointer-from-left',  px/100);
+    wrap.style.setProperty('--rotate-x',           round(-(cx/6))+'deg');
+    wrap.style.setProperty('--rotate-y',           round(cy/5)+'deg');
+    var fromCenter = Math.max(Math.abs(cx),Math.abs(cy))/50;
+    wrap.style.setProperty('--border-glow', round(fromCenter>0.1?Math.min(1,fromCenter*1.2):0,3));
   }
 
   function step(ts){
     if(!running) return;
     if(lastTs===0) lastTs=ts;
     var dt=(ts-lastTs)/1000; lastTs=ts;
-    var tau = ts<initialUntil ? INITIAL_TAU : DEFAULT_TAU;
-    var k = 1-Math.exp(-dt/tau);
-    curX+=(tgtX-curX)*k;
-    curY+=(tgtY-curY)*k;
+    var k=1-Math.exp(-dt/(ts<initialUntil?INITIAL_TAU:DEFAULT_TAU));
+    curX+=(tgtX-curX)*k; curY+=(tgtY-curY)*k;
     setVars(curX,curY);
-    if(Math.abs(tgtX-curX)>0.05||Math.abs(tgtY-curY)>0.05){
-      requestAnimationFrame(step);
-    } else { running=false; lastTs=0; }
+    if(Math.abs(tgtX-curX)>0.05||Math.abs(tgtY-curY)>0.05){ requestAnimationFrame(step); }
+    else { running=false; lastTs=0; }
   }
-
   function start(){ if(running)return; running=true; lastTs=0; requestAnimationFrame(step); }
   function toCenter(){ tgtX=card.clientWidth/2; tgtY=card.clientHeight/2; start(); }
 
   card.addEventListener('pointermove',function(e){
+    if(e.pointerType==='touch') return;
     var r=card.getBoundingClientRect();
     tgtX=e.clientX-r.left; tgtY=e.clientY-r.top;
     if(!running) start();
   });
-
   card.addEventListener('pointerleave',function(){
     wrap.style.setProperty('--border-glow','0');
     toCenter();
   });
 
-  /* Animación de entrada */
   curX=(card.clientWidth||300)-70; curY=60;
   setVars(curX,curY);
   initialUntil=performance.now()+1200;
