@@ -93,13 +93,14 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .swatch{aspect-ratio:1;border-radius:10px;border:1px solid rgba(0,0,0,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1)}
 .swatch:hover{box-shadow:0 8px 18px rgba(0,0,0,.18);filter:brightness(1.05)}
 .hobby-card{display:flex;flex-direction:column;overflow:hidden}
-.hobby-img{width:100%;height:240px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
+.hobby-img{width:100%;height:200px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
 .hobby-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
 .hobby-card:hover .hobby-img img{transform:scale(1.06)}
-.hobby-body{padding:18px 18px 20px}
-.hobby-icon-text{font-size:22px;margin-bottom:8px;display:block}
-.hobby-title{font-size:13px;font-weight:700;color:#111;margin-bottom:4px}
-.hobby-desc-text{font-size:11px;color:#888;line-height:1.65}
+.hobby-body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px}
+.hobby-header{display:flex;align-items:center;gap:10px}
+.hobby-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hobby-title{font-size:14px;font-weight:700;color:#111;letter-spacing:-.01em}
+.hobby-desc-text{font-size:12px;color:#888;line-height:1.65}
 .tool-card-v{display:flex;flex-direction:column;overflow:hidden}
 .tool-img{width:100%;height:400px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
 .tool-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)}
@@ -517,12 +518,66 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <div class="db-panel" id="panel-pasatiempos">
   <div class="ph"><div class="ph-title">Pasatiempos</div><div class="ph-sub">Lo que hago cuando no estoy diseñando — aunque casi siempre lo estoy</div></div>
   <div class="row col-2">
-    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/game.webp" alt="Videojuegos" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Videojuegos</div><div class="hobby-desc-text">Jugar y construir. Actualmente aprendiendo Unity para crear mis propios mundos y mecánicas desde cero.</div></div></div>
-    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/nature.webp" alt="Naturaleza" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Naturaleza</div><div class="hobby-desc-text">Documentales de fauna, animales y nuestro planeta. Me enganchan los de David Attenborough y ecosistemas increíbles.</div></div></div>
-    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/ia.webp" alt="Inteligencia Artificial" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Inteligencia Artificial</div><div class="hobby-desc-text">Sigo cada actualización. La IA es uno de los momentos más fascinantes de la humanidad — y lo aprovecho al máximo.</div></div></div>
-    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/music.webp" alt="Música" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Música</div><div class="hobby-desc-text">La escucho constantemente, mayormente en inglés. También la creo — de forma muy personal, no para publicar.</div></div></div>
-    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/technology.webp" alt="Tecnología" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Tecnología</div><div class="hobby-desc-text">Noticias, lanzamientos, tendencias. Si ocurre algo nuevo en tech o diseño, me entero ese mismo día.</div></div></div>
-    <div class="card hobby-card"><div class="hobby-img"><img src="../assets/hobbies/learning.webp" alt="Aprender" loading="lazy" width="400" height="240"></div><div class="hobby-body"><span class="hobby-icon-text">♥</span><div class="hobby-title">Aprender</div><div class="hobby-desc-text">Si algo me llama la atención, lo estudio. Unity, código, IA — el proceso siempre me engancha más que el resultado.</div></div></div>
+    <div class="card hobby-card">
+      <div class="hobby-img"><img src="../assets/hobbies/game.webp" alt="Videojuegos" loading="lazy" width="400" height="200"></div>
+      <div class="hobby-body">
+        <div class="hobby-header">
+          <div class="hobby-icon" style="background:#EAFFF4"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01M7 12v-2m0 2v2M17 10h2m-2 2h2"/></svg></div>
+          <div class="hobby-title">Videojuegos</div>
+        </div>
+        <div class="hobby-desc-text">Jugar y construir. Actualmente aprendiendo Unity para crear mis propios mundos y mecánicas desde cero.</div>
+      </div>
+    </div>
+    <div class="card hobby-card">
+      <div class="hobby-img"><img src="../assets/hobbies/nature.webp" alt="Naturaleza" loading="lazy" width="400" height="200"></div>
+      <div class="hobby-body">
+        <div class="hobby-header">
+          <div class="hobby-icon" style="background:#EAFFF4"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.11M19 4.85A16.42 16.42 0 0 1 20 8c0 8-8 12-8 12"/><path d="M10.68 13.31a16.32 16.32 0 0 0 1.77 1.48M9 9a9 9 0 0 1 9 9"/></svg></div>
+          <div class="hobby-title">Naturaleza</div>
+        </div>
+        <div class="hobby-desc-text">Documentales de fauna, animales y nuestro planeta. Me enganchan los de David Attenborough y ecosistemas increíbles.</div>
+      </div>
+    </div>
+    <div class="card hobby-card">
+      <div class="hobby-img"><img src="../assets/hobbies/ia.webp" alt="Inteligencia Artificial" loading="lazy" width="400" height="200"></div>
+      <div class="hobby-body">
+        <div class="hobby-header">
+          <div class="hobby-icon" style="background:#F5EAFF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+          <div class="hobby-title">Inteligencia Artificial</div>
+        </div>
+        <div class="hobby-desc-text">Sigo cada actualización. La IA es uno de los momentos más fascinantes de la humanidad — y lo aprovecho al máximo.</div>
+      </div>
+    </div>
+    <div class="card hobby-card">
+      <div class="hobby-img"><img src="../assets/hobbies/music.webp" alt="Música" loading="lazy" width="400" height="200"></div>
+      <div class="hobby-body">
+        <div class="hobby-header">
+          <div class="hobby-icon" style="background:#FFF0EA"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+          <div class="hobby-title">Música</div>
+        </div>
+        <div class="hobby-desc-text">La escucho constantemente, mayormente en inglés. También la creo — de forma muy personal, no para publicar.</div>
+      </div>
+    </div>
+    <div class="card hobby-card">
+      <div class="hobby-img"><img src="../assets/hobbies/technology.webp" alt="Tecnología" loading="lazy" width="400" height="200"></div>
+      <div class="hobby-body">
+        <div class="hobby-header">
+          <div class="hobby-icon" style="background:#FFF8EA"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <div class="hobby-title">Tecnología</div>
+        </div>
+        <div class="hobby-desc-text">Noticias, lanzamientos, tendencias. Si ocurre algo nuevo en tech o diseño, me entero ese mismo día.</div>
+      </div>
+    </div>
+    <div class="card hobby-card">
+      <div class="hobby-img"><img src="../assets/hobbies/learning.webp" alt="Aprender" loading="lazy" width="400" height="200"></div>
+      <div class="hobby-body">
+        <div class="hobby-header">
+          <div class="hobby-icon" style="background:#EAF3FF"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <div class="hobby-title">Aprender</div>
+        </div>
+        <div class="hobby-desc-text">Si algo me llama la atención, lo estudio. Unity, código, IA — el proceso siempre me engancha más que el resultado.</div>
+      </div>
+    </div>
   </div>
 </div>
 
