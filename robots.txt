@@ -1,0 +1,53 @@
+# robots.txt — andresgaldino.com
+# Portfolio de Andrés Galdino, Product Designer
+
+# Motores de búsqueda — acceso completo
+User-agent: *
+Allow: /
+
+# Google — rastreo e indexación estándar
+User-agent: Googlebot
+Allow: /
+
+# Google: no indexar imágenes de assets de forma aislada
+User-agent: Googlebot-Image
+Disallow: /assets/
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# ── Crawlers de IA — explícitamente permitidos ──
+
+# OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# Common Crawl (base de datos usada por múltiples LLMs)
+User-agent: CCBot
+Allow: /
+
+# Google Gemini / AI Overviews
+User-agent: Google-Extended
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+Sitemap: https://andresgaldino.com/sitemap.xml
