@@ -75,8 +75,10 @@
       transition: opacity .5s ease, transform .5s ease, background .2s, color .2s;
     }
     #skipBtn.visible { opacity: 1; transform: translateY(0); }
-    #skipBtn:hover   { background: rgba(255,255,255,.16); color: rgba(255,255,255,.9); }
     #skipBtn svg     { width: 12px; height: 12px; flex-shrink: 0; }
+    @media (hover: hover) {
+      #skipBtn:hover { background: rgba(255,255,255,.16); color: rgba(255,255,255,.9); }
+    }
 
     /* ── Canvases de fondo ── */
     #dot-grid {
@@ -142,7 +144,6 @@
       transition: opacity .2s, transform .2s; white-space: nowrap;
       text-decoration: none; display: inline-flex; align-items: center;
     }
-    .btn-dark:hover { opacity: .82; transform: scale(.98); }
     .btn-light {
       font-family: var(--font); font-size: clamp(12px,1.3vw,14px); font-weight: 400;
       color: rgba(245,245,247,.85); background: rgba(255,255,255,.08);
@@ -151,7 +152,10 @@
       transition: background .2s; white-space: nowrap;
       text-decoration: none; display: inline-flex; align-items: center;
     }
-    .btn-light:hover { background: rgba(255,255,255,.15); }
+    @media (hover: hover) {
+      .btn-dark:hover  { opacity: .82; transform: scale(.98); }
+      .btn-light:hover { background: rgba(255,255,255,.15); }
+    }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }

@@ -154,20 +154,23 @@
     .pc-socials { display:flex; gap:14px; align-items:center; }
     .pc-soc {
       color:rgba(255,255,255,.6); text-decoration:none;
-      display:flex; align-items:center;
+      display:flex; align-items:center; justify-content:center;
+      min-width:44px; min-height:44px;
       transition:color .18s, transform .15s;
     }
-    .pc-soc:hover { color:#fff; transform:scale(1.12); }
     .pc-btn {
       display:inline-flex; align-items:center; gap:5px;
       background:#fff; color:#0d0d10;
       font-family:var(--font); font-size:12.5px; font-weight:700;
       border:none; border-radius:999px;
-      padding:9px 16px; text-decoration:none; cursor:pointer;
+      padding:9px 16px; min-height:44px; text-decoration:none; cursor:pointer;
       transition:opacity .18s, transform .15s;
       letter-spacing:-.01em; white-space:nowrap;
     }
-    .pc-btn:hover { opacity:.88; transform:scale(.97); }
+    @media (hover: hover) {
+      .pc-soc:hover { color:#fff; transform:scale(1.12); }
+      .pc-btn:hover  { opacity:.88; transform:scale(.97); }
+    }
     .pc-btn-plus { font-size:15px; font-weight:300; line-height:1; }
   </style>
 </head>

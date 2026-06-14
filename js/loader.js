@@ -54,7 +54,6 @@
 
         container.innerHTML = html;
         if (typeof onReady === 'function') onReady();
-        console.log('[loader] ✓ ' + path);
       })
       .catch(function (err) {
         console.error('[loader] ✗ Error cargando ' + path + '. Verifica el nombre de la carpeta.', err);
@@ -308,7 +307,6 @@
     }
 
     document.dispatchEvent(new CustomEvent('navReady'));
-    console.log('[nav] ✓ listo');
   }
 
 /* ─────────────────────────────────────────────

@@ -93,7 +93,7 @@ html, body { height: 100%; overflow: hidden; background: #0d0d0f; }
   font-size: 10.5px; font-weight: 500; color: rgba(255,255,255,.45);
   transition: background .15s;
 }
-.tool-pill:hover { background: rgba(255,255,255,.09); color: rgba(255,255,255,.7); }
+/* hover solo en dispositivos con puntero real */
 
 /* Botones */
 .vr-btns { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -106,7 +106,6 @@ html, body { height: 100%; overflow: hidden; background: #0d0d0f; }
   transition: opacity .2s, transform .18s;
   cursor: none;
 }
-.btn-primary:hover { opacity: .88; transform: scale(.97); }
 .btn-primary[aria-disabled="true"], .btn-primary.disabled {
   opacity: .35; pointer-events: none;
 }
@@ -120,7 +119,6 @@ html, body { height: 100%; overflow: hidden; background: #0d0d0f; }
   transition: color .15s, border-color .15s;
   cursor: none;
 }
-.btn-secondary:hover { color: rgba(255,255,255,.65); border-color: rgba(255,255,255,.24); }
 
 /* ── Panel derecho: video ── */
 .vr-video-panel { position: relative; background: #000; overflow: hidden; }
@@ -148,7 +146,12 @@ html, body { height: 100%; overflow: hidden; background: #0d0d0f; }
   cursor: none; color: #fff; flex-shrink: 0;
   transition: background .15s;
 }
-.ctrl-btn:hover { background: rgba(255,255,255,.2); }
+@media (hover: hover) {
+  .tool-pill:hover    { background: rgba(255,255,255,.09); color: rgba(255,255,255,.7); }
+  .btn-primary:hover  { opacity: .88; transform: scale(.97); }
+  .btn-secondary:hover{ color: rgba(255,255,255,.65); border-color: rgba(255,255,255,.24); }
+  .ctrl-btn:hover     { background: rgba(255,255,255,.2); }
+}
 
 .ctrl-bar {
   flex: 1; height: 1.5px;

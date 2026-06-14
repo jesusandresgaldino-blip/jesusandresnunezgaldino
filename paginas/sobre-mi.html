@@ -31,7 +31,6 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .sb-pill{width:60px;flex-shrink:0;background:#111113;border-radius:20px;display:flex;flex-direction:column;align-items:center;padding:14px 0;gap:3px}
 .sb-toggle,.sb-icon{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:none;border:none;border-radius:12px;color:rgba(255,255,255,.42);transition:background .25s cubic-bezier(.16,1,.3,1),color .25s}
 .sb-toggle{margin-bottom:6px;color:rgba(255,255,255,.65)}
-.sb-toggle:hover,.sb-icon:hover{background:rgba(255,255,255,.1);color:#fff}
 .sb-icon.active{background:rgba(255,255,255,.15);color:#fff}
 .sb-div{width:28px;height:1px;background:rgba(255,255,255,.08);margin:4px 0}
 .sb-panel{width:0;overflow:hidden;background:#fff;border-radius:20px;flex-shrink:0;transition:width .42s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 2px 16px rgba(0,0,0,.1)) drop-shadow(0 0 0.5px rgba(0,0,0,.08))}
@@ -42,9 +41,7 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .sb-head{display:flex;align-items:center;justify-content:space-between;padding:2px 8px 12px;border-bottom:1px solid rgba(0,0,0,.06);margin-bottom:8px;flex-shrink:0}
 .sb-head-title{font-size:13px;font-weight:700;color:#111}
 .sb-close-btn{width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.05);border:none;border-radius:8px;color:#aaa;transition:background .2s}
-.sb-close-btn:hover{background:rgba(0,0,0,.1);color:#555}
 .sb-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;font-size:12px;font-weight:500;color:#777;background:none;border:none;text-align:left;width:100%;font-family:var(--font);transition:background .2s cubic-bezier(.16,1,.3,1),color .2s;white-space:nowrap}
-.sb-item:hover{background:rgba(0,0,0,.05);color:#333}
 .sb-item.active{background:rgba(0,0,0,.08);color:#111;font-weight:600}
 .sb-badge{margin-left:auto;font-size:9px;font-weight:600;background:rgba(0,0,0,.06);color:#bbb;border-radius:4px;padding:2px 6px}
 .db-content{flex:1;background:#fff;border-radius:20px;overflow-y:auto;padding:28px 32px}
@@ -62,7 +59,6 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .ph-title{font-size:22px;font-weight:800;letter-spacing:-.025em;color:#111;margin-bottom:2px}
 .ph-sub{font-size:12px;color:#aaa;margin-bottom:4px}
 .card{background:#fff;border-radius:20px;border:none;box-shadow:0 2px 12px rgba(0,0,0,.07);transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s cubic-bezier(.16,1,.3,1);overflow:hidden}
-.card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.11)}
 .card-lbl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#bbb;margin-bottom:5px}
 .card-val{font-size:14px;font-weight:700;color:#111}
 .card-desc{font-size:11px;color:#aaa;margin-top:3px;line-height:1.5}
@@ -73,7 +69,6 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .hero-card{background:#111;border-radius:20px;color:#f5f5f7;display:flex;flex-direction:column;overflow:hidden;min-height:280px;position:relative}
 .hero-img-slot{width:100%;height:650px;background:#1a1a1c;flex-shrink:0;overflow:hidden}
 .hero-img-slot img{width:100%;height:100%;object-fit:cover;display:block;opacity:.85;transition:opacity .5s,transform .7s cubic-bezier(.16,1,.3,1)}
-.hero-card:hover .hero-img-slot img{opacity:.92;transform:scale(1.02)}
 .hero-body{padding:24px 28px;position:relative;z-index:1}
 .hero-name{font-size:clamp(24px,3.5vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:5px}
 .hero-role{font-size:13px;color:rgba(245,245,247,.5);font-weight:400}
@@ -89,7 +84,6 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .tl-entry{display:grid;grid-template-columns:40px 1fr;gap:22px;padding-bottom:36px;position:relative}
 .tl-entry:last-child{padding-bottom:0}
 .tl-dot{width:40px;height:40px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;z-index:1;transition:transform .35s cubic-bezier(.16,1,.3,1),background .3s;box-shadow:0 0 0 4px #fff}
-.tl-entry:hover .tl-dot{transform:scale(1.1);background:#333}
 .tl-content{padding-top:9px}
 .tl-yr{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#bbb;margin-bottom:6px}
 .tl-title{font-size:15px;font-weight:700;color:#111;margin-bottom:8px;letter-spacing:-.02em}
@@ -102,11 +96,9 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .palette-card{padding:20px 22px}
 .palette-row{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
 .swatch{aspect-ratio:1;border-radius:10px;border:1px solid rgba(0,0,0,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1)}
-.swatch:hover{box-shadow:0 8px 18px rgba(0,0,0,.18);filter:brightness(1.05)}
 .hobby-card{display:flex;flex-direction:column;overflow:hidden}
 .hobby-img{width:100%;height:200px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
 .hobby-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
-.hobby-card:hover .hobby-img img{transform:scale(1.06)}
 .hobby-body{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px}
 .hobby-header{display:flex;align-items:center;gap:10px}
 .hobby-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -122,7 +114,6 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .lang-card{display:flex;flex-direction:column;overflow:hidden}
 .lang-img{width:100%;height:180px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
 .lang-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
-.lang-card:hover .lang-img img{transform:scale(1.05)}
 .lang-body{padding:20px 22px}
 .lang-name-v{font-size:15px;font-weight:800;color:#111;margin-bottom:3px}
 .lang-detail-v{font-size:11px;color:#aaa;margin-bottom:14px;line-height:1.5}
@@ -135,11 +126,9 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .skill-cat-sub{font-size:10px;color:#bbb}
 .skill-tags{display:flex;flex-wrap:wrap;gap:7px}
 .skill-tag{font-size:11.5px;font-weight:500;color:#555;border:1px solid rgba(0,0,0,.1);border-radius:999px;padding:6px 14px;transition:background .25s cubic-bezier(.16,1,.3,1),color .25s,border-color .25s,transform .25s cubic-bezier(.16,1,.3,1)}
-.skill-tag:hover{background:#111;color:#fff;border-color:#111}
 .skill-tag.highlight{background:#111;color:#fff;border-color:#111}
 .proc-card{padding:26px 24px}
 .proc-num{font-size:44px;font-weight:800;color:rgba(0,0,0,.07);letter-spacing:-.05em;line-height:1;margin-bottom:10px;transition:color .35s}
-.proc-card:hover .proc-num{color:rgba(0,0,0,.15)}
 .proc-title{font-size:14px;font-weight:700;color:#111;margin-bottom:9px}
 .proc-body{font-size:12px;color:#777;line-height:1.8}
 .inspo-card{padding:28px 24px 24px;display:flex;flex-direction:column;min-height:210px}
@@ -162,7 +151,6 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .exp-co-dates{font-size:10px;font-weight:500;color:#ccc;letter-spacing:.06em;white-space:nowrap;flex-shrink:0;padding-top:3px}
 .exp-roles{display:flex;flex-direction:column;gap:8px;padding-left:51px}
 .exp-role-item{padding:10px 14px;border-left:1.5px solid rgba(0,0,0,.08);padding-left:14px;transition:border-color .2s}
-.exp-role-item:hover{border-left-color:#111}
 .exp-role-name{font-size:12.5px;font-weight:600;color:#111;margin-bottom:3px;letter-spacing:-.01em}
 .exp-role-info{font-size:11px;color:#bbb;line-height:1.55}
 .exp-role-desc{font-size:11.5px;color:#666;line-height:1.75;margin-top:7px}
@@ -308,6 +296,21 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
   .hero-body{padding:16px 20px 20px}
   .hero-name{font-size:22px}
   .hero-role{font-size:11px}
+}
+/* ── Hover states — solo en dispositivos con puntero real (mouse / trackpad) ── */
+@media (hover: hover) {
+  .sb-toggle:hover,.sb-icon:hover        { background:rgba(255,255,255,.1);color:#fff }
+  .sb-close-btn:hover                    { background:rgba(0,0,0,.1);color:#555 }
+  .sb-item:hover                         { background:rgba(0,0,0,.05);color:#333 }
+  .card:hover                            { transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.11) }
+  .hero-card:hover .hero-img-slot img    { opacity:.92;transform:scale(1.02) }
+  .tl-entry:hover .tl-dot               { transform:scale(1.1);background:#333 }
+  .swatch:hover                          { box-shadow:0 8px 18px rgba(0,0,0,.18);filter:brightness(1.05) }
+  .hobby-card:hover .hobby-img img       { transform:scale(1.06) }
+  .lang-card:hover .lang-img img         { transform:scale(1.05) }
+  .skill-tag:hover                       { background:#111;color:#fff;border-color:#111 }
+  .proc-card:hover .proc-num             { color:rgba(0,0,0,.15) }
+  .exp-role-item:hover                   { border-left-color:#111 }
 }
 </style>
 </head>
