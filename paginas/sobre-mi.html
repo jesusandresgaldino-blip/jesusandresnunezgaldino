@@ -72,12 +72,17 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .info-card{padding:18px 20px}
 .bio-card{padding:20px 22px}
 .bio-text{font-size:13px;line-height:1.85;color:#666}
-.tl-card{padding:22px 24px;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
-.tl-num{width:38px;height:38px;border-radius:11px;background:#111;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;transition:transform .35s cubic-bezier(.16,1,.3,1),background .3s}
-.tl-card:hover .tl-num{transform:scale(1.1);background:#333}
-.tl-yr{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#ccc;margin-bottom:4px}
-.tl-title{font-size:14px;font-weight:700;color:#111;margin-bottom:6px}
-.tl-desc{font-size:13px;color:#777;line-height:1.7}
+.tl-wrap{padding:32px 28px}
+.tl-list{display:flex;flex-direction:column;position:relative}
+.tl-list::before{content:'';position:absolute;left:19px;top:20px;bottom:20px;width:1.5px;background:rgba(0,0,0,.07);border-radius:2px}
+.tl-entry{display:grid;grid-template-columns:40px 1fr;gap:22px;padding-bottom:36px;position:relative}
+.tl-entry:last-child{padding-bottom:0}
+.tl-dot{width:40px;height:40px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;z-index:1;transition:transform .35s cubic-bezier(.16,1,.3,1),background .3s;box-shadow:0 0 0 4px #fff}
+.tl-entry:hover .tl-dot{transform:scale(1.1);background:#333}
+.tl-content{padding-top:9px}
+.tl-yr{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#bbb;margin-bottom:6px}
+.tl-title{font-size:15px;font-weight:700;color:#111;margin-bottom:8px;letter-spacing:-.02em}
+.tl-desc{font-size:13px;color:#777;line-height:1.75}
 .wheel-card{padding:26px;display:flex;flex-direction:column;align-items:center;gap:14px}
 .color-readout{display:flex;align-items:center;gap:10px;padding:10px 18px;background:#f5f5f5;border-radius:12px;min-width:200px;justify-content:center;transition:background .3s}
 .color-preview-dot{width:22px;height:22px;border-radius:7px;border:1px solid rgba(0,0,0,.1);transition:background .2s;flex-shrink:0}
@@ -445,10 +450,47 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <!-- HISTORIA -->
 <div class="db-panel" id="panel-historia">
   <div class="ph"><div class="ph-title">Historia</div><div class="ph-sub">El camino que me trajo hasta aquí</div></div>
-  <div class="card tl-card"><div class="tl-num">01</div><div><div class="tl-yr">Desde siempre</div><div class="tl-title">Crecí construyendo cosas</div><div class="tl-desc">Mi padre es arquitecto. Crecí entre planos, maquetas y conversaciones sobre proporciones, luz y cómo los espacios hacen sentir a las personas. Desde muy pequeño dibujaba, armaba cosas y me hacía preguntas que todavía me hago: ¿cómo funciona esto? ¿cómo se siente? ¿cómo lo haría yo?</div></div></div>
-  <div class="card tl-card"><div class="tl-num">02</div><div><div class="tl-yr">El descubrimiento</div><div class="tl-title">Figma cambió todo</div><div class="tl-desc">A los 15 años me topé con el diseño gráfico y con herramientas que permitían crear sin límites físicos. Cuando descubrí Figma, algo hizo clic. Podía construir mundos visuales completos, sistemas, interfaces que se sienten — desde una pantalla. El mismo impulso de construir, en otro medio.</div></div></div>
-  <div class="card tl-card"><div class="tl-num">03</div><div><div class="tl-yr">Formación</div><div class="tl-title">Autodidacta por naturaleza, Javeriana por convicción</div><div class="tl-desc">Empecé aprendiendo solo — videos, proyectos reales, referentes que estudiaba pieza por pieza. Lo formalicé en la Pontificia Universidad Javeriana con Diseño de Experiencias y Comunicación Digital. La academia me dio estructura; la práctica me dio criterio. La mentalidad de "si no sé, aprendo" nunca desapareció.</div></div></div>
-  <div class="card tl-card"><div class="tl-num">04</div><div><div class="tl-yr">Hoy</div><div class="tl-title">Diseño que se prueba en vivo</div><div class="tl-desc">Con la llegada de la IA, mi proceso dio otro salto. Hoy paso mis diseños de Figma a código real para validar que mis ideas más ambiciosas sean también factibles. Este portafolio fue construido así — Figma como fuente de verdad, Claude como ejecutor técnico, el navegador como juez final.</div></div></div>
+  <div class="card tl-wrap">
+    <div class="tl-list">
+
+      <div class="tl-entry">
+        <div class="tl-dot">01</div>
+        <div class="tl-content">
+          <div class="tl-yr">Desde siempre</div>
+          <div class="tl-title">Crecí construyendo cosas</div>
+          <div class="tl-desc">Mi padre es arquitecto. Crecí entre planos, maquetas y conversaciones sobre proporciones, luz y cómo los espacios hacen sentir a las personas. Desde muy pequeño dibujaba, armaba cosas y me hacía preguntas que todavía me hago: ¿cómo funciona esto? ¿cómo se siente? ¿cómo lo haría yo?</div>
+        </div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-dot">02</div>
+        <div class="tl-content">
+          <div class="tl-yr">El descubrimiento</div>
+          <div class="tl-title">Figma cambió todo</div>
+          <div class="tl-desc">A los 15 años me topé con el diseño gráfico y con herramientas que permitían crear sin límites físicos. Cuando descubrí Figma, algo hizo clic. Podía construir mundos visuales completos, sistemas, interfaces que se sienten — desde una pantalla. El mismo impulso de construir, en otro medio.</div>
+        </div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-dot">03</div>
+        <div class="tl-content">
+          <div class="tl-yr">Formación</div>
+          <div class="tl-title">Autodidacta por naturaleza, Javeriana por convicción</div>
+          <div class="tl-desc">Empecé aprendiendo solo — videos, proyectos reales, referentes que estudiaba pieza por pieza. Lo formalicé en la Pontificia Universidad Javeriana con Diseño de Experiencias y Comunicación Digital. La academia me dio estructura; la práctica me dio criterio. La mentalidad de "si no sé, aprendo" nunca desapareció.</div>
+        </div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-dot">04</div>
+        <div class="tl-content">
+          <div class="tl-yr">Hoy</div>
+          <div class="tl-title">Diseño que se prueba en vivo</div>
+          <div class="tl-desc">Con la llegada de la IA, mi proceso dio otro salto. Hoy paso mis diseños de Figma a código real para validar que mis ideas más ambiciosas sean también factibles. Este portafolio fue construido así — Figma como fuente de verdad, Claude como ejecutor técnico, el navegador como juez final.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <!-- COLORES -->
