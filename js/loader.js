@@ -35,7 +35,7 @@
       return;
     }
 
-    fetch(path + '?_=' + Date.now(), { cache: 'no-store' })
+    fetch(path + '?_=' + Date.now())
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status + ' cargando ' + path);
         return res.text();
