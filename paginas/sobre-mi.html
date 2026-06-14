@@ -120,10 +120,14 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .lang-bar-wrap{height:3px;background:rgba(0,0,0,.07);border-radius:2px;overflow:hidden}
 .lang-bar-fill{height:100%;background:#111;border-radius:2px}
 .skill-cat-card{padding:20px 22px}
-.skill-cat-title{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#bbb;margin-bottom:11px}
+.skill-cat-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.skill-cat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.skill-cat-name{font-size:13px;font-weight:700;color:#111;letter-spacing:-.01em;margin-bottom:1px}
+.skill-cat-sub{font-size:10px;color:#bbb}
 .skill-tags{display:flex;flex-wrap:wrap;gap:7px}
-.skill-tag{font-size:12px;font-weight:500;color:#555;border:1px solid rgba(0,0,0,.1);border-radius:999px;padding:6px 14px;transition:background .25s cubic-bezier(.16,1,.3,1),color .25s,border-color .25s,transform .25s cubic-bezier(.16,1,.3,1)}
+.skill-tag{font-size:11.5px;font-weight:500;color:#555;border:1px solid rgba(0,0,0,.1);border-radius:999px;padding:6px 14px;transition:background .25s cubic-bezier(.16,1,.3,1),color .25s,border-color .25s,transform .25s cubic-bezier(.16,1,.3,1)}
 .skill-tag:hover{background:#111;color:#fff;border-color:#111}
+.skill-tag.highlight{background:#111;color:#fff;border-color:#111}
 .proc-card{padding:26px 24px}
 .proc-num{font-size:44px;font-weight:800;color:rgba(0,0,0,.07);letter-spacing:-.05em;line-height:1;margin-bottom:10px;transition:color .35s}
 .proc-card:hover .proc-num{color:rgba(0,0,0,.15)}
@@ -631,10 +635,86 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <div class="db-panel" id="panel-habilidades">
   <div class="ph"><div class="ph-title">Habilidades</div><div class="ph-sub">Disciplinas y capacidades profesionales</div></div>
   <div class="row col-1">
-    <div class="card skill-cat-card"><div class="skill-cat-title">Identidad &amp; Comunicación</div><div class="skill-tags"><span class="skill-tag">Brand Identity</span><span class="skill-tag">Logotipo</span><span class="skill-tag">Packaging</span><span class="skill-tag">Editorial</span><span class="skill-tag">Manual de marca</span></div></div>
-    <div class="card skill-cat-card"><div class="skill-cat-title">Digital &amp; Producto</div><div class="skill-tags"><span class="skill-tag">UX / UI Design</span><span class="skill-tag">Design Systems</span><span class="skill-tag">Prototipado</span><span class="skill-tag">Motion Design</span></div></div>
-    <div class="card skill-cat-card"><div class="skill-cat-title">Producción Visual</div><div class="skill-tags"><span class="skill-tag">Fotografía</span><span class="skill-tag">Retoque</span><span class="skill-tag">Edición de video</span><span class="skill-tag">Experiencias web</span></div></div>
-    <div class="card skill-cat-card"><div class="skill-cat-title">Proceso &amp; Research</div><div class="skill-tags"><span class="skill-tag">Case Study</span><span class="skill-tag">User Research</span><span class="skill-tag">Benchmark</span><span class="skill-tag">JTBD</span></div></div>
+
+    <div class="card skill-cat-card">
+      <div class="skill-cat-header">
+        <div class="skill-cat-icon" style="background:#FFF0EA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div><div class="skill-cat-name">Identidad &amp; Marca</div><div class="skill-cat-sub">Branding, sistemas visuales y comunicación</div></div>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Brand Identity</span>
+        <span class="skill-tag highlight">Brand Strategy</span>
+        <span class="skill-tag">Logotipo</span>
+        <span class="skill-tag">Manual de marca</span>
+        <span class="skill-tag">Sistema cromático</span>
+        <span class="skill-tag">Tipografía</span>
+        <span class="skill-tag">Packaging</span>
+        <span class="skill-tag">Editorial</span>
+      </div>
+    </div>
+
+    <div class="card skill-cat-card">
+      <div class="skill-cat-header">
+        <div class="skill-cat-icon" style="background:#F0EAFF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div><div class="skill-cat-name">Producto &amp; UX</div><div class="skill-cat-sub">Diseño de producto, sistemas y experiencia digital</div></div>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">UX / UI Design</span>
+        <span class="skill-tag highlight">Design Systems</span>
+        <span class="skill-tag">UX Strategy</span>
+        <span class="skill-tag">Arquitectura de información</span>
+        <span class="skill-tag">Prototipado</span>
+        <span class="skill-tag">Motion Design</span>
+        <span class="skill-tag">DesignOps</span>
+      </div>
+    </div>
+
+    <div class="card skill-cat-card">
+      <div class="skill-cat-header">
+        <div class="skill-cat-icon" style="background:#FFF8EA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div><div class="skill-cat-name">Producción Visual</div><div class="skill-cat-sub">Dirección creativa, fotografía y contenido</div></div>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">Dirección Creativa</span>
+        <span class="skill-tag">Fotografía</span>
+        <span class="skill-tag">Retoque</span>
+        <span class="skill-tag">Edición de video</span>
+        <span class="skill-tag">Campañas</span>
+        <span class="skill-tag">Producción</span>
+        <span class="skill-tag">Redes sociales</span>
+      </div>
+    </div>
+
+    <div class="card skill-cat-card">
+      <div class="skill-cat-header">
+        <div class="skill-cat-icon" style="background:#EAFFF4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div><div class="skill-cat-name">Código &amp; Web</div><div class="skill-cat-sub">Implementación y validación en el navegador</div></div>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">HTML</span>
+        <span class="skill-tag highlight">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Experiencias web</span>
+        <span class="skill-tag">Responsive design</span>
+        <span class="skill-tag">Animaciones CSS</span>
+      </div>
+    </div>
+
+    <div class="card skill-cat-card">
+      <div class="skill-cat-header">
+        <div class="skill-cat-icon" style="background:#EAF3FF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div><div class="skill-cat-name">Proceso &amp; Research</div><div class="skill-cat-sub">Investigación, análisis y metodología de diseño</div></div>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag highlight">User Research</span>
+        <span class="skill-tag">Case Study</span>
+        <span class="skill-tag">Benchmark</span>
+        <span class="skill-tag">JTBD</span>
+        <span class="skill-tag">Análisis competitivo</span>
+        <span class="skill-tag">Localización</span>
+      </div>
+    </div>
+
   </div>
 </div>
 
