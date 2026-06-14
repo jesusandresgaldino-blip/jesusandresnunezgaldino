@@ -55,7 +55,7 @@
     #cinemaWrap.open #cbarBottom { transform: translateY(100%); }
 
     html, body { background: #000; }
-    body { overscroll-behavior-y: none; }
+    html { overscroll-behavior-y: none; }
     body.cinema-on { overflow: hidden; height: 100%; }
     .hero { min-height: 100vh; max-height: 100vh; overflow: hidden; }
     .cursor { background: #fff !important; mix-blend-mode: difference !important; }
@@ -1341,12 +1341,6 @@ window._darkMode = true;
 
   if (skipBtn) skipBtn.addEventListener('click', dismiss);
   video.addEventListener('ended', dismiss);
-
-  /* iOS puede bloquear autoplay incluso con muted+playsinline — forzar play() y
-     descartar la intro si el navegador rechaza la promesa */
-  var _play = video.play();
-  if (_play !== undefined) { _play.catch(function () { dismiss(); }); }
-
   video.addEventListener('error', function () {
     wrap.style.display = 'none';
     document.body.classList.remove('cinema-on');
