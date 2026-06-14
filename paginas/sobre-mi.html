@@ -131,12 +131,14 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .proc-card:hover .proc-num{color:rgba(0,0,0,.15)}
 .proc-title{font-size:14px;font-weight:700;color:#111;margin-bottom:9px}
 .proc-body{font-size:12px;color:#777;line-height:1.8}
-.inspo-card{padding:22px 24px;display:flex;align-items:center;gap:16px}
-.inspo-logo{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.inspo-card{padding:28px 24px 24px;display:flex;flex-direction:column;background:#0f0f0f;box-shadow:none;min-height:210px;position:relative;overflow:hidden}
+.inspo-card::after{content:'';position:absolute;inset:0;background:linear-gradient(145deg,rgba(255,255,255,.05) 0%,transparent 55%);pointer-events:none}
+.inspo-logo{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,.08);overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1);margin-bottom:auto}
 .inspo-card:hover .inspo-logo{transform:scale(1.1) rotate(-4deg)}
-.inspo-logo img{width:100%;height:100%;object-fit:contain}
-.inspo-name{font-size:14px;font-weight:700;color:#111;margin-bottom:4px}
-.inspo-why{font-size:12px;color:#888;line-height:1.65}
+.inspo-logo img{width:65%;height:65%;object-fit:contain;filter:brightness(0) invert(1)}
+.inspo-body{padding-top:26px}
+.inspo-name{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:6px}
+.inspo-why{font-size:12px;color:rgba(255,255,255,.4);line-height:1.65}
 /* ── Experiencia ── */
 .exp-list{display:flex;flex-direction:column}
 .exp-entry{padding:28px 0;border-bottom:1px solid rgba(0,0,0,.06)}
@@ -767,12 +769,11 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <!-- INSPIRACIÓN -->
 <div class="db-panel" id="panel-inspiracion">
   <div class="ph"><div class="ph-title">Inspiración</div><div class="ph-sub">Marcas y referentes que influyen en mi estética</div></div>
-  <div class="row col-3">
-    <div class="card inspo-card"><div class="inspo-logo" style="background:transparent"><img src="../assets/iconos/apple.svg" alt="Apple"></div><div><div class="inspo-name">Apple</div><div class="inspo-why">El estándar definitivo del producto bien pensado. Sistema visual cohesivo, lenguaje propio y una obsesión por los detalles que nadie ve pero todos sienten. Mi referente principal en consistencia y elegancia.</div></div></div>
-    <div class="card inspo-card"><div class="inspo-logo" style="background:transparent"><img src="../assets/iconos/adidas.svg" alt="adidas"></div><div><div class="inspo-name">adidas</div><div class="inspo-why">Identidad que trasciende el deporte. Su capacidad de mantenerse relevante entre culturas, décadas y audiencias sin perder su esencia es un masterclass en construcción de marca a largo plazo.</div></div></div>
-    <div class="card inspo-card"><div class="inspo-logo" style="background:transparent"><img src="../assets/iconos/netflix.svg" alt="Netflix"></div><div><div class="inspo-name">Netflix</div><div class="inspo-why">Domina el diseño de experiencia a escala global. Su UI oscura, su sistema de personalización y la forma en que conecta contenido con usuario son una referencia directa en mis proyectos digitales.</div></div></div>
-    <div class="card inspo-card"><div class="inspo-logo" style="background:transparent"><img src="../assets/iconos/nike.svg" alt="Nike"></div><div><div class="inspo-name">Nike</div><div class="inspo-why">Emoción condensada en simplicidad. El storytelling de Nike demuestra que el diseño más poderoso no es el más complejo — es el que comunica exactamente lo que necesita y mueve a las personas a actuar.</div></div></div>
-    <div class="card inspo-card" style="opacity:.4;border-style:dashed"><div class="inspo-logo" style="background:#f2f2f2;border:1px dashed rgba(0,0,0,.12)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div><div class="inspo-name" style="color:#ccc">Próximamente</div><div class="inspo-why" style="color:#ddd">Más referentes en camino...</div></div></div>
+  <div class="row col-2">
+    <div class="card inspo-card"><div class="inspo-logo"><img src="../assets/iconos/apple.svg" alt="Apple"></div><div class="inspo-body"><div class="inspo-name">Apple</div><div class="inspo-why">El estándar del producto bien pensado. Sistema visual cohesivo y obsesión por detalles que nadie ve pero todos sienten.</div></div></div>
+    <div class="card inspo-card"><div class="inspo-logo"><img src="../assets/iconos/adidas.svg" alt="adidas"></div><div class="inspo-body"><div class="inspo-name">adidas</div><div class="inspo-why">Identidad que trasciende el deporte. Un masterclass en construir marca relevante entre culturas y décadas sin perder la esencia.</div></div></div>
+    <div class="card inspo-card"><div class="inspo-logo"><img src="../assets/iconos/netflix.svg" alt="Netflix"></div><div class="inspo-body"><div class="inspo-name">Netflix</div><div class="inspo-why">Diseño de experiencia a escala global. UI oscura y personalización son referencia directa en mis proyectos digitales.</div></div></div>
+    <div class="card inspo-card"><div class="inspo-logo"><img src="../assets/iconos/nike.svg" alt="Nike"></div><div class="inspo-body"><div class="inspo-name">Nike</div><div class="inspo-why">Emoción condensada en simplicidad. El diseño más poderoso es el que comunica exactamente lo que necesita y mueve a actuar.</div></div></div>
   </div>
 </div>
 
