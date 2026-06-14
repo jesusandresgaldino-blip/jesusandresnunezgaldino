@@ -153,6 +153,12 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .pf-photo img{width:100%;height:100%;object-fit:cover;display:block;object-position:center top}
 .pf-name{font-size:22px;font-weight:800;letter-spacing:-.03em;color:#111;margin-bottom:4px}
 .pf-role{font-size:13px;color:#aaa;font-weight:400;margin-bottom:12px}
+.pf-stats{display:flex;align-items:center;justify-content:center;padding:2px 0 10px}
+.pf-stat{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 0}
+.pf-stat-num{font-size:24px;font-weight:800;color:#111;letter-spacing:-.04em;line-height:1}
+.pf-stat-lbl{font-size:10px;color:#bbb;font-weight:500}
+.pf-stat-div{width:1px;height:28px;background:rgba(0,0,0,.08)}
+.pf-group-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#bbb;padding:6px 4px 2px}
 .pf-rows-card{padding:0;overflow:hidden}
 .pf-row{display:flex;align-items:center;gap:14px;padding:13px 20px;transition:background .18s}
 .pf-row:active{background:rgba(0,0,0,.03)}
@@ -161,8 +167,19 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .pf-row-lbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#bbb;margin-bottom:2px}
 .pf-row-val{font-size:14px;font-weight:500;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pf-row-right{font-size:11px;color:#bbb;flex-shrink:0;text-align:right;line-height:1.45}
-.pf-row-chevron{color:#ccc;flex-shrink:0;margin-left:4px}
 .pf-row-div{height:1px;background:rgba(0,0,0,.05);margin:0 20px 0 70px}
+.pf-mbti-card{padding:20px 22px;display:flex;align-items:center;gap:16px}
+.pf-mbti-badge{width:52px;height:52px;border-radius:14px;background:#111;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;letter-spacing:.08em;flex-shrink:0}
+.pf-mbti-type{font-size:15px;font-weight:700;color:#111;margin-bottom:3px;letter-spacing:-.01em}
+.pf-mbti-desc{font-size:12px;color:#aaa;line-height:1.5}
+.pf-facts-card{padding:20px 22px}
+.pf-fact-item{display:flex;align-items:flex-start;gap:12px;padding:9px 0;border-bottom:1px solid rgba(0,0,0,.05)}
+.pf-fact-item:last-child{border-bottom:none;padding-bottom:0}
+.pf-fact-num{font-size:10px;font-weight:700;color:#ddd;flex-shrink:0;padding-top:3px;letter-spacing:.04em}
+.pf-fact-text{font-size:12.5px;color:#555;line-height:1.6}
+.pf-mantra{padding:10px 6px 4px;text-align:center}
+.pf-mantra-quote{font-size:14px;font-weight:600;color:#333;line-height:1.65;letter-spacing:-.01em;margin-bottom:8px;font-style:italic}
+.pf-mantra-attr{font-size:10px;color:#ccc;letter-spacing:.06em;text-transform:uppercase}
 
 /* ── Bottom nav ≤ 1300px ── */
 .mob-nav,.mob-backdrop,.mob-sheet{display:none}
@@ -302,51 +319,48 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <div class="db-panel active" id="panel-perfil">
   <div class="ph"><div class="ph-title">Perfil</div><div class="ph-sub">Quién soy y de dónde vengo</div></div>
 
-  <!-- Header: foto + nombre + badge — sin card -->
+  <!-- Header sin card -->
   <div class="pf-header-card">
-    <div class="pf-photo">
-      <img src="../assets/perfil1.webp" alt="Andrés Galdino" width="200" height="200">
-    </div>
+    <div class="pf-photo"><img src="../assets/perfil1.webp" alt="Andrés Galdino" width="200" height="200"></div>
     <div class="pf-name">Andrés Galdino</div>
     <div class="pf-role">Product &amp; Creative Designer</div>
     <div class="hero-avail"><span class="dot-g"></span>Disponible para proyectos</div>
   </div>
 
-  <!-- Info rows — cards individuales -->
+  <!-- Stats rápidas -->
+  <div class="pf-stats">
+    <div class="pf-stat"><div class="pf-stat-num">8+</div><div class="pf-stat-lbl">años activo</div></div>
+    <div class="pf-stat-div"></div>
+    <div class="pf-stat"><div class="pf-stat-num">12+</div><div class="pf-stat-lbl">proyectos</div></div>
+    <div class="pf-stat-div"></div>
+    <div class="pf-stat"><div class="pf-stat-num">3</div><div class="pf-stat-lbl">empresas</div></div>
+  </div>
+
+  <!-- Información -->
+  <div class="pf-group-lbl">Información</div>
   <div class="card pf-rows-card">
     <div class="pf-row">
-      <div class="pf-row-icon" style="background:#EAF3FF">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      </div>
-      <div class="pf-row-body">
-        <div class="pf-row-lbl">Ubicación</div>
-        <div class="pf-row-val">Bogotá, Colombia</div>
-      </div>
+      <div class="pf-row-icon" style="background:#EAF3FF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Ubicación</div><div class="pf-row-val">Bogotá, Colombia</div></div>
       <div class="pf-row-right">Remoto · Latam</div>
     </div>
-  </div>
-  <div class="card pf-rows-card">
+    <div class="pf-row-div"></div>
     <div class="pf-row">
-      <div class="pf-row-icon" style="background:#F0EAFF">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      </div>
-      <div class="pf-row-body">
-        <div class="pf-row-lbl">Formación</div>
-        <div class="pf-row-val">UX/UI Design</div>
-      </div>
+      <div class="pf-row-icon" style="background:#F0EAFF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Formación</div><div class="pf-row-val">UX/UI Design</div></div>
       <div class="pf-row-right">P. U. Javeriana</div>
     </div>
-  </div>
-  <div class="card pf-rows-card">
+    <div class="pf-row-div"></div>
     <div class="pf-row">
-      <div class="pf-row-icon" style="background:#FFF0EA">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </div>
-      <div class="pf-row-body">
-        <div class="pf-row-lbl">Fecha de nacimiento</div>
-        <div class="pf-row-val">31 · 12 · 2001</div>
-      </div>
+      <div class="pf-row-icon" style="background:#FFF0EA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Fecha de nacimiento</div><div class="pf-row-val">31 · 12 · 2001</div></div>
       <div class="pf-row-right">24 años</div>
+    </div>
+    <div class="pf-row-div"></div>
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#EAFFF4"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.11M19 4.85A16.42 16.42 0 0 1 20 8c0 8-8 12-8 12"/><path d="M10.68 13.31a16.32 16.32 0 0 0 1.77 1.48M9 9a9 9 0 0 1 9 9"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Origen</div><div class="pf-row-val">Leticia, Amazonas</div></div>
+      <div class="pf-row-right">Colombia</div>
     </div>
   </div>
 
@@ -355,6 +369,76 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
     <div class="card-lbl">Bio</div>
     <p class="bio-text">Crecí entre planos y maquetas — mi padre es arquitecto y desde pequeño entendí que los espacios tienen el poder de cambiar cómo te sientes. Esa misma idea me llevó al diseño digital: la posibilidad de construir experiencias sin límites físicos.</p>
     <p class="bio-text" style="margin-top:10px">Me formé en Diseño de Experiencias y Comunicación Digital en la Pontificia Universidad Javeriana, y soy autodidacta por naturaleza. Combino investigación de usuarios, pensamiento de sistemas y un criterio estético sólido para diseñar cosas que funcionan antes de que alguien las note. Si lo diseñé, tiene que poder verse y sentirse en un navegador real.</p>
+  </div>
+
+  <!-- Ahora mismo -->
+  <div class="pf-group-lbl">Ahora mismo</div>
+  <div class="card pf-rows-card">
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#FFF8EA"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EAB308" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Construyendo</div><div class="pf-row-val">Este portafolio en código real</div></div>
+    </div>
+    <div class="pf-row-div"></div>
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#EAF3FF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Aprendiendo</div><div class="pf-row-val">Unity &amp; C# para videojuegos</div></div>
+    </div>
+    <div class="pf-row-div"></div>
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#F5EAFF"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Escuchando</div><div class="pf-row-val">Música en inglés · siempre</div></div>
+    </div>
+  </div>
+
+  <!-- Personalidad + Fun facts -->
+  <div class="pf-group-lbl">Sobre mí</div>
+  <div class="card pf-mbti-card">
+    <div class="pf-mbti-badge">INTJ</div>
+    <div>
+      <div class="pf-mbti-type">El Arquitecto</div>
+      <div class="pf-mbti-desc">Estratégico, independiente, perfeccionista.<br>Diseño sistemas antes de diseñar piezas.</div>
+    </div>
+  </div>
+  <div class="card pf-facts-card">
+    <div class="card-lbl" style="margin-bottom:10px">Fun facts</div>
+    <div class="pf-fact-item"><span class="pf-fact-num">01</span><span class="pf-fact-text">Crecí en la Amazonía colombiana, a orillas del río Amazonas en Leticia.</span></div>
+    <div class="pf-fact-item"><span class="pf-fact-num">02</span><span class="pf-fact-text">Tenía 16 años cuando diseñé para mi primera empresa — Moda Week International.</span></div>
+    <div class="pf-fact-item"><span class="pf-fact-num">03</span><span class="pf-fact-text">Familia brasileña. El portugués es tan natural para mí como el español.</span></div>
+    <div class="pf-fact-item"><span class="pf-fact-num">04</span><span class="pf-fact-text">Nunca entrego algo sin antes verlo en un navegador real. Figma es el borrador.</span></div>
+  </div>
+
+  <!-- Setup -->
+  <div class="pf-group-lbl">Setup</div>
+  <div class="card pf-rows-card">
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#f5f5f5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Computador</div><div class="pf-row-val">MacBook Pro</div></div>
+      <div class="pf-row-right">macOS</div>
+    </div>
+    <div class="pf-row-div"></div>
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#f5f5f5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Teléfono</div><div class="pf-row-val">iPhone</div></div>
+      <div class="pf-row-right">iOS</div>
+    </div>
+    <div class="pf-row-div"></div>
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#f5f5f5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Editor</div><div class="pf-row-val">VS Code</div></div>
+      <div class="pf-row-right">Dark theme</div>
+    </div>
+    <div class="pf-row-div"></div>
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#f5f5f5"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+      <div class="pf-row-body"><div class="pf-row-lbl">Diseño</div><div class="pf-row-val">Figma</div></div>
+      <div class="pf-row-right">Principal</div>
+    </div>
+  </div>
+
+  <!-- Mantra -->
+  <div class="pf-mantra">
+    <div class="pf-mantra-quote">"El diseño más difícil no es el más complejo — es el que dice exactamente lo que necesita y absolutamente nada más."</div>
+    <div class="pf-mantra-attr">— Andrés Galdino</div>
   </div>
 </div>
 
