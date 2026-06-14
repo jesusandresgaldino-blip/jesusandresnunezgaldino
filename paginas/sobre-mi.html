@@ -101,15 +101,13 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .hobby-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .hobby-title{font-size:14px;font-weight:700;color:#111;letter-spacing:-.01em}
 .hobby-desc-text{font-size:12px;color:#888;line-height:1.65}
-.tool-card-v{display:flex;flex-direction:column;overflow:hidden}
-.tool-img{width:100%;height:400px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
-.tool-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.16,1,.3,1)}
-.tool-card-v:hover .tool-img img{transform:scale(1.04)}
-.tool-body{padding:20px 22px}
-.tool-logo-badge{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
-.tool-logo-badge img{width:60%;height:60%;object-fit:contain;display:block}
-.tool-name-v{font-size:15px;font-weight:700;color:#111;margin-bottom:5px}
-.tool-desc-v{font-size:12px;color:#aaa;line-height:1.55}
+.tool-card-v{padding:20px 22px 22px}
+.tool-header{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.tool-logo-badge{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#f5f5f5;border:1px solid rgba(0,0,0,.06);overflow:hidden}
+.tool-logo-badge img{width:62%;height:62%;object-fit:contain;display:block}
+.tool-name-v{font-size:15px;font-weight:700;color:#111;margin-bottom:2px;letter-spacing:-.02em}
+.tool-tag-v{font-size:10px;color:#bbb;font-weight:500}
+.tool-desc-v{font-size:12px;color:#888;line-height:1.7}
 .lang-card{display:flex;flex-direction:column;overflow:hidden}
 .lang-img{width:100%;height:180px;background:#e8e8e8;flex-shrink:0;overflow:hidden}
 .lang-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
@@ -589,8 +587,20 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <div class="db-panel" id="panel-h-diseno">
   <div class="ph"><div class="ph-title">Diseño</div><div class="ph-sub">Herramientas de diseño visual y motion</div></div>
   <div class="row col-2">
-    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-figma.webp" alt="Figma" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/figma.svg" alt="Logo Figma"></div><div class="tool-name-v">Figma</div><div class="tool-desc-v">Mi herramienta principal de diseño. Construyo sistemas de componentes, variantes, prototipos interactivos y handoff con variables de tokens para desarrollo. También uso Dev Mode para conectar el diseño con código real.</div></div></div>
-    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-illustrator.webp" alt="Illustrator" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/illustrator.svg" alt="Logo Illustrator"></div><div class="tool-name-v">Illustrator</div><div class="tool-desc-v">Para todo lo que requiere precisión vectorial: construcción de logotipos, sistemas de iconos, manuales de marca y materiales de packaging. La herramienta de identidad visual por excelencia.</div></div></div>
+    <div class="card tool-card-v">
+      <div class="tool-header">
+        <div class="tool-logo-badge"><img src="../assets/iconos/figma.svg" alt="Logo Figma"></div>
+        <div><div class="tool-name-v">Figma</div><div class="tool-tag-v">Diseño · Prototipado · Sistemas</div></div>
+      </div>
+      <div class="tool-desc-v">Mi herramienta principal. Construyo sistemas de componentes, variantes, prototipos interactivos y handoff con tokens. Uso Dev Mode para conectar el diseño con el resultado final en navegador.</div>
+    </div>
+    <div class="card tool-card-v">
+      <div class="tool-header">
+        <div class="tool-logo-badge"><img src="../assets/iconos/illustrator.svg" alt="Logo Illustrator"></div>
+        <div><div class="tool-name-v">Illustrator</div><div class="tool-tag-v">Vectorial · Identidad · Packaging</div></div>
+      </div>
+      <div class="tool-desc-v">Para todo lo que requiere precisión vectorial: logotipos, sistemas de iconos, manuales de marca y packaging. La herramienta de identidad visual por excelencia.</div>
+    </div>
   </div>
 </div>
 
@@ -598,8 +608,20 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <div class="db-panel" id="panel-h-productividad">
   <div class="ph"><div class="ph-title">Productividad</div><div class="ph-sub">Organización y documentación</div></div>
   <div class="row col-2">
-    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-notion.webp" alt="Notion" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/notion-icon.svg" alt="Logo Notion"></div><div class="tool-name-v">Notion</div><div class="tool-desc-v">Centro de operaciones de todos mis proyectos. Aquí viven los case studies, flujos de trabajo, manuales de marca de clientes y mis notas de investigación. Todo organizado, todo accesible.</div></div></div>
-    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-vscode.webp" alt="VS Code" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/vscode.svg" alt="Logo VS Code"></div><div class="tool-name-v">VS Code</div><div class="tool-desc-v">Entorno donde reviso y valido en el navegador el código que genera Claude. Uso Live Server para ver los cambios en tiempo real y confirmar que lo que diseñé en Figma se siente exactamente como lo imaginé.</div></div></div>
+    <div class="card tool-card-v">
+      <div class="tool-header">
+        <div class="tool-logo-badge"><img src="../assets/iconos/notion-icon.svg" alt="Logo Notion"></div>
+        <div><div class="tool-name-v">Notion</div><div class="tool-tag-v">Documentación · Gestión · Research</div></div>
+      </div>
+      <div class="tool-desc-v">Centro de operaciones de todos mis proyectos. Aquí viven los case studies, flujos de trabajo, manuales de marca de clientes y notas de investigación. Todo organizado, todo accesible.</div>
+    </div>
+    <div class="card tool-card-v">
+      <div class="tool-header">
+        <div class="tool-logo-badge"><img src="../assets/iconos/vscode.svg" alt="Logo VS Code"></div>
+        <div><div class="tool-name-v">VS Code</div><div class="tool-tag-v">Revisión · Validación · Browser</div></div>
+      </div>
+      <div class="tool-desc-v">Entorno donde reviso y valido en el navegador el código que genera Claude. Uso Live Server para confirmar que lo que diseñé en Figma se siente exactamente como lo imaginé.</div>
+    </div>
   </div>
 </div>
 
@@ -607,9 +629,27 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <div class="db-panel" id="panel-h-ia">
   <div class="ph"><div class="ph-title">IA &amp; Automatización</div><div class="ph-sub">Herramientas de inteligencia artificial en mi flujo diario</div></div>
   <div class="row col-2">
-    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-claude.webp" alt="Claude" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/claude.svg" alt="Logo Claude"></div><div class="tool-name-v">Claude</div><div class="tool-desc-v">Mi aliado para llevar el diseño al navegador. Describo mis decisiones de Figma, dirijo la lógica visual y reviso el resultado en vivo. Claude traduce el diseño a código; yo me aseguro de que funcione y se sienta como lo imaginé.</div></div></div>
-    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-chatgpt.webp" alt="ChatGPT" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/chatgpt.svg" alt="Logo ChatGPT"></div><div class="tool-name-v">ChatGPT</div><div class="tool-desc-v">Para redacción, conceptualización y análisis. Lo uso en la fase de investigación de proyectos: sintetizar benchmarks, estructurar narrativas de marca y desarrollar textos de copy para identidades visuales.</div></div></div>
-    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-gemini.webp" alt="Gemini" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/gemini.svg" alt="Logo Gemini"></div><div class="tool-name-v">Gemini</div><div class="tool-desc-v">Búsqueda aumentada con integración a Google Workspace. Lo uso para análisis de documentos, investigación con contexto ampliado y tareas que cruzan información de múltiples fuentes simultáneamente.</div></div></div>
+    <div class="card tool-card-v">
+      <div class="tool-header">
+        <div class="tool-logo-badge"><img src="../assets/iconos/claude.svg" alt="Logo Claude"></div>
+        <div><div class="tool-name-v">Claude</div><div class="tool-tag-v">Diseño → Navegador · Principal</div></div>
+      </div>
+      <div class="tool-desc-v">Mi aliado para llevar el diseño al navegador. Describo mis decisiones de Figma, dirijo la lógica visual y reviso el resultado en vivo. Claude traduce el diseño a código; yo me aseguro de que funcione y se sienta como lo imaginé.</div>
+    </div>
+    <div class="card tool-card-v">
+      <div class="tool-header">
+        <div class="tool-logo-badge"><img src="../assets/iconos/chatgpt.svg" alt="Logo ChatGPT"></div>
+        <div><div class="tool-name-v">ChatGPT</div><div class="tool-tag-v">Copy · Research · Conceptualización</div></div>
+      </div>
+      <div class="tool-desc-v">Para redacción, conceptualización y análisis. Lo uso en la fase de investigación: sintetizar benchmarks, estructurar narrativas de marca y desarrollar textos de copy para identidades visuales.</div>
+    </div>
+    <div class="card tool-card-v">
+      <div class="tool-header">
+        <div class="tool-logo-badge"><img src="../assets/iconos/gemini.svg" alt="Logo Gemini"></div>
+        <div><div class="tool-name-v">Gemini</div><div class="tool-tag-v">Búsqueda · Análisis · Google</div></div>
+      </div>
+      <div class="tool-desc-v">Búsqueda aumentada con integración a Google Workspace. Análisis de documentos, investigación con contexto ampliado y tareas que cruzan información de múltiples fuentes.</div>
+    </div>
   </div>
 </div>
 
@@ -617,7 +657,13 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <div class="db-panel" id="panel-h-aprendiendo">
   <div class="ph"><div class="ph-title">Aprendiendo</div><div class="ph-sub">Tecnologías en proceso activo de dominio</div></div>
   <div class="row col-2">
-    <div class="card tool-card-v"><div class="tool-img"><img src="../assets/herramientas/tool-unity.webp" alt="Unity" loading="lazy" width="400" height="400"></div><div class="tool-body"><div class="tool-logo-badge" style="background:transparent"><img src="../assets/iconos/unity.svg" alt="Logo Unity"></div><div class="tool-name-v">Unity</div><div class="tool-desc-v">Motor de videojuegos en aprendizaje activo. Mi objetivo: diseñar y programar experiencias interactivas propias en C#. Quiero crear mundos desde cero — no solo diseñarlos, sino construirlos y hacerlos jugables.</div></div></div>
+    <div class="card tool-card-v">
+      <div class="tool-header">
+        <div class="tool-logo-badge" style="background:#1a1a1a"><img src="../assets/iconos/unity.svg" alt="Logo Unity"></div>
+        <div><div class="tool-name-v">Unity</div><div class="tool-tag-v">Videojuegos · Mecánicas · C#</div></div>
+      </div>
+      <div class="tool-desc-v">Motor de videojuegos en aprendizaje activo. Mi objetivo: diseñar y construir experiencias interactivas propias. Quiero crear mundos desde cero — no solo diseñarlos, sino hacerlos jugables.</div>
+    </div>
   </div>
 </div>
 
