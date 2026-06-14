@@ -6,7 +6,8 @@
  * Cada página mantiene un <style> mínimo para overrides tipográficos específicos.
  */
 
-html, body { height: 100%; overflow: hidden; background: #0d0d0f; }
+html { height: 100%; }
+body { height: 100%; overflow: hidden; background: #0d0d0f; }
 
 /* ── Cursor blanco con difference sobre fondos oscuros ── */
 .cursor { background: #fff !important; mix-blend-mode: difference !important; }
