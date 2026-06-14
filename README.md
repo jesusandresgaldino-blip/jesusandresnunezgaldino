@@ -1,6 +1,8 @@
 # Portafolio — Andrés Galdino
 
-Portfolio personal de diseño. Sitio estático sin frameworks ni bundler — HTML, CSS y JS vanilla.
+Sitio personal de diseño de producto. Estático, sin frameworks ni bundler — HTML, CSS y JS vanilla.
+
+**Dominio:** [andresgaldino.com](https://andresgaldino.com)
 
 ---
 
@@ -9,7 +11,12 @@ Portfolio personal de diseño. Sitio estático sin frameworks ni bundler — HTM
 ```
 Portafolio final/
 │
-├── index.html                          # Home (depth 0)
+├── index.html                          # Home (depth 0) — hero cinematic + parallax + fluid ink WebGL
+│
+├── sitemap.xml                         # Sitemap XML para Googlebot y otros crawlers
+├── robots.txt                          # Directivas para crawlers (incluye GPTBot, ClaudeBot, PerplexityBot)
+├── llms.txt                            # Perfil en Markdown para modelos de lenguaje (estándar Answer.AI)
+├── readme.html                         # Página pública de perfil — HTML semántico sin JS
 │
 ├── components/
 │   └── nav.html                        # Fragmento de nav inyectado vía fetch en todas las páginas
@@ -48,6 +55,29 @@ Abrir con **Live Server** (extensión VS Code). La URL base es `http://127.0.0.1
 
 ---
 
+## SEO y descubribilidad para IA
+
+### Archivos de infraestructura
+
+| Archivo | Propósito |
+|---|---|
+| `sitemap.xml` | 12 URLs con prioridades y `lastmod` — para Googlebot y otros |
+| `robots.txt` | Permite explícitamente: `Googlebot`, `GPTBot`, `ClaudeBot`, `PerplexityBot`, `CCBot`, `Google-Extended` |
+| `llms.txt` | Perfil estructurado en Markdown para que modelos de lenguaje indexen la identidad y trabajo de Andrés |
+| `readme.html` | Página pública de perfil semántica — sin JS, sin animaciones, accesible para scrapers |
+
+### JSON-LD (Schema.org Person)
+
+Inyectado en `<head>` de `index.html` y `paginas/sobre-mi.html`. Contiene nombre, rol, ubicación, idiomas, URLs canónicas de RRSS y email de contacto.
+
+### Open Graph
+
+Todas las páginas tienen `og:title`, `og:description`, `og:image`, `og:url` apuntando a:
+- Imagen: `/assets/og-image.png`
+- Dominio canonical: `https://andresgaldino.com`
+
+---
+
 ## Arquitectura CSS
 
 ### Cascada de tres capas
@@ -81,13 +111,11 @@ Define todas las variables globales:
 - Cursor personalizado `.cursor` + `.cursor.big` — `mix-blend-mode: multiply`
 - `cursor: none` en `button`, `a` (solo `@media (pointer: fine)`)
 - `.page-content` — padding-top para compensar el nav fijo
-- `#nav-container { min-height: var(--nh, 44px) }` — **reserva espacio antes del fetch** para evitar layout shift (CLS)
+- `#nav-container { min-height: var(--nh, 44px) }` — reserva espacio antes del fetch para evitar layout shift (CLS)
 
 ### proyecto-page.css
 
 Layout de dos columnas: panel izquierdo `.vr-info` (texto) + panel derecho `.vr-video-panel` (vídeo). Usado por todos los proyectos individuales excepto `museo.html`.
-
-Cada página de proyecto solo incluye un `<style>` mínimo si necesita sobreescribir valores como `font-size` del título o propiedades de un tagline específico.
 
 ---
 
@@ -134,7 +162,7 @@ Cada HTML tiene `<meta name="base-depth" content="N">`:
 
 ### Event delegation
 
-Todos los clicks del nav se manejan con **un solo listener en `document.body`**, no con listeners directos en cada botón. Esto es necesario porque el nav se inyecta de forma asíncrona — si se vincularan listeners directos justo después del fetch, podrían fallar si el DOM no había terminado de actualizarse.
+Todos los clicks del nav se manejan con **un solo listener en `document.body`**, no con listeners directos en cada botón. Esto es necesario porque el nav se inyecta de forma asíncrona.
 
 ```js
 document.body.addEventListener('click', function (e) {
@@ -144,8 +172,8 @@ document.body.addEventListener('click', function (e) {
   if (t.closest('#cnMobProyBtn')) → openAcc / closeAcc
   if (t.closest('#cnSPCls'))      → closeSearch
   // Outside-click detection:
-  if (spOpen  && !sp.contains(t))              → closeSearch
-  if (mobOpen && !mob.contains(t) && ...)      → closeMob
+  if (spOpen  && !sp.contains(t))         → closeSearch
+  if (mobOpen && !mob.contains(t) && ...) → closeMob
 });
 ```
 
@@ -153,59 +181,68 @@ document.body.addEventListener('click', function (e) {
 
 Un `<div>` creado desde JS (backdrop blur + semi-opaco) se monta en `document.body` con `z-index: 896`. El nav tiene `z-index: 900`, así el nav queda por encima y sigue recibiendo clicks aunque el overlay esté activo.
 
-### Clases CSS del menú móvil
+---
 
-El menú móvil usa `is-open` en **dos** elementos simultáneamente:
-- `ham.classList.add('is-open')` → anima las barras del hamburger a ×
-- `mob.classList.add('is-open')` → dispara la animación `cnMobIn` en las filas (`.cn-mob.is-open .cn-mob-row`)
+## Hero de index.html — componentes principales
 
-Sin la clase en `mob`, las filas permanecen invisibles (`opacity: 0` en el CSS base).
+### Cinema letterbox
+
+Video de introducción (`heroVideo`) que se reproduce una sola vez al cargar. El evento `ended` dispara el dismiss del modo cinema. Atributos requeridos: `autoplay muted playsinline preload="auto"` — sin `loop`.
+
+### Fluid ink (WebGL)
+
+Dos instancias de simulación de fluidos:
+- **Hero ink** — tinta negra sobre fondo oscuro
+- **inkSection ink** — tinta blanca; el texto superpuesto usa `mix-blend-mode: difference` intencionalmente — cuando la tinta oscura pasa debajo del texto blanco, el blend invierte el color haciéndolo legible
+
+> **Regla crítica de WebGL:** `Material.setKeywords()` debe llamarse **antes** de `Material.bind()`. Si el orden se invierte, `activeProgram` es `null` en el primer frame y los uniforms fallan con `INVALID_OPERATION`.
+
+### Parallax scroll
+
+Driver en `index.html` (aprox. líneas 1362–1458). Usa `window.scrollY` + `requestAnimationFrame` para animar `svVideo`. Requiere que `overscroll-behavior-y: none` esté en `html` (no en `body`) — Chrome deja de actualizar `window.scrollY` si la propiedad está en `body`.
+
+```css
+/* index.html — inline style */
+html { overscroll-behavior-y: none; }
+```
+
+---
+
+## Estrategia de vídeo por página
+
+| Página | Vídeo | Atributos | Razón |
+|---|---|---|---|
+| `index.html` | heroVideo | `autoplay muted playsinline preload="auto"` | Cinema intro — sin loop |
+| `index.html` | svVideo | `muted playsinline preload="auto"` | Controlado por scroll — sin autoplay |
+| `universitario.html` | lumi.mov | `autoplay muted loop playsinline` | Audio embebido pero es animación de fondo — muted para autoplay iOS |
+| `victoria-regia.html` | — | `controls loop playsinline preload="auto"` | Audio intencional — usuario controla playback |
+| `moda-week-international.html` | — | `controls loop playsinline preload="auto"` | Audio intencional |
+| `chiper.html` | chiper.MOV | `controls loop playsinline` | Audio intencional |
+| `chiper.html` | marquilla.mov | `controls loop playsinline` | Audio intencional |
+| `farmalaxia.html` | — | `controls loop playsinline` | Audio intencional |
+
+**Regla iOS autoplay:** solo `muted + playsinline` permite reproducción automática. Videos con audio requieren `controls` para que el usuario inicie la reproducción manualmente.
+
+---
+
+## Mobile polish
+
+- `overscroll-behavior-y: none` en `html` — elimina el elastic bounce de iOS sin romper el parallax en desktop
+- `contacto.html` usa `min-height: 100svh` (Small Viewport Height) para compensar el chrome del navegador móvil
+- Cursor personalizado desactivado en `@media (pointer: coarse)` — no aparece en táctil
+- Hover states protegidos con `@media (hover: hover)` donde aplica
 
 ---
 
 ## Bug de Live Server + SVG — Causa raíz y solución
 
-### El problema
+Live Server inyecta su script de live-reload dentro de los elementos `<svg>` cuando el archivo HTML no tiene `</body>`. `nav.html` tiene dos SVG inline → dos inyecciones → `Content-Length` incorrecto → el archivo llega truncado al navegador.
 
-Live Server (extensión VS Code) inyecta su script de live-reload dentro de los elementos `<svg>` cuando el archivo HTML no tiene `</body>`. Esto pasa porque:
+**Síntomas:** `document.getElementById('cnSP')` → `null`, menú móvil incompleto.
 
-1. Live Server busca `</body>` para inyectar su script
-2. Si no lo encuentra, activa el modo "SVG support" y lo inyecta dentro de cada `<svg>` con comentarios CDATA
-3. `nav.html` tiene dos SVG inline (ícono de búsqueda y chevron) → **dos inyecciones**
-4. Live Server calcula `Content-Length` asumiendo **una** sola inyección: `file_size + 1493 = 14235` bytes
-5. El cliente HTTP para de leer al llegar a `Content-Length` bytes
-6. El archivo queda truncado **antes** de llegar al panel de búsqueda `#cnSP` y a las filas Perfil/Contacto del menú móvil
+**Solución permanente:** `</body>` al final de `components/nav.html` — Live Server lo usa como punto de inyección. El navegador ignora el tag huérfano al parsear con `innerHTML`.
 
-### Síntomas
-
-- `document.getElementById('cnSP')` → `null`
-- Menú móvil: solo muestra "Inicio" y "Proyectos" (los primeros ítems antes del primer SVG inyectado)
-- Lupa visible en la barra pero sin reacción al hacer click
-- `Content-Length: 14235` pero el archivo en disco mide 12742 bytes
-
-### Solución permanente
-
-Se añadió `</body>` al final de `components/nav.html`. Live Server encuentra ese tag y **redirige la inyección ahí**, en lugar de dentro de los SVG. El navegador ignora el `</body>` huérfano al parsear el fragmento con `innerHTML`.
-
-### Solución de defensa en JS (loader.js)
-
-Para cubrir cualquier futura regresión, `initNav()` crea el panel de búsqueda y las filas del menú **dinámicamente** si no los encuentra en el DOM:
-
-```js
-// Si #cnSP no llegó, se crea desde JS
-if (!sp) {
-  sp = document.createElement('div');
-  sp.id = 'cnSP'; sp.className = 'cn-sp';
-  sp.innerHTML = /* HTML del panel */;
-  document.body.appendChild(sp);
-}
-
-// Si faltan Perfil/Contacto en el menú móvil, se añaden
-if (!mob.querySelector('a[href*="sobre-mi"]')) { /* añadir fila */ }
-if (!mob.querySelector('a[href*="contacto"]')) { /* añadir fila */ }
-```
-
-El CSS de `.cn-sp` ya está disponible porque llega en el bloque `<style>` del nav, que se inyecta antes del truncamiento.
+**Defensa en JS:** `initNav()` crea el panel de búsqueda y las filas faltantes dinámicamente si no los encuentra en el DOM.
 
 ---
 
@@ -218,7 +255,7 @@ El CSS de `.cn-sp` ya está disponible porque llega en el bloque `<style>` del n
   <link rel="stylesheet" href="../../css/main.css">
   <link rel="stylesheet" href="../../css/proyecto-page.css">
   <style>
-    /* Solo overrides específicos de esta página — fuera del default */
+    /* Solo overrides específicos de esta página */
     .vr-title { font-size: clamp(42px, 4.8vw, 72px); }
   </style>
 </head>
@@ -230,23 +267,22 @@ El CSS de `.cn-sp` ya está disponible porque llega en el bloque `<style>` del n
 </body>
 ```
 
-Regla: si la página usa los valores default de `proyecto-page.css`, el `<style>` inline se omite completamente.
-
 ---
 
 ## Agregar una nueva página de proyecto
 
 1. Duplicar cualquier `paginas/proyectos/*.html` existente
-2. Actualizar `meta[name="base-depth"]` (value `2` para páginas en `proyectos/`)
-3. Añadir la entrada en el array `PAGES` en `js/loader.js` (para que aparezca en el buscador)
-4. Añadir el link en el dropdown del nav en `components/nav.html` y en el menú móvil
-5. Si el título o tagline difiere del default, añadir un `<style>` inline mínimo
+2. Actualizar `meta[name="base-depth"]` a `2`
+3. Añadir la entrada en el array `PAGES` en `js/loader.js` (buscador)
+4. Añadir el link en `components/nav.html` — dropdown desktop y menú móvil
+5. Añadir la URL en `sitemap.xml`
+6. Si el título o tagline difiere del default, añadir un `<style>` inline mínimo
 
 ---
 
-## Consideraciones para producción
+## Notas de producción
 
-- `fetch()` con `cache: 'no-store'` y `?_=Date.now()` en la URL — asegura que nunca se sirva un nav cacheado. Considerar cambiar a `cache: 'default'` con versionado de archivos (`nav.v2.html`) en producción.
-- Las rutas de `href` en `nav.html` usan `/` absolutos. `patchNavLinks()` las convierte a relativas automáticamente para desarrollo local. En producción con dominio propio las absolutas funcionan directamente.
+- Las rutas de `href` en `nav.html` usan `/` absolutos. `patchNavLinks()` las convierte a relativas automáticamente en desarrollo local. Con dominio propio en producción funcionan directamente.
 - El cursor personalizado está desactivado en `@media (pointer: coarse)` (móvil/táctil).
-- `mix-blend-mode: difference` en el cursor blanco de páginas oscuras requiere que el elemento `.cursor` esté fuera del `#nav-container` en el DOM.
+- `mix-blend-mode: difference` en el cursor de páginas oscuras requiere que `.cursor` esté fuera del `#nav-container` en el DOM.
+- El error de consola `Permissions-Policy: browsing-topics` es un header del servidor de GitHub Pages — no es un error de código y no afecta funcionalidad ni SEO.
