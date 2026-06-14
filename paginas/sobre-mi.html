@@ -156,20 +156,62 @@ html,body{background:#EBEBEB;font-family:var(--font);height:100%;overflow:hidden
 @media(max-width:767px){
   .sb-pill,.sb-panel{display:none!important}
   .page-wrap{padding:8px 8px 0;gap:0}
-  .db-content{border-radius:20px 20px 0 0;padding:20px 18px calc(68px + env(safe-area-inset-bottom,0px))}
-  .mob-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:calc(60px + env(safe-area-inset-bottom,0px));padding-bottom:env(safe-area-inset-bottom,0px);padding-left:4px;padding-right:4px;background:#111113;border-top:.5px solid rgba(255,255,255,.07);align-items:center;justify-content:space-around;z-index:200}
-  .mob-nav-btn{flex:1;height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:none;border:none;border-radius:12px;color:rgba(255,255,255,.32);transition:color .2s,background .2s;cursor:pointer;padding:0}
+  .db-content{border-radius:20px 20px 0 0;padding:20px 18px 84px}
+
+  /* Pill flotante — igual estética que el sb-pill de desktop */
+  .mob-nav{
+    display:flex;position:fixed;bottom:10px;left:12px;right:12px;
+    height:58px;background:#111113;border-radius:20px;
+    align-items:center;justify-content:space-around;
+    z-index:200;box-shadow:0 4px 28px rgba(0,0,0,.4)
+  }
+  .mob-nav-btn{
+    flex:1;height:100%;display:flex;align-items:center;justify-content:center;
+    background:none;border:none;border-radius:16px;
+    color:rgba(255,255,255,.3);transition:color .2s;padding:0;cursor:pointer;
+    position:relative
+  }
+  .mob-nav-btn::after{
+    content:'';position:absolute;bottom:9px;left:50%;transform:translateX(-50%);
+    width:4px;height:4px;border-radius:50%;background:#fff;
+    opacity:0;transition:opacity .2s
+  }
   .mob-nav-btn.active{color:#fff}
-  .mob-nav-btn-dot{width:4px;height:4px;border-radius:50%;background:#fff;opacity:0;transition:opacity .2s;flex-shrink:0}
-  .mob-nav-btn.active .mob-nav-btn-dot{opacity:1}
-  .mob-backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:201;opacity:0;pointer-events:none;transition:opacity .25s}
-  .mob-backdrop.open{opacity:1;pointer-events:all}
-  .mob-sheet{display:block;position:fixed;left:8px;right:8px;bottom:calc(60px + env(safe-area-inset-bottom,0px) + 8px);background:#1c1c1e;border-radius:22px;z-index:202;padding:10px 12px 14px;transform:translateY(calc(100% + 30px));opacity:0;transition:transform .38s cubic-bezier(.16,1,.3,1),opacity .3s;will-change:transform;max-height:65vh;overflow:hidden}
-  .mob-sheet.open{transform:translateY(0);opacity:1}
+  .mob-nav-btn.active::after{opacity:1}
+
+  /* Backdrop */
+  .mob-backdrop{
+    display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);
+    z-index:201;
+    visibility:hidden;opacity:0;
+    transition:opacity .22s,visibility 0s .22s
+  }
+  .mob-backdrop.open{visibility:visible;opacity:1;transition:opacity .22s,visibility 0s 0s}
+
+  /* Sheet — sube desde abajo del pill */
+  .mob-sheet{
+    display:block;position:fixed;left:12px;right:12px;bottom:78px;
+    background:#1c1c1e;border-radius:20px;
+    z-index:202;padding:10px 12px 14px;
+    visibility:hidden;opacity:0;transform:translateY(16px);
+    transition:opacity .22s,transform .28s cubic-bezier(.16,1,.3,1),visibility 0s .28s;
+    max-height:70vh;overflow:hidden
+  }
+  .mob-sheet.open{
+    visibility:visible;opacity:1;transform:translateY(0);
+    transition:opacity .22s,transform .28s cubic-bezier(.16,1,.3,1),visibility 0s 0s
+  }
   .mob-sheet-handle{width:36px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:0 auto 12px}
   .mob-sheet-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);padding:0 6px 8px;font-family:var(--font)}
-  .mob-sheet-inner{overflow-y:auto;max-height:calc(65vh - 64px)}
-  .mob-sheet-item{display:flex;align-items:center;gap:13px;padding:13px 12px;border-radius:14px;color:rgba(255,255,255,.55);font-size:14px;font-weight:500;background:none;border:none;width:100%;font-family:var(--font);text-align:left;transition:background .18s,color .18s;cursor:pointer}
+  .mob-sheet-inner{overflow-y:auto;max-height:calc(70vh - 60px)}
+  .mob-sheet-item{
+    display:flex;align-items:center;gap:13px;
+    padding:13px 12px;border-radius:14px;
+    color:rgba(255,255,255,.55);font-size:14px;font-weight:500;
+    background:none;border:none;width:100%;
+    font-family:var(--font);text-align:left;
+    transition:background .18s,color .18s;cursor:pointer
+  }
   .mob-sheet-item.active{background:rgba(255,255,255,.09);color:#fff}
   .mob-sheet-item svg{flex-shrink:0;opacity:.7}
   .mob-sheet-item.active svg{opacity:1}
@@ -612,68 +654,83 @@ if(canvas){
 }
 
 /* ── Mobile bottom nav ── */
-var MOB_ICONS={
-  'sobremí':     '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>',
-  'herramientas':'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
-  'idiomas':     '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
-  'habilidades': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
-  'filosofia':   '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-1.86 5.58-4.6 6.67L14 18H10l-.4-2.33C6.86 14.58 5 12 5 9a7 7 0 0 1 7-7z"/><line x1="10" y1="22" x2="14" y2="22"/></svg>',
-  'inspiracion': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
-  'experiencia': '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>'
-};
-var mobNavEl=document.getElementById('mobNav');
-var mobBackdropEl=document.getElementById('mobBackdrop');
-var mobSheetEl=document.getElementById('mobSheet');
-var mobSheetLabelEl=document.getElementById('mobSheetLabel');
-var mobSheetItemsEl=document.getElementById('mobSheetItems');
-if(mobNavEl){
-  var mobActiveCtx='sobremí';
-  var mobActivePanel='perfil';
-  var sheetOpen=false;
-  function closeSheet(){sheetOpen=false;mobSheetEl.classList.remove('open');mobBackdropEl.classList.remove('open');}
+(function(){
+  var navEl=document.getElementById('mobNav');
+  var bdEl=document.getElementById('mobBackdrop');
+  var sheetEl=document.getElementById('mobSheet');
+  var sheetLbl=document.getElementById('mobSheetLabel');
+  var sheetItems=document.getElementById('mobSheetItems');
+  if(!navEl||!bdEl||!sheetEl)return;
+
+  var activeCtx='sobremí';
+  var activePanel='perfil';
+  var isOpen=false;
+
+  function closeSheet(){
+    isOpen=false;
+    sheetEl.classList.remove('open');
+    bdEl.classList.remove('open');
+  }
   function openSheet(ctxKey){
-    var c=CONTEXTS[ctxKey];if(!c)return;
-    mobSheetLabelEl.textContent=c.title;
-    mobSheetItemsEl.innerHTML='';
+    var c=CONTEXTS[ctxKey];
+    if(!c)return;
+    sheetLbl.textContent=c.title;
+    sheetItems.innerHTML='';
     c.items.forEach(function(item){
-      var btn=document.createElement('button');
-      btn.className='mob-sheet-item'+(item.p===mobActivePanel?' active':'');
-      btn.innerHTML=(SVG[item.i]||'')+'<span>'+item.l+'</span>';
-      btn.addEventListener('click',function(){
-        mobSheetItemsEl.querySelectorAll('.mob-sheet-item').forEach(function(b){b.classList.remove('active');});
-        btn.classList.add('active');
-        mobActivePanel=item.p;
+      var b=document.createElement('button');
+      b.className='mob-sheet-item'+(item.p===activePanel?' active':'');
+      b.innerHTML=(SVG[item.i]||'')+'<span>'+item.l+'</span>';
+      b.addEventListener('click',function(){
+        sheetItems.querySelectorAll('.mob-sheet-item').forEach(function(x){x.classList.remove('active');});
+        b.classList.add('active');
+        activePanel=item.p;
         showPanel(item.p);
         closeSheet();
       });
-      mobSheetItemsEl.appendChild(btn);
+      sheetItems.appendChild(b);
     });
-    sheetOpen=true;mobSheetEl.classList.add('open');mobBackdropEl.classList.add('open');
+    isOpen=true;
+    sheetEl.classList.add('open');
+    bdEl.classList.add('open');
   }
-  Object.keys(CONTEXTS).forEach(function(ctxKey){
-    var ctx=CONTEXTS[ctxKey];
+
+  /* Nav items — orden explícito */
+  var NAV=[
+    {key:'sobremí',    svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>'},
+    {key:'herramientas',svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>'},
+    {key:'idiomas',    svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'},
+    {key:'habilidades',svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'},
+    {key:'filosofia',  svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 3-1.86 5.58-4.6 6.67L14 18H10l-.4-2.33C6.86 14.58 5 12 5 9a7 7 0 0 1 7-7z"/><line x1="10" y1="22" x2="14" y2="22"/></svg>'},
+    {key:'inspiracion',svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>'},
+    {key:'experiencia',svg:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>'}
+  ];
+
+  NAV.forEach(function(item){
+    var ctx=CONTEXTS[item.key];
+    if(!ctx)return;
     var btn=document.createElement('button');
-    btn.className='mob-nav-btn'+(ctxKey==='sobremí'?' active':'');
+    btn.className='mob-nav-btn'+(item.key==='sobrem\xED'?' active':'');
     btn.setAttribute('aria-label',ctx.title);
-    btn.innerHTML=(MOB_ICONS[ctxKey]||'')+'<span class="mob-nav-btn-dot"></span>';
+    btn.innerHTML=item.svg;
     btn.addEventListener('click',function(){
-      var prev=mobActiveCtx;
-      mobNavEl.querySelectorAll('.mob-nav-btn').forEach(function(b){b.classList.remove('active');});
+      var prev=activeCtx;
+      navEl.querySelectorAll('.mob-nav-btn').forEach(function(b){b.classList.remove('active');});
       btn.classList.add('active');
-      mobActiveCtx=ctxKey;
+      activeCtx=item.key;
       if(ctx.items.length===1){
         closeSheet();
-        mobActivePanel=ctx.items[0].p;
+        activePanel=ctx.items[0].p;
         showPanel(ctx.items[0].p);
       } else {
-        if(prev===ctxKey&&sheetOpen){closeSheet();}
-        else{openSheet(ctxKey);}
+        if(prev===item.key&&isOpen){closeSheet();}
+        else{openSheet(item.key);}
       }
     });
-    mobNavEl.appendChild(btn);
+    navEl.appendChild(btn);
   });
-  mobBackdropEl.addEventListener('click',closeSheet);
-}
+
+  bdEl.addEventListener('click',closeSheet);
+}());
 
 
 })();
