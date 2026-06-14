@@ -1190,11 +1190,11 @@ window._darkMode = true;
   }
   function render() {
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA); gl.enable(gl.BLEND);
-    displayMat.bind();
     /* No LIGHT_MODE: shader siempre emite c directamente.
        dark mode: screen sobre negro → acumula blanco
        light mode: difference sobre blanco → acumula negro */
     displayMat.setKeywords(['SHADING']);
+    displayMat.bind();
     gl.uniform2f(displayMat.uniforms.texelSize, 1/gl.drawingBufferWidth, 1/gl.drawingBufferHeight);
     gl.uniform1i(displayMat.uniforms.uTexture, dye.read.attach(0)); blit(null);
   }
