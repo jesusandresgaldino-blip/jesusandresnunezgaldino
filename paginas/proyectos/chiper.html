@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="../../css/main.css">
   <link rel="stylesheet" href="../../css/proyecto-page.css">
   <style>
-    /* Eliminar grano del panel en todas las resoluciones */
     .vr-info::before { display: none !important; }
 
     /* Fix para pantallas grandes (>1440px): el wrapper debe ocupar toda la altura */
@@ -31,21 +30,26 @@
     /* ── Right panel: Chiper tokens ── */
     .vr-scroll-panel {
       overflow-y: auto;
+      overflow-x: hidden;
       height: 100%;
       scroll-behavior: smooth;
       position: relative;
-      --red:      #FF0000;
-      --mid:      #FF0000;
-      --light:    #FF8099;
-      --pale:     #FFF0F3;
-      --ink:      #1a0204;
-      --ch-muted: rgba(26,2,4,0.42);
-      --bg:       #f9f7f7;
+      --red:      #a00000;
+      --mid:      #C20000;
+      --light:    #bb2626;
+      --pale:     rgba(255,0,0,0.07);
+      --ink:      rgba(18,3,3,0.88);
+      --ch-muted: rgba(18,3,3,0.50);
+      --bg:       #fdfafa;
       --white:    #ffffff;
       --ease:     cubic-bezier(0.16,1,0.3,1);
       --r:        20px;
       --max:      1260px;
-      background: var(--bg);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 70% 45% at 15% 5%, rgba(255,0,0,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 40% at 85% 15%, rgba(200,0,0,0.022) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 35% at 70% 90%, rgba(180,0,0,0.015) 0%, transparent 55%);
       font-family: 'Poppins', sans-serif;
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
@@ -53,20 +57,20 @@
 
     /* ── Glass cards ── */
     .vr-scroll-panel .gc {
-      background: rgba(255,255,255,0.72);
-      backdrop-filter: blur(48px) saturate(180%);
-      -webkit-backdrop-filter: blur(48px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.9);
-      box-shadow: 0 8px 32px rgba(255,0,0,0.06), inset 0 1.5px 0 rgba(255,255,255,0.9);
+      background: linear-gradient(145deg, rgba(255,255,255,0.88) 0%, rgba(255,240,240,0.65) 100%);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(147, 27, 27, 0.3);
+      box-shadow: 0 4px 22px rgba(255,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.95);
       will-change: transform;
       transform: translateZ(0);
       isolation: isolate;
     }
 
     .vr-scroll-panel .dark {
-      background: var(--red);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 16px 48px rgba(255,0,0,0.30);
+      background: linear-gradient(145deg, #AA0000 0%, #640000 100%);
+      border: 1px solid rgba(255,100,100,0.38);
+      box-shadow: 0 12px 40px rgba(130,0,0,0.40), inset 0 1px 0 rgba(255,150,150,0.42);
       color: #fff;
     }
 
@@ -79,17 +83,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #FF0000;
-    }
-
-    .ch-hero::after {
-      content: '';
-      position: absolute;
-      bottom: -80px; left: -80px;
-      width: 480px; height: 480px;
-      background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
-      pointer-events: none;
-      animation: chPulse 6s ease-in-out infinite;
+      background: linear-gradient(145deg, #960000 0%, #4E0000 100%);
     }
 
     @keyframes chPulse {
@@ -204,7 +198,7 @@
     .vr-scroll-panel .section {
       padding: 11rem 6vw;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .vr-scroll-panel .container {
@@ -217,7 +211,7 @@
     .vr-scroll-panel hr.div {
       border: none;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,0,0,0.08), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,0,0,0.12), transparent);
       margin: 0 6vw;
     }
 
@@ -256,7 +250,7 @@
     .vr-scroll-panel .cover {
       padding: 22rem 6vw 13rem;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
 
     .vr-scroll-panel .cover-grid {
@@ -316,7 +310,7 @@
       display: flex;
       gap: 2.5rem;
       padding-top: 1.8rem;
-      border-top: 1px solid rgba(255,0,0,0.08);
+      border-top: 1px solid rgba(255,0,0,0.09);
       flex-wrap: wrap;
     }
 
@@ -394,34 +388,36 @@
     .vr-scroll-panel .wf-card {
       border-radius: var(--r);
       padding: 1.8rem 1.4rem;
-      background: rgba(255,255,255,0.62);
-      border: 1px solid rgba(255,255,255,0.9);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      box-shadow: 0 2px 16px rgba(255,0,0,0.05), 0 1px 4px rgba(0,0,0,0.03);
+      background: linear-gradient(145deg, rgba(255,255,255,0.82) 0%, rgba(255,242,242,0.60) 100%);
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      border: 1px solid rgba(255,185,185,0.25);
+      box-shadow: 0 2px 16px rgba(255,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
       will-change: transform;
       transform: translateZ(0);
-      transition: transform .3s var(--ease);
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease, border-color .2s ease, background .2s ease;
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
     }
 
-    .vr-scroll-panel .wf-card:hover { transform: translateY(-4px); }
+    .vr-scroll-panel .wf-card:hover { transform: translateY(-5px) scale(1.02); background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(255,235,235,0.80) 100%); border-color: rgba(255,160,160,0.40); box-shadow: 0 22px 52px rgba(255,0,0,0.12); }
+    .vr-scroll-panel .wf-card.dark:hover { background: linear-gradient(145deg, #C40000 0%, #820000 100%); box-shadow: 0 22px 52px rgba(140,0,0,0.45); border-color: rgba(255,140,140,0.55); }
+    .vr-scroll-panel .wf-card:active { transform: scale(0.97) !important; transition-duration: .09s; }
 
     .vr-scroll-panel .wf-card.dark {
-      background: var(--red);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 16px 48px rgba(255,0,0,0.32);
+      background: linear-gradient(155deg, #960000 0%, #4E0000 100%);
+      border: 1px solid rgba(255,100,100,0.38);
+      box-shadow: 0 12px 40px rgba(100,0,0,0.35), inset 0 1px 0 rgba(255,150,150,0.42);
     }
-    .vr-scroll-panel .wf-card.dark .wf-n { color: rgba(255,255,255,0.6); }
-    .vr-scroll-panel .wf-card.dark p { color: #fff; font-weight: 600; }
+    .vr-scroll-panel .wf-card.dark .wf-n { color: rgba(255,185,185,0.65); }
+    .vr-scroll-panel .wf-card.dark p { color: rgba(255,255,255,0.92); font-weight: 500; }
     .vr-scroll-panel .wf-card.gc {
-      background: rgba(255,255,255,0.72);
-      backdrop-filter: blur(48px) saturate(180%);
-      -webkit-backdrop-filter: blur(48px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.9);
-      box-shadow: 0 8px 32px rgba(255,0,0,0.06), inset 0 1.5px 0 rgba(255,255,255,0.9);
+      background: linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(255,238,238,0.70) 100%);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(255,185,185,0.32);
+      box-shadow: 0 4px 24px rgba(255,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.96);
     }
 
     .vr-scroll-panel .wf-n {
@@ -451,7 +447,7 @@
     .vr-scroll-panel .prob-rows {
       display: flex;
       flex-direction: column;
-      border-top: 1px solid rgba(255,0,0,0.08);
+      border-top: 1px solid rgba(255,0,0,0.09);
       margin-bottom: 4rem;
     }
 
@@ -460,7 +456,7 @@
       grid-template-columns: 1fr 1.5fr;
       gap: 2rem;
       padding: 1.4rem 0;
-      border-bottom: 1px solid rgba(255,0,0,0.06);
+      border-bottom: 1px solid rgba(255,0,0,0.07);
       align-items: center;
     }
 
@@ -484,6 +480,7 @@
       position: relative;
       overflow: hidden;
     }
+    .vr-scroll-panel .bq.dark { background: linear-gradient(150deg, #720000 0%, #380000 100%); border: 1px solid rgba(255,100,100,0.38); box-shadow: 0 16px 48px rgba(70,0,0,0.40), inset 0 1px 0 rgba(255,150,150,0.42); }
 
     .vr-scroll-panel .bq-mark {
       position: absolute;
@@ -516,7 +513,13 @@
     .vr-scroll-panel .research-card {
       border-radius: 28px;
       padding: 3rem;
+      position: relative;
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease, border-color .2s ease, background .2s ease;
     }
+    .vr-scroll-panel .research-card.dark { background: linear-gradient(135deg, #7A0000 0%, #3D0000 100%); border: 1px solid rgba(255,100,100,0.38); box-shadow: 0 12px 40px rgba(80,0,0,0.38), inset 0 1px 0 rgba(255,150,150,0.42); }
+    .vr-scroll-panel .research-card:hover { transform: translateY(-5px) scale(1.02); background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(255,232,232,0.80) 100%); border-color: rgba(255,160,160,0.40); box-shadow: 0 22px 52px rgba(255,0,0,0.12); }
+    .vr-scroll-panel .research-card.dark:hover { background: linear-gradient(135deg, #960000 0%, #550000 100%); box-shadow: 0 22px 52px rgba(90,0,0,0.50); border-color: rgba(255,140,140,0.55); }
+    .vr-scroll-panel .research-card:active { transform: scale(0.97) !important; transition-duration: .09s; }
 
     .vr-scroll-panel .rc-title {
       font-size: 1.05rem;
@@ -568,10 +571,14 @@
     .vr-scroll-panel .country-card {
       border-radius: var(--r);
       padding: 1.8rem 1.4rem;
-      transition: transform .3s var(--ease);
+      position: relative;
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease;
     }
 
-    .vr-scroll-panel .country-card:hover { transform: translateY(-4px); }
+    .vr-scroll-panel .country-card.dark { background: linear-gradient(165deg, #880000 0%, #440000 100%); border: 1px solid rgba(255,100,100,0.38); box-shadow: 0 10px 32px rgba(80,0,0,0.34), inset 0 1px 0 rgba(255,150,150,0.42); }
+    .vr-scroll-panel .country-card:hover { transform: translateY(-5px) scale(1.02); background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(255,232,232,0.80) 100%); border-color: rgba(255,160,160,0.40); box-shadow: 0 18px 44px rgba(255,0,0,0.11); }
+    .vr-scroll-panel .country-card.dark:hover { background: linear-gradient(165deg, #AA0000 0%, #600000 100%); box-shadow: 0 18px 44px rgba(90,0,0,0.46); border-color: rgba(255,140,140,0.55); }
+    .vr-scroll-panel .country-card:active { transform: scale(0.97) !important; transition-duration: .09s; }
 
     .vr-scroll-panel .country-flag {
       font-size: 2rem;
@@ -606,10 +613,13 @@
       padding: 3rem;
       position: relative;
       overflow: hidden;
-      transition: transform .3s var(--ease);
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease;
     }
 
-    .vr-scroll-panel .strat-card:hover { transform: translateY(-4px); }
+    .vr-scroll-panel .strat-card.dark { background: linear-gradient(160deg, #C41A00 0%, #780000 100%); border: 1px solid rgba(255,100,100,0.38); box-shadow: 0 12px 40px rgba(140,0,0,0.38), inset 0 1px 0 rgba(255,150,150,0.42); }
+    .vr-scroll-panel .strat-card:hover { transform: translateY(-5px) scale(1.02); background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(255,232,232,0.80) 100%); border-color: rgba(255,160,160,0.40); box-shadow: 0 22px 52px rgba(255,0,0,0.12); }
+    .vr-scroll-panel .strat-card.dark:hover { background: linear-gradient(160deg, #DD2000 0%, #920000 100%); box-shadow: 0 22px 52px rgba(150,0,0,0.50); border-color: rgba(255,140,140,0.55); }
+    .vr-scroll-panel .strat-card:active { transform: scale(0.97) !important; transition-duration: .09s; }
 
     .vr-scroll-panel .strat-eyebrow {
       font-size: .58rem;
@@ -706,10 +716,11 @@
       min-height: 200px;
       position: relative;
       overflow: hidden;
-      transition: transform .3s var(--ease);
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease;
     }
 
-    .vr-scroll-panel .ecard-mock:hover { transform: translateY(-4px) scale(1.02); }
+    .vr-scroll-panel .ecard-mock:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 22px 52px rgba(255,0,0,0.30); }
+    .vr-scroll-panel .ecard-mock:active { transform: scale(0.97) !important; transition-duration: .09s; }
 
     .vr-scroll-panel .ecard-mock::before {
       content: '';
@@ -794,12 +805,13 @@
       overflow: hidden;
       position: relative;
       background: #111;
-      transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease;
     }
     .vr-scroll-panel .wg-item:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 24px 48px rgba(0,0,0,0.35);
+      transform: translateY(-7px) scale(1.02);
+      box-shadow: 0 28px 56px rgba(0,0,0,0.42);
     }
+    .vr-scroll-panel .wg-item:active { transform: scale(0.97) !important; transition-duration: .09s; }
     .vr-scroll-panel .wg-item img {
       width: 100%;
       height: auto;
@@ -822,10 +834,13 @@
       padding: 3rem;
       position: relative;
       overflow: hidden;
-      transition: transform .3s var(--ease);
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease;
     }
 
-    .vr-scroll-panel .campaign-card:hover { transform: translateY(-4px); }
+    .vr-scroll-panel .campaign-card.dark { background: linear-gradient(140deg, #630000 0%, #320000 100%); border: 1px solid rgba(255,100,100,0.38); box-shadow: 0 14px 44px rgba(60,0,0,0.42), inset 0 1px 0 rgba(255,150,150,0.42); }
+    .vr-scroll-panel .campaign-card:hover { transform: translateY(-5px) scale(1.02); background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(255,232,232,0.80) 100%); border-color: rgba(255,160,160,0.40); box-shadow: 0 22px 52px rgba(255,0,0,0.12); }
+    .vr-scroll-panel .campaign-card.dark:hover { background: linear-gradient(140deg, #820000 0%, #480000 100%); box-shadow: 0 22px 52px rgba(70,0,0,0.52); border-color: rgba(255,140,140,0.55); }
+    .vr-scroll-panel .campaign-card:active { transform: scale(0.97) !important; transition-duration: .09s; }
 
     .vr-scroll-panel .cc-brand {
       font-size: .6rem;
@@ -899,12 +914,15 @@
       padding: 3rem 2.4rem;
       position: relative;
       overflow: hidden;
-      transition: transform .3s var(--ease);
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease;
       display: flex;
       flex-direction: column;
     }
 
-    .vr-scroll-panel .metric-card:hover { transform: translateY(-6px); }
+    .vr-scroll-panel .metric-card.dark { background: linear-gradient(150deg, #B20000 0%, #680000 100%); border: 1px solid rgba(255,100,100,0.38); box-shadow: 0 14px 44px rgba(120,0,0,0.38), inset 0 1px 0 rgba(255,150,150,0.42); }
+    .vr-scroll-panel .metric-card:hover { transform: translateY(-7px) scale(1.02); background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(255,232,232,0.80) 100%); border-color: rgba(255,160,160,0.40); box-shadow: 0 28px 58px rgba(255,0,0,0.14); }
+    .vr-scroll-panel .metric-card.dark:hover { background: linear-gradient(150deg, #CC0000 0%, #840000 100%); box-shadow: 0 28px 58px rgba(130,0,0,0.50); border-color: rgba(255,140,140,0.55); }
+    .vr-scroll-panel .metric-card:active { transform: scale(0.97) !important; transition-duration: .09s; }
 
     .vr-scroll-panel .mc-n {
       font-size: clamp(2.4rem, 4vw, 4.5rem);
@@ -950,10 +968,13 @@
       padding: 2.5rem;
       position: relative;
       overflow: hidden;
-      transition: transform .3s var(--ease);
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease;
     }
 
-    .vr-scroll-panel .learning-card:hover { transform: translateY(-4px); }
+    .vr-scroll-panel .learning-card.dark { background: linear-gradient(135deg, #BD0B0B 0%, #6E0000 100%); border: 1px solid rgba(255,100,100,0.38); box-shadow: 0 12px 40px rgba(110,0,0,0.36), inset 0 1px 0 rgba(255,150,150,0.42); }
+    .vr-scroll-panel .learning-card:hover { transform: translateY(-5px) scale(1.02); background: linear-gradient(145deg, rgba(255,255,255,0.96) 0%, rgba(255,232,232,0.80) 100%); border-color: rgba(255,160,160,0.40); box-shadow: 0 22px 52px rgba(255,0,0,0.12); }
+    .vr-scroll-panel .learning-card.dark:hover { background: linear-gradient(135deg, #D81414 0%, #8A0000 100%); box-shadow: 0 22px 52px rgba(120,0,0,0.48); border-color: rgba(255,140,140,0.55); }
+    .vr-scroll-panel .learning-card:active { transform: scale(0.97) !important; transition-duration: .09s; }
 
     .vr-scroll-panel .lc-n {
       font-size: 3rem;
@@ -986,21 +1007,24 @@
       margin-top: 4rem;
     }
     .vr-scroll-panel .brand-col {
-      background: rgba(255,255,255,0.72);
-      backdrop-filter: blur(48px) saturate(180%);
-      -webkit-backdrop-filter: blur(48px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.9);
-      box-shadow: 0 8px 32px rgba(255,0,0,0.06), inset 0 1.5px 0 rgba(255,255,255,0.9);
+      background: linear-gradient(145deg, rgba(255,255,255,0.88) 0%, rgba(255,240,240,0.65) 100%);
+      backdrop-filter: blur(20px) saturate(155%);
+      -webkit-backdrop-filter: blur(20px) saturate(155%);
+      border: 1px solid rgba(255,185,185,0.28);
+      box-shadow: 0 4px 22px rgba(255,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.95);
       border-radius: var(--r);
       padding: 2rem 2rem 2.4rem;
+      transition: transform .35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s ease, border-color .2s ease, background .2s ease;
     }
+    .vr-scroll-panel .brand-col:hover { transform: translateY(-5px) scale(1.02); background: linear-gradient(145deg, rgba(255,255,255,0.97) 0%, rgba(255,232,232,0.82) 100%); border-color: rgba(255,150,150,0.42); box-shadow: 0 22px 52px rgba(255,0,0,0.12); }
+    .vr-scroll-panel .brand-col:active { transform: scale(0.97); transition-duration: .09s; }
     .vr-scroll-panel .brand-col-header {
       display: flex;
       align-items: center;
       gap: .7rem;
       margin-bottom: 1.6rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255,0,0,0.1);
+      border-bottom: 1px solid rgba(255,0,0,0.10);
     }
     .vr-scroll-panel .brand-flag { font-size: 1.5rem; line-height: 1; }
     .vr-scroll-panel .brand-country {
@@ -1038,19 +1062,19 @@
     /* ── Reveal ── */
     .vr-scroll-panel .reveal {
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(30px) scale(0.97);
       transition: opacity .85s var(--ease), transform .85s var(--ease);
     }
 
     .vr-scroll-panel .reveal.on {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     /* ── Footer ── */
     .vr-scroll-panel footer {
       padding: 7rem 6vw 3.5rem;
-      border-top: 1px solid rgba(255,0,0,0.07);
+      border-top: 1px solid rgba(255,0,0,0.08);
       position: relative;
       overflow: hidden;
     }
@@ -1086,8 +1110,8 @@
       font-size: .65rem;
       font-weight: 600;
       color: var(--mid);
-      background: rgba(255,255,255,0.7);
-      border: 1px solid rgba(255,0,0,0.14);
+      background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,0,0,0.16);
     }
 
     /* ── Cinematic ── */
@@ -1111,11 +1135,11 @@
       will-change: transform;
     }
 
-    .vr-scroll-panel h2.st-split.reveal    { transform: none; }
-    .vr-scroll-panel h2.st-split.reveal.on { transform: none; }
+    .vr-scroll-panel h2.st-split.reveal    { transform: none; opacity: 1; }
+    .vr-scroll-panel h2.st-split.reveal.on { transform: none; opacity: 1; }
 
-    .vr-scroll-panel .chip.reveal    { transform: translateX(-16px); }
-    .vr-scroll-panel .chip.reveal.on { transform: translateX(0); }
+    .vr-scroll-panel .chip.reveal    { transform: translateX(-16px); opacity: 0; }
+    .vr-scroll-panel .chip.reveal.on { transform: translateX(0); opacity: 1; }
 
     .vr-scroll-panel .bq.reveal {
       transform: translateY(36px) scale(0.96);
@@ -1956,7 +1980,7 @@
         <div class="chip reveal">Frente 01 — Ecosistema de Volumen (E-cards y Promociones)</div>
         <p class="sb reveal" style="max-width:640px;transition-delay:.04s;margin-bottom:0;">Desarrollé miles de piezas funcionales, limpias y directas pensadas para que el tendero pudiera leer rápidamente el producto, el descuento y tomar una decisión de compra. Miles de SKUs activos simultáneamente con representación visual consistente.</p>
 
-        <div class="reveal" style="transition-delay:.08s;margin-top:2.5rem;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.18);border:1px solid rgba(0,0,0,0.08);">
+        <div class="reveal" style="transition-delay:.08s;margin-top:2.5rem;border-radius:20px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.18);border:1px solid rgba(255,0,0,0.10);">
           <img src="../../assets/chiper/catalogo.png" alt="Catálogo mayorista Chiper · Colombia" style="width:100%;height:auto;display:block;">
         </div>
 
