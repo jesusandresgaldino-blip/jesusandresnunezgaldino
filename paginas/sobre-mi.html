@@ -57,6 +57,7 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .card-val{font-size:14px;font-weight:700;color:#111}
 .card-desc{font-size:11px;color:#aaa;margin-top:3px;line-height:1.5}
 .row{display:grid;gap:12px}
+.col-1{grid-template-columns:1fr}
 .col-2{grid-template-columns:1fr 1fr}
 .col-3{grid-template-columns:1fr 1fr 1fr}
 .hero-card{background:#111;border-radius:20px;color:#f5f5f7;display:flex;flex-direction:column;overflow:hidden;min-height:280px;position:relative}
@@ -169,7 +170,7 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 .pf-stat-div{width:1px;height:28px;background:rgba(0,0,0,.08)}
 .pf-group-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#bbb;padding:6px 4px 2px}
 .pf-rows-card{padding:0;overflow:hidden}
-.pf-row{display:flex;align-items:center;gap:14px;padding:13px 20px;transition:background .18s}
+.pf-row{display:flex;align-items:center;gap:14px;padding:13px 20px;transition:background .18s;cursor:pointer}
 .pf-row:active{background:rgba(0,0,0,.03)}
 .pf-row-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .pf-row-body{flex:1;min-width:0}
@@ -269,7 +270,7 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
   .mob-sheet.open .mob-sheet-label{
     animation:mobItemIn .3s cubic-bezier(.16,1,.3,1) .07s forwards
   }
-  .mob-sheet-inner{overflow:visible}
+  .mob-sheet-inner{overflow-y:auto;max-height:calc(70vh - 60px)}
   .mob-sheet-item{
     display:flex;align-items:center;gap:13px;
     padding:13px 12px;border-radius:14px;
@@ -286,6 +287,9 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
   .mob-sheet-item.active{background:rgba(0,0,0,.06);color:#111}
   .mob-sheet-item svg{flex-shrink:0;opacity:.6}
   .mob-sheet-item.active svg{opacity:1}
+}
+@media(max-width:900px){
+  .col-3{grid-template-columns:1fr 1fr}
 }
 @media(max-width:767px){
   .col-2,.col-3{grid-template-columns:1fr!important}
@@ -428,7 +432,7 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 
   <!-- Mantra -->
   <div class="pf-mantra">
-    <div class="pf-mantra-quote">"El diseño más difícil no es el más complejo — es el que dice exactamente lo que necesita y absolutamente nada más."</div>
+    <div class="pf-mantra-quote">"Prefiero rehacerlo cien veces antes que entregar algo que no se siente exactamente como debería."</div>
     <div class="pf-mantra-attr">— Andrés Galdino</div>
   </div>
 </div>
@@ -639,7 +643,7 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
 <!-- H: APRENDIENDO -->
 <div class="db-panel" id="panel-h-aprendiendo">
   <div class="ph"><div class="ph-title">Aprendiendo</div><div class="ph-sub">Tecnologías en proceso activo de dominio</div></div>
-  <div class="row col-2">
+  <div class="row col-1">
     <div class="card tool-card-v">
       <div class="tool-header">
         <div class="tool-logo-badge" style="background:#1a1a1a"><img src="../assets/iconos/unity.svg" alt="Logo Unity"></div>
@@ -769,7 +773,7 @@ html,body{background:#fff;font-family:var(--font);height:100%;overflow:hidden;co
           <div class="exp-logo-sm"><img src="../assets/iconos/victoria-regia.svg" alt="Victoria Regia"></div>
           <div>
             <div class="exp-co-title">Reserva Natural Victoria Regia</div>
-            <div class="exp-co-sub">Leticia, Amazonas · Ecoturismo · Proyecto propio</div>
+            <div class="exp-co-sub">Colombia · Ecoturismo · Proyecto propio</div>
           </div>
         </div>
         <div class="exp-co-dates">2019 — hoy</div>
