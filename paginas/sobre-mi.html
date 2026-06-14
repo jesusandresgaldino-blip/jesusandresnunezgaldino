@@ -185,12 +185,11 @@ html,body{background:#EBEBEB;font-family:var(--font);height:100%;overflow:hidden
   /* Backdrop */
   .mob-backdrop{
     display:block;position:fixed;inset:0;
-    background:rgba(0,0,0,.25);
+    background:transparent;
     z-index:201;
-    visibility:hidden;opacity:0;
-    transition:opacity .28s,visibility 0s .28s
+    visibility:hidden;pointer-events:none
   }
-  .mob-backdrop.open{visibility:visible;opacity:1;transition:opacity .28s,visibility 0s 0s}
+  .mob-backdrop.open{visibility:visible;pointer-events:all}
 
   /* Keyframes */
   @keyframes mobSheetUp{
@@ -251,6 +250,9 @@ html,body{background:#EBEBEB;font-family:var(--font);height:100%;overflow:hidden
   .mob-sheet-item.active{background:rgba(255,255,255,.09);color:#fff}
   .mob-sheet-item svg{flex-shrink:0;opacity:.7}
   .mob-sheet-item.active svg{opacity:1}
+}
+@media(max-width:767px){
+  .col-2,.col-3{grid-template-columns:1fr!important}
 }
 </style>
 </head>
