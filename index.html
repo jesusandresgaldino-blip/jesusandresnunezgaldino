@@ -524,7 +524,7 @@
 
 <!-- Cinema letterbox: barras se abren revelando el video -->
 <div id="cinemaWrap">
-  <video id="heroVideo" src="assets/videohero.mp4" autoplay muted playsinline></video>
+  <video id="heroVideo" src="assets/videohero.mp4" autoplay muted playsinline preload="auto"></video>
   <div class="cbar" id="cbarTop"></div>
   <div class="cbar" id="cbarBottom"></div>
   <button id="skipBtn" aria-label="Omitir introducción">
@@ -1343,6 +1343,12 @@ window._darkMode = true;
 
   if (skipBtn) skipBtn.addEventListener('click', dismiss);
   video.addEventListener('ended', dismiss);
+
+  /* iOS puede bloquear autoplay incluso con muted+playsinline — forzar play() y
+     descartar la intro si el navegador rechaza la promesa */
+  var _play = video.play();
+  if (_play !== undefined) { _play.catch(function () { dismiss(); }); }
+
   video.addEventListener('error', function () {
     wrap.style.display = 'none';
     document.body.classList.remove('cinema-on');
