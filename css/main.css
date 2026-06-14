@@ -13,7 +13,6 @@ html, body {
   color: var(--text);
   background: #fff;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
 }
 
 /* ── Cursor personalizado (solo en dispositivos con mouse preciso) ── */
