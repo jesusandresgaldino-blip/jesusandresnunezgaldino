@@ -147,6 +147,23 @@ html,body{background:#F0F0F5;font-family:var(--font);height:100%;overflow:hidden
 .exp-role-name{font-size:12.5px;font-weight:600;color:#111;margin-bottom:3px;letter-spacing:-.01em}
 .exp-role-info{font-size:11px;color:#bbb;line-height:1.55}
 
+/* ── Perfil — settings style ── */
+.pf-header-card{padding:36px 24px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+.pf-photo{width:96px;height:96px;border-radius:50%;overflow:hidden;border:3px solid rgba(0,0,0,.06);margin:0 auto 16px;flex-shrink:0;box-shadow:0 4px 18px rgba(0,0,0,.1)}
+.pf-photo img{width:100%;height:100%;object-fit:cover;display:block;object-position:center top}
+.pf-name{font-size:22px;font-weight:800;letter-spacing:-.03em;color:#111;margin-bottom:4px}
+.pf-role{font-size:13px;color:#aaa;font-weight:400;margin-bottom:12px}
+.pf-rows-card{padding:0;overflow:hidden}
+.pf-row{display:flex;align-items:center;gap:14px;padding:13px 20px;transition:background .18s}
+.pf-row:active{background:rgba(0,0,0,.03)}
+.pf-row-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pf-row-body{flex:1;min-width:0}
+.pf-row-lbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#bbb;margin-bottom:2px}
+.pf-row-val{font-size:14px;font-weight:700;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pf-row-right{font-size:11px;color:#bbb;flex-shrink:0;text-align:right;line-height:1.45}
+.pf-row-chevron{color:#ccc;flex-shrink:0;margin-left:4px}
+.pf-row-div{height:1px;background:rgba(0,0,0,.05);margin:0 20px 0 70px}
+
 /* ── Bottom nav ≤ 1300px ── */
 .mob-nav,.mob-backdrop,.mob-sheet{display:none}
 @media(max-width:1300px){
@@ -283,19 +300,54 @@ html,body{background:#F0F0F5;font-family:var(--font);height:100%;overflow:hidden
 <!-- PERFIL -->
 <div class="db-panel active" id="panel-perfil">
   <div class="ph"><div class="ph-title">Perfil</div><div class="ph-sub">Quién soy y de dónde vengo</div></div>
-  <div class="hero-card">
-    <div class="hero-img-slot"><img src="../assets/perfil1.webp" alt="Andrés Galdino" width="800" height="500"></div>
-    <div class="hero-body">
-      <div class="hero-name">Andrés Galdino</div>
-      <div class="hero-role">Product &amp; Creative Designer</div>
-      <div class="hero-avail"><span class="dot-g"></span>Disponible para proyectos</div>
+
+  <!-- Header: foto + nombre + badge -->
+  <div class="card pf-header-card">
+    <div class="pf-photo">
+      <img src="../assets/perfil1.webp" alt="Andrés Galdino" width="200" height="200">
+    </div>
+    <div class="pf-name">Andrés Galdino</div>
+    <div class="pf-role">Product &amp; Creative Designer</div>
+    <div class="hero-avail"><span class="dot-g"></span>Disponible para proyectos</div>
+  </div>
+
+  <!-- Info rows — estilo settings -->
+  <div class="card pf-rows-card">
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#EAF3FF">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div class="pf-row-body">
+        <div class="pf-row-lbl">Ubicación</div>
+        <div class="pf-row-val">Bogotá, Colombia</div>
+      </div>
+      <div class="pf-row-right">Remoto · Latam</div>
+    </div>
+    <div class="pf-row-div"></div>
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#F0EAFF">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+      </div>
+      <div class="pf-row-body">
+        <div class="pf-row-lbl">Formación</div>
+        <div class="pf-row-val">UX/UI Design</div>
+      </div>
+      <div class="pf-row-right">P. U. Javeriana</div>
+    </div>
+    <div class="pf-row-div"></div>
+    <div class="pf-row">
+      <div class="pf-row-icon" style="background:#FFF0EA">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <div class="pf-row-body">
+        <div class="pf-row-lbl">Fecha de nacimiento</div>
+        <div class="pf-row-val">31 · 12 · 2001</div>
+      </div>
+      <div class="pf-row-right">24 años</div>
     </div>
   </div>
-  <div class="row col-3">
-    <div class="card info-card"><div class="card-lbl">Ubicación</div><div class="card-val">Bogotá, Colombia</div><div class="card-desc">Remoto · Latam</div></div>
-    <div class="card info-card"><div class="card-lbl">Formación</div><div class="card-val">UX/UI Design</div><div class="card-desc">P. Universidad Javeriana</div></div>
-    <div class="card info-card"><div class="card-lbl">Fecha de nacimiento</div><div class="card-val">31 · 12 · 2001</div><div class="card-desc">24 años</div></div>
-  </div>
+
+  <!-- Bio -->
   <div class="card bio-card">
     <div class="card-lbl">Bio</div>
     <p class="bio-text">Crecí entre planos y maquetas — mi padre es arquitecto y desde pequeño entendí que los espacios tienen el poder de cambiar cómo te sientes. Esa misma idea me llevó al diseño digital: la posibilidad de construir experiencias sin límites físicos.</p>
