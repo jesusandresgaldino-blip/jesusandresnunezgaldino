@@ -129,27 +129,22 @@ html,body{background:#EBEBEB;font-family:var(--font);height:100%;overflow:hidden
 .inspo-logo img{width:100%;height:100%;object-fit:contain}
 .inspo-name{font-size:14px;font-weight:700;color:#111;margin-bottom:4px}
 .inspo-why{font-size:12px;color:#888;line-height:1.65}
-.exp-timeline{display:flex;flex-direction:column;position:relative}
-.exp-timeline::before{content:'';position:absolute;left:6px;top:32px;bottom:32px;width:1.5px;background:linear-gradient(to bottom,transparent,rgba(0,0,0,.1) 15%,rgba(0,0,0,.1) 85%,transparent);z-index:0}
-.exp-block{display:grid;grid-template-columns:20px 52px 1fr;gap:0 16px;align-items:start;padding:22px 0;position:relative;z-index:1}
-.exp-block:not(:last-child){border-bottom:1px solid rgba(0,0,0,.04)}
-.exp-dot{width:13px;height:13px;border-radius:50%;background:#fff;border:2.5px solid rgba(0,0,0,.2);margin-top:16px;flex-shrink:0;transition:border-color .35s,transform .35s cubic-bezier(.16,1,.3,1),background .35s;z-index:2}
-.exp-block:hover .exp-dot{border-color:#111;background:#111;transform:scale(1.25)}
-.exp-logo-wrap{width:52px;height:52px;border-radius:13px;background:#f7f7f7;border:1px solid rgba(0,0,0,.07);display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s cubic-bezier(.16,1,.3,1);flex-shrink:0}
-.exp-logo-wrap img{width:62%;height:62%;object-fit:contain;display:block}
-.exp-block:hover .exp-logo-wrap{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1)}
-.exp-main{min-width:0}
-.exp-co-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;gap:10px}
-.exp-co-name{font-size:14px;font-weight:700;color:#111}
-.exp-co-meta{font-size:11px;color:#000000;margin-bottom:10px}
-.exp-co-badge{font-size:10px;font-weight:600;background:rgba(0,0,0,.05);color:#888;border-radius:999px;padding:3px 10px;letter-spacing:.02em;white-space:nowrap;flex-shrink:0}
-.exp-roles-list{display:flex;flex-direction:column;gap:8px}
-.exp-role-row{padding:10px 14px;background:rgba(0, 0, 0, 0.025);border-radius:10px;border-left:2px solid rgba(0,0,0,.08);transition:background .3s cubic-bezier(.16,1,.3,1),border-color .3s}
-.exp-role-row:hover{background:rgba(0,0,0,.05);border-color:#111}
-.exp-role-title{font-size:11.5px;font-weight:700;color:#111;letter-spacing:.01em;margin-bottom:3px}
-.exp-role-meta{font-size:11px;color:#000000;line-height:1.5}
-.exp-role-skills{font-size:11px;color:#000000;margin-top:5px;font-style:italic}
-.exp-founder-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;background:rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.08);border-radius:999px;padding:3px 10px;color:#555;margin-top:6px}
+/* ── Experiencia ── */
+.exp-list{display:flex;flex-direction:column;gap:10px}
+.exp-entry{background:#111;border-radius:18px;padding:24px 22px;color:#f5f5f7;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.exp-entry:hover{transform:translateY(-2px)}
+.exp-entry-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}
+.exp-entry-left{display:flex;align-items:center;gap:12px}
+.exp-logo-sm{width:34px;height:34px;border-radius:9px;background:rgba(255,255,255,.07);border:.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.exp-logo-sm img{width:65%;height:65%;object-fit:contain;display:block;filter:brightness(0) invert(1)}
+.exp-co-title{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.02em;margin-bottom:2px}
+.exp-co-sub{font-size:10px;color:rgba(255,255,255,.28);letter-spacing:.01em}
+.exp-co-dates{font-size:10px;font-weight:600;color:rgba(255,255,255,.22);letter-spacing:.06em;white-space:nowrap;flex-shrink:0;padding-top:2px}
+.exp-roles{display:flex;flex-direction:column;gap:2px}
+.exp-role-item{padding:11px 14px;border-radius:11px;background:rgba(255,255,255,.05);transition:background .2s}
+.exp-role-item:hover{background:rgba(255,255,255,.09)}
+.exp-role-name{font-size:12px;font-weight:600;color:rgba(255,255,255,.85);margin-bottom:3px;letter-spacing:-.01em}
+.exp-role-info{font-size:10.5px;color:rgba(255,255,255,.28);line-height:1.5}
 
 /* ── Bottom nav ≤ 1300px ── */
 .mob-nav,.mob-backdrop,.mob-sheet{display:none}
@@ -438,74 +433,73 @@ html,body{background:#EBEBEB;font-family:var(--font);height:100%;overflow:hidden
 <!-- EXPERIENCIA -->
 <div class="db-panel" id="panel-experiencia">
   <div class="ph"><div class="ph-title">Experiencia</div><div class="ph-sub">Trayectoria profesional</div></div>
-  <div class="card" style="padding:20px 24px">
-    <div class="exp-timeline">
-      <div class="exp-block">
-        <div class="exp-dot"></div>
-        <div class="exp-logo-wrap"><img src="../assets/iconos/victoria-regia.svg" alt="Reserva Natural Victoria Regia"></div>
-        <div class="exp-main">
-          <div class="exp-co-header">
-            <div><div class="exp-co-name">Reserva Natural Victoria Regia</div></div>
-            <span class="exp-co-badge">Founder</span>
-          </div>
-          <div class="exp-co-meta">Leticia, Amazonas, Colombia · Ecoturismo · mar. 2019 – actualidad</div>
-          <div class="exp-roles-list">
-            <div class="exp-role-row">
-              <div class="exp-role-title">DIGITAL FOUNDER &amp; CREATIVE DIRECTOR</div>
-              <div class="exp-role-meta">Proyecto propio · Dirección creativa autónoma</div>
-              <div class="exp-founder-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Fundador · No es empleo de tiempo completo</div>
-              <div class="exp-role-skills">Branding · Adobe Illustrator · Dirección creativa · Gestión de proyectos · UX/UI</div>
-            </div>
+  <div class="exp-list">
+
+    <div class="exp-entry">
+      <div class="exp-entry-top">
+        <div class="exp-entry-left">
+          <div class="exp-logo-sm"><img src="../assets/iconos/victoria-regia.svg" alt="Victoria Regia"></div>
+          <div>
+            <div class="exp-co-title">Reserva Natural Victoria Regia</div>
+            <div class="exp-co-sub">Leticia, Amazonas · Ecoturismo · Proyecto propio</div>
           </div>
         </div>
+        <div class="exp-co-dates">2019 — hoy</div>
       </div>
-      <div class="exp-block">
-        <div class="exp-dot"></div>
-        <div class="exp-logo-wrap"><img src="../assets/iconos/chiperos.svg" alt="ChiperOS"></div>
-        <div class="exp-main">
-          <div class="exp-co-header">
-            <div><div class="exp-co-name">ChiperOS</div></div>
-            <span class="exp-co-badge">Jornada completa</span>
-          </div>
-          <div class="exp-co-meta">En remoto · 10 meses · B2B Marketplace</div>
-          <div class="exp-roles-list">
-            <div class="exp-role-row">
-              <div class="exp-role-title">GRAPHIC DESIGNER (BILINGUAL)</div>
-              <div class="exp-role-meta">ago. 2024 – mar. 2025 · 8 meses · Bogotá, Colombia</div>
-              <div class="exp-role-skills">Adobe Illustrator · Diseño UX/UI · Comunicación bilingüe ES/EN</div>
-            </div>
-            <div class="exp-role-row">
-              <div class="exp-role-title">GRAPHIC DESIGNER</div>
-              <div class="exp-role-meta">jun. 2024 – ago. 2024 · 3 meses · Colombia</div>
-              <div class="exp-role-skills">Adobe Illustrator · Diseño gráfico · Identidad visual</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="exp-block">
-        <div class="exp-dot"></div>
-        <div class="exp-logo-wrap"><img src="../assets/iconos/modaweek.svg" alt="Moda Week International"></div>
-        <div class="exp-main">
-          <div class="exp-co-header">
-            <div><div class="exp-co-name">Moda Week International</div></div>
-            <span class="exp-co-badge">Jornada completa</span>
-          </div>
-          <div class="exp-co-meta">Estados Unidos · En remoto · 4 años 5 meses</div>
-          <div class="exp-roles-list">
-            <div class="exp-role-row">
-              <div class="exp-role-title">GRAPHIC DESIGNER &amp; BRAND STRATEGIST</div>
-              <div class="exp-role-meta">ene. 2018 – may. 2022 · 4 años 5 meses</div>
-              <div class="exp-role-skills">Adobe Illustrator · Estrategia de marca · Motion · Fotografía · Edición de imágenes</div>
-            </div>
-            <div class="exp-role-row">
-              <div class="exp-role-title">PHOTOGRAPHER, EDITOR &amp; GRAPHIC DESIGNER</div>
-              <div class="exp-role-meta">ene. 2018 – nov. 2018 · 11 meses</div>
-              <div class="exp-role-skills">Fotografía · Retoque · Edición de video · Adobe Illustrator</div>
-            </div>
-          </div>
+      <div class="exp-roles">
+        <div class="exp-role-item">
+          <div class="exp-role-name">Digital Founder &amp; Creative Director</div>
+          <div class="exp-role-info">Dirección creativa autónoma · Branding · Illustrator · UX/UI</div>
         </div>
       </div>
     </div>
+
+    <div class="exp-entry">
+      <div class="exp-entry-top">
+        <div class="exp-entry-left">
+          <div class="exp-logo-sm"><img src="../assets/iconos/chiperos.svg" alt="ChiperOS"></div>
+          <div>
+            <div class="exp-co-title">ChiperOS</div>
+            <div class="exp-co-sub">Remoto · B2B Marketplace · 10 meses</div>
+          </div>
+        </div>
+        <div class="exp-co-dates">2024 — 2025</div>
+      </div>
+      <div class="exp-roles">
+        <div class="exp-role-item">
+          <div class="exp-role-name">Graphic Designer (Bilingual)</div>
+          <div class="exp-role-info">ago. 2024 – mar. 2025 · Illustrator · UX/UI · Comunicación ES/EN</div>
+        </div>
+        <div class="exp-role-item">
+          <div class="exp-role-name">Graphic Designer</div>
+          <div class="exp-role-info">jun. – ago. 2024 · Illustrator · Identidad visual</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-entry">
+      <div class="exp-entry-top">
+        <div class="exp-entry-left">
+          <div class="exp-logo-sm"><img src="../assets/iconos/modaweek.svg" alt="Moda Week International"></div>
+          <div>
+            <div class="exp-co-title">Moda Week International</div>
+            <div class="exp-co-sub">Estados Unidos · Remoto · 4 años 5 meses</div>
+          </div>
+        </div>
+        <div class="exp-co-dates">2018 — 2022</div>
+      </div>
+      <div class="exp-roles">
+        <div class="exp-role-item">
+          <div class="exp-role-name">Graphic Designer &amp; Brand Strategist</div>
+          <div class="exp-role-info">ene. 2018 – may. 2022 · Illustrator · Estrategia · Motion · Fotografía</div>
+        </div>
+        <div class="exp-role-item">
+          <div class="exp-role-name">Photographer, Editor &amp; Graphic Designer</div>
+          <div class="exp-role-info">ene. – nov. 2018 · Fotografía · Retoque · Edición de video</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
