@@ -33,8 +33,8 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
 .sb-toggle{margin-bottom:6px;color:rgba(255,255,255,.65)}
 .sb-icon.active{background:rgba(255,255,255,.15);color:#fff}
 .sb-div{width:28px;height:1px;background:rgba(255,255,255,.08);margin:4px 0}
-.sb-panel{width:0;overflow:hidden;background:#0a0a0c;border-radius:20px;flex-shrink:0;transition:width .42s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 2px 16px rgba(0,0,0,.5)) drop-shadow(0 0 0.5px rgba(0,0,0,.3));border:1px solid rgba(255,255,255,0.03)}
-.sb-panel.open{width:210px}
+.sb-panel{width:0;overflow:hidden;background:#0a0a0c;border-radius:20px;flex-shrink:0;opacity:0;pointer-events:none;transition:width .42s cubic-bezier(.16,1,.3,1), border-color .42s, opacity .42s;filter:drop-shadow(0 2px 16px rgba(0,0,0,.5)) drop-shadow(0 0 0.5px rgba(0,0,0,.3));border:1px solid transparent}
+.sb-panel.open{width:210px;opacity:1;pointer-events:auto;border-color:rgba(255,255,255,0.03)}
 .sb-inner{width:210px;padding:14px 10px;display:flex;flex-direction:column;height:100%;overflow-y:auto}
 .sb-inner::-webkit-scrollbar{width:3px}
 .sb-inner::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
@@ -50,7 +50,7 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
 @keyframes panelIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .db-panel{display:none}
-.db-panel.active{display:flex;flex-direction:column;gap:12px;animation:panelIn .48s cubic-bezier(.16,1,.3,1) both}
+.db-panel.active{display:flex;flex-direction:column;gap:12px;animation:panelIn .48s cubic-bezier(.16,1,.3,1) both;max-width:960px;margin:0 auto;width:100%}
 .db-panel.active>*:nth-child(1){animation:cardIn .48s cubic-bezier(.16,1,.3,1) .04s both}
 .db-panel.active>*:nth-child(2){animation:cardIn .48s cubic-bezier(.16,1,.3,1) .09s both}
 .db-panel.active>*:nth-child(3){animation:cardIn .48s cubic-bezier(.16,1,.3,1) .14s both}
@@ -140,12 +140,12 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
 .proc-num{font-size:44px;font-weight:800;color:rgba(255,255,255,.07);letter-spacing:-.05em;line-height:1;margin-bottom:10px;transition:color .35s}
 .proc-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:9px}
 .proc-body{font-size:12px;color:#aaa;line-height:1.8}
-.inspo-card{padding:28px 24px 24px;display:flex;flex-direction:column;min-height:210px;background:linear-gradient(145deg, #ffffff 0%, #e5e5e5 100%);border-color:#fff}
-.inspo-logo{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(0,0,0,0.06);overflow:hidden;margin-bottom:auto}
-.inspo-logo img{width:65%;height:65%;object-fit:contain}
+.inspo-card{padding:28px 24px 24px;display:flex;flex-direction:column;min-height:210px;background:linear-gradient(145deg, #16161a 0%, #0a0a0c 100%);border:1px solid rgba(255,255,255,0.05)}
+.inspo-logo{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);overflow:hidden;margin-bottom:auto}
+.inspo-logo img{width:60%;height:60%;object-fit:contain;filter:brightness(0) invert(1)}
 .inspo-body{padding-top:26px}
-.inspo-name{font-size:16px;font-weight:800;color:#111;letter-spacing:-.02em;margin-bottom:6px}
-.inspo-why{font-size:13px;font-weight:500;color:#555;line-height:1.65}
+.inspo-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:6px}
+.inspo-why{font-size:13px;font-weight:500;color:#888;line-height:1.65}
 /* ── Experiencia ── */
 .exp-list{display:flex;flex-direction:column}
 .exp-entry{padding:32px 0;border-bottom:1px solid rgba(255,255,255,.06)}
@@ -154,16 +154,10 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
 .exp-entry-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px}
 .exp-entry-left{display:flex;align-items:flex-start;gap:16px;width:100%}
 .exp-dot{width:12px;height:12px;border-radius:50%;background:#fff;margin-top:4px;flex-shrink:0;box-shadow:0 0 0 4px rgba(255,255,255,0.08)}
-.exp-co-title{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:2px}
+.exp-co-title{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:0}
 .exp-co-sub{font-size:12px;font-weight:500;color:#888;letter-spacing:.01em}
-.exp-cards-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.exp-card{display:flex;align-items:center;justify-content:center;border-radius:20px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);overflow:hidden;height:100px}
-.exp-card:not(.year){padding:0;background:#000}
-.exp-card.year{padding:0 16px}
-.exp-card-logo{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
-.exp-card-logo img{width:100%;height:100%;object-fit:cover;display:block}
-.exp-card-text{font-size:14px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.exp-card.year{justify-content:center}
+.exp-header-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.exp-yr-badge{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:4px 12px;border-radius:20px;font-size:11.5px;font-weight:600;color:#aaa;letter-spacing:0.02em}
 .exp-roles{display:flex;flex-direction:column;gap:8px;padding-left:28px}
 .exp-role-item{padding:10px 14px;border-left:1.5px solid rgba(255,255,255,.08);padding-left:14px;transition:border-color .2s}
 .exp-role-name{font-size:12.5px;font-weight:600;color:#fff;margin-bottom:3px;letter-spacing:-.01em}
@@ -535,11 +529,7 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
     </div>
   </div>
 
-  <!-- Mantra -->
-  <div class="pf-mantra">
-    <div class="pf-mantra-quote">"Prefiero rehacerlo cien veces antes que entregar algo que no se siente exactamente como debería."</div>
-    <div class="pf-mantra-attr">— Andrés Galdino</div>
-  </div>
+
 </div>
 
 <!-- HISTORIA -->
@@ -877,17 +867,11 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
         <div class="exp-entry-left">
           <div class="exp-dot"></div>
           <div style="flex:1;min-width:0">
-            <div class="exp-co-title">Reserva Natural Victoria Regia</div>
-            <div class="exp-co-sub">Colombia · Ecoturismo · Proyecto propio</div>
-            
-            <div class="exp-cards-row">
-              <div class="exp-card">
-                <div class="exp-card-logo"><img src="../assets/iconos/victoria-regia.svg" alt="Victoria Regia"></div>
-              </div>
-              <div class="exp-card year" style="background: linear-gradient(145deg, #092B4F 0%, #051930 100%); border-color: #174b85;">
-                <div class="exp-card-text">2019 — hoy</div>
-              </div>
+            <div class="exp-header-row">
+              <div class="exp-co-title">Reserva Natural Victoria Regia</div>
+              <div class="exp-yr-badge">2019 — hoy</div>
             </div>
+            <div class="exp-co-sub" style="margin-bottom:20px">Colombia · Ecoturismo · Proyecto propio</div>
           </div>
         </div>
       </div>
@@ -905,17 +889,11 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
         <div class="exp-entry-left">
           <div class="exp-dot"></div>
           <div style="flex:1;min-width:0">
-            <div class="exp-co-title">ChiperOS</div>
-            <div class="exp-co-sub">Remoto · B2B Marketplace · 10 meses</div>
-            
-            <div class="exp-cards-row">
-              <div class="exp-card">
-                <div class="exp-card-logo"><img src="../assets/iconos/chiperos.svg" alt="ChiperOS"></div>
-              </div>
-              <div class="exp-card year" style="background: linear-gradient(145deg, #42127a 0%, #17042e 100%); border-color: #7b31d4;">
-                <div class="exp-card-text">2024 — 2025</div>
-              </div>
+            <div class="exp-header-row">
+              <div class="exp-co-title">ChiperOS</div>
+              <div class="exp-yr-badge">2024 — 2025</div>
             </div>
+            <div class="exp-co-sub" style="margin-bottom:20px">Remoto · B2B Marketplace · 10 meses</div>
           </div>
         </div>
       </div>
@@ -938,17 +916,11 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
         <div class="exp-entry-left">
           <div class="exp-dot"></div>
           <div style="flex:1;min-width:0">
-            <div class="exp-co-title">Moda Week International</div>
-            <div class="exp-co-sub">Estados Unidos · Remoto · 4 años 5 meses</div>
-            
-            <div class="exp-cards-row">
-              <div class="exp-card">
-                <div class="exp-card-logo"><img src="../assets/iconos/modaweek.svg" alt="Moda Week"></div>
-              </div>
-              <div class="exp-card year" style="background: linear-gradient(135deg, #4A2BB5 0%, #D82F4E 60%, #E8612E 100%); border-color: #8c2f4e;">
-                <div class="exp-card-text">2018 — 2022</div>
-              </div>
+            <div class="exp-header-row">
+              <div class="exp-co-title">Moda Week International</div>
+              <div class="exp-yr-badge">2018 — 2022</div>
             </div>
+            <div class="exp-co-sub" style="margin-bottom:20px">Estados Unidos · Remoto · 4 años 5 meses</div>
           </div>
         </div>
       </div>
