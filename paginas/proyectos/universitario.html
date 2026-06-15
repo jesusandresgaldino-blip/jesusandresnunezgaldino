@@ -74,6 +74,49 @@
       transform: translateZ(0);
     }
 
+    /* ── Scroll to Top Button ── */
+    .scroll-top-wrap {
+      text-align: center;
+      margin-top: 7rem;
+      margin-bottom: -4rem;
+      position: relative;
+      z-index: 10;
+    }
+    .scroll-top-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #9B6FFF 0%, #7149FF 100%);
+      border: 1px solid rgba(229,160,255,0.38);
+      box-shadow: 0 12px 30px rgba(113,73,255,0.30), inset 0 1px 0 rgba(229,160,255,0.42);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: none;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background 0.3s ease;
+      padding: 0;
+    }
+    .scroll-top-btn svg {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s ease;
+    }
+    @media(hover: hover) {
+      .scroll-top-btn:hover {
+        transform: translateY(-5px) scale(1.05);
+        background: linear-gradient(145deg, #B58AFF 0%, #8A5CFF 100%);
+        box-shadow: 0 18px 40px rgba(140,100,255,0.45), inset 0 1px 0 rgba(229,160,255,0.55);
+      }
+      .scroll-top-btn:hover svg {
+        transform: translateY(-3px);
+      }
+    }
+    .scroll-top-btn:active {
+      transform: scale(0.95) !important;
+      transition-duration: 0.1s;
+    }
+
     /* ── Hero ── */
     .lm-hero {
       width: 100%;
@@ -2190,6 +2233,13 @@
           </div>
         </div>
 
+        <!-- Scroll to Top -->
+        <div class="scroll-top-wrap reveal" style="transition-delay:.1s;">
+          <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Volver arriba">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+          </button>
+        </div>
+
       </div>
     </section>
 
@@ -2388,6 +2438,16 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeInfoPanel();
   });
+
+  /* ── Scroll to Top ── */
+  var scrollTopBtn = document.getElementById('scrollTopBtn');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () {
+      scrollPanel.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    scrollTopBtn.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
+    scrollTopBtn.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
+  }
 
 })();
 </script>

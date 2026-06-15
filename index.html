@@ -138,6 +138,39 @@
     .hero--in .hero-name       { animation: fadeUp 1.0s 0.10s both; }
     .hero--in .hero-sub        { animation: fadeUp 0.8s 0.28s both; }
     .hero--in .hero-btns       { animation: fadeUp 0.7s 0.46s both; }
+    .hero--in .scroll-indicator { animation: fadeUp 0.8s 0.64s both; }
+
+    /* ── Scroll Chevrons ── */
+    .scroll-chevrons {
+      position: absolute;
+      bottom: clamp(8px, 2vh, 24px); /* Fixed below the progress dots */
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 6;
+      pointer-events: none;
+    }
+    .scroll-chevrons svg {
+      width: 14px;
+      height: 14px;
+      color: rgba(255,255,255,0.7);
+      animation: chevronAnim 1.6s infinite;
+    }
+    .scroll-chevrons svg:nth-child(1) {
+      animation-delay: 0s;
+      margin-bottom: -8px; /* overlap slightly */
+    }
+    .scroll-chevrons svg:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    @keyframes chevronAnim {
+      0% { opacity: 0; transform: translateY(-4px); }
+      40% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 0; transform: translateY(4px); }
+      100% { opacity: 0; transform: translateY(4px); }
+    }
     .btn-dark {
       font-family: var(--font); font-size: clamp(12px,1.3vw,14px); font-weight: 600;
       color: #fff; background: linear-gradient(145deg, #333 0%, #111 100%);
@@ -339,15 +372,15 @@
       align-items: center;
     }
     .svp-dot {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.18);
-      transition: background 0.4s ease, transform 0.4s ease;
+      width: 6px; height: 6px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.22);
+      transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease;
       flex-shrink: 0;
     }
     .svp-dot.active {
-      background: rgba(245,245,247,0.88);
-      transform: scale(1.6);
+      width: 28px;
+      background: rgba(245,245,247,0.95);
     }
 
     /* ── Ink section ── */
@@ -560,6 +593,7 @@
     <a class="btn-dark" href="paginas/proyectos.html">Ver proyectos →</a>
     <a class="btn-light" href="assets/cv-andres-galdino.pdf" download>Descargar Perfil</a>
   </div>
+
 </main>
 
 <!-- Scroll-cinematic video -->
@@ -636,6 +670,11 @@
       <div class="svp-dot"></div>
       <div class="svp-dot"></div>
     </div>
+
+    <div class="scroll-chevrons" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
   </div>
 </section>
 
@@ -698,7 +737,7 @@ window._darkMode = true;
       if (sy < 1) {
         /* reset so hero--in animations are clean at top */
         [marquee, heroName, heroSub, heroBtns].forEach(function (el) {
-          if (el) { el.style.transform = ''; }
+          if (el) { el.style.transform = ''; el.style.opacity = ''; }
         });
         return;
       }
