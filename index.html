@@ -140,22 +140,24 @@
     .hero--in .hero-btns       { animation: fadeUp 0.7s 0.46s both; }
     .btn-dark {
       font-family: var(--font); font-size: clamp(12px,1.3vw,14px); font-weight: 600;
-      color: #000; background: #f5f5f7; padding: 12px 28px;
-      border-radius: var(--pill); border: none;
-      transition: opacity .2s, transform .2s; white-space: nowrap;
-      text-decoration: none; display: inline-flex; align-items: center;
+      color: #fff; background: linear-gradient(145deg, #333 0%, #111 100%);
+      padding: 12px 28px;
+      border-radius: var(--pill); border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.15);
+      transition: opacity .25s, transform .25s, box-shadow .25s, background .25s;
+      white-space: nowrap; text-decoration: none; display: inline-flex; align-items: center;
     }
     .btn-light {
-      font-family: var(--font); font-size: clamp(12px,1.3vw,14px); font-weight: 400;
-      color: rgba(245,245,247,.85); background: rgba(255,255,255,.08);
-      backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.14);
+      font-family: var(--font); font-size: clamp(12px,1.3vw,14px); font-weight: 500;
+      color: rgba(255,255,255,0.60); background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.07);
       padding: 12px 28px; border-radius: var(--pill);
-      transition: background .2s; white-space: nowrap;
-      text-decoration: none; display: inline-flex; align-items: center;
+      transition: background .25s, color .25s, border-color .25s;
+      white-space: nowrap; text-decoration: none; display: inline-flex; align-items: center;
     }
     @media (hover: hover) {
-      .btn-dark:hover  { opacity: .82; transform: scale(.98); }
-      .btn-light:hover { background: rgba(255,255,255,.15); }
+      .btn-dark:hover  { background: linear-gradient(145deg, #222 0%, #050505 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1); transform: translateY(-1px) scale(0.98); }
+      .btn-light:hover { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.22); }
     }
 
     @keyframes fadeUp {
