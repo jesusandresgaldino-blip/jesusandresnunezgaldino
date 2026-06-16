@@ -26,6 +26,31 @@
   <link rel="stylesheet" href="css/main.css">
 
   <style>
+    /* ── Page loader ── */
+    #pageLoader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .5s ease;
+    }
+    #pageLoader.pl-hide { opacity: 0; pointer-events: none; }
+    .pl-inner {
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+    }
+    .pl-logo { width: 72px; height: 72px; display: block; }
+    .pl-dots { display: flex; gap: 8px; align-items: center; }
+    .pl-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,.75);
+      animation: plDot 1.5s ease-in-out infinite;
+    }
+    .pl-dot:nth-child(2) { animation-delay: .22s; }
+    .pl-dot:nth-child(3) { animation-delay: .44s; }
+    @keyframes plDot {
+      0%,60%,100% { opacity: .15; transform: translateY(0); }
+      30%          { opacity: 1;   transform: translateY(-6px); }
+    }
+
     /* ── Cinema letterbox ── */
     #cinemaWrap {
       position: fixed;
@@ -554,6 +579,18 @@
   </script>
 </head>
 <body class="cinema-on">
+
+<!-- Page loader -->
+<div id="pageLoader" role="status" aria-label="Cargando sitio">
+  <div class="pl-inner">
+    <img class="pl-logo" src="/assets/favicon.svg" alt="" aria-hidden="true" width="72" height="72">
+    <div class="pl-dots" aria-hidden="true">
+      <span class="pl-dot"></span>
+      <span class="pl-dot"></span>
+      <span class="pl-dot"></span>
+    </div>
+  </div>
+</div>
 
 <!-- Cinema letterbox: barras se abren revelando el video -->
 <div id="cinemaWrap">
@@ -1685,6 +1722,41 @@ window._darkMode = true;
     }
   },{threshold:0.05});
   obs.observe(section);
+})();
+</script>
+
+<!-- Page loader controller -->
+<script>
+(function () {
+  var loader = document.getElementById('pageLoader');
+  if (!loader) return;
+
+  var dismissed  = false;
+  var startTime  = Date.now();
+  var MIN_MS     = 800; /* tiempo mínimo visible para que no flashee en conexiones rápidas */
+
+  function hide() {
+    if (dismissed) return;
+    dismissed = true;
+    loader.classList.add('pl-hide');
+    setTimeout(function () { loader.style.display = 'none'; }, 520);
+  }
+
+  function tryHide() {
+    var remaining = MIN_MS - (Date.now() - startTime);
+    if (remaining > 0) setTimeout(hide, remaining);
+    else hide();
+  }
+
+  /* Espera a que todos los recursos estén listos */
+  if (document.readyState === 'complete') {
+    tryHide();
+  } else {
+    window.addEventListener('load', tryHide);
+  }
+
+  /* Failsafe: nunca bloquea más de 7 segundos */
+  setTimeout(hide, 7000);
 })();
 </script>
 
