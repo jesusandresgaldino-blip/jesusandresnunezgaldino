@@ -1760,5 +1760,19 @@ window._darkMode = true;
 })();
 </script>
 
+<!-- Parallax video: alta calidad en desktop, comprimido en móvil/tablet -->
+<script>
+(function () {
+  var isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (isDesktop) {
+    var vid = document.getElementById('svVideo');
+    if (vid) {
+      vid.src = 'assets/destok.mp4#t=0.001';
+      vid.load();
+    }
+  }
+})();
+</script>
+
 </body>
 </html>
