@@ -258,7 +258,7 @@
       }
       .vr-num    { margin-bottom: auto; }
       .vr-center { justify-content: flex-end; }
-      .vr-video-panel { display: block !important; position: relative !important; height: 100svh; min-height: 500px; width: 100%; }
+      .vr-video-panel { display: block !important; position: relative !important; height: 65svh; min-height: 400px; width: 100%; }
       .vr-title  { font-size: clamp(42px, 9vw, 68px); }
       .vr-desc   { max-width: 100%; font-size: 12.5px; }
       .ms-card   { width: clamp(200px, 72vw, 360px); }
@@ -589,6 +589,9 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !lightbox.classList.contains('open')) closePanel();
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1440 || window.innerWidth <= 900) closePanel();
   });
 
 })();
