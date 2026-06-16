@@ -2042,7 +2042,8 @@
   var scrollTopBtn = document.getElementById('scrollTopBtn');
   if (scrollTopBtn) {
     scrollTopBtn.addEventListener('click', function () {
-      scrollPanel.scrollTo({ top: 0, behavior: 'smooth' });
+      var target = scrollPanel.scrollHeight > scrollPanel.clientHeight ? scrollPanel : window;
+      target.scrollTo({ top: 0, behavior: 'smooth' });
     });
     scrollTopBtn.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
     scrollTopBtn.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
