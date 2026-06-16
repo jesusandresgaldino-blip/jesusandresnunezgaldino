@@ -417,7 +417,7 @@
       gap: 1.2rem;
     }
 
-    .vr-scroll-panel .wf-card:hover { transform: translateY(-4px); }
+    @media (hover: hover) { .vr-scroll-panel .wf-card:hover { transform: translateY(-4px); } }
 
     .vr-scroll-panel .wf-card.dark {
       background: linear-gradient(145deg, #6040F0 0%, #2D0E90 100%);
@@ -528,7 +528,7 @@
       transition: transform .3s var(--ease);
     }
 
-    .vr-scroll-panel .int-card:hover { transform: translateY(-4px); }
+    @media (hover: hover) { .vr-scroll-panel .int-card:hover { transform: translateY(-4px); } }
 
     .vr-scroll-panel .int-meta {
       display: flex;
@@ -589,7 +589,7 @@
       transition: transform .3s var(--ease);
     }
 
-    .vr-scroll-panel .insight-card:hover { transform: translateY(-4px); }
+    @media (hover: hover) { .vr-scroll-panel .insight-card:hover { transform: translateY(-4px); } }
 
     .vr-scroll-panel .ins-n {
       font-size: 2.8rem;
@@ -743,7 +743,7 @@
       transition: transform .3s var(--ease);
     }
 
-    .vr-scroll-panel .jtbd-card:hover { transform: translateY(-5px); }
+    @media (hover: hover) { .vr-scroll-panel .jtbd-card:hover { transform: translateY(-5px); } }
 
     .vr-scroll-panel .jtbd-chip {
       font-size: .58rem;
@@ -821,7 +821,7 @@
       transition: transform .3s var(--ease);
     }
 
-    .vr-scroll-panel .bench-card:hover { box-shadow: 0 16px 48px rgba(113,73,255,0.14); }
+    @media (hover: hover) { .vr-scroll-panel .bench-card:hover { box-shadow: 0 16px 48px rgba(113,73,255,0.14); } }
 
     .vr-scroll-panel .bench-app {
       font-size: .6rem;
@@ -1013,8 +1013,8 @@
       transition: box-shadow .3s var(--ease);
     }
 
-    .vr-scroll-panel .kingdom-card:hover {
-      box-shadow: 0 28px 80px rgba(0,0,0,0.35);
+    @media (hover: hover) {
+      .vr-scroll-panel .kingdom-card:hover { box-shadow: 0 28px 80px rgba(0,0,0,0.35); }
     }
 
     .vr-scroll-panel .kd-bg {
@@ -1174,9 +1174,11 @@
       transition: transform .65s var(--ease);
       pointer-events: none;
     }
-    .vr-scroll-panel .wf-card.dark:hover::after        { transform: translateX(120%) skewX(-15deg); }
-    .vr-scroll-panel .jtbd-card.dark:hover::after      { transform: translateX(120%) skewX(-15deg); }
-    .vr-scroll-panel .hipo-featured.dark:hover::after  { transform: translateX(120%) skewX(-15deg); }
+    @media (hover: hover) {
+      .vr-scroll-panel .wf-card.dark:hover::after        { transform: translateX(120%) skewX(-15deg); }
+      .vr-scroll-panel .jtbd-card.dark:hover::after      { transform: translateX(120%) skewX(-15deg); }
+      .vr-scroll-panel .hipo-featured.dark:hover::after  { transform: translateX(120%) skewX(-15deg); }
+    }
 
     /* ── Flecha pulsante (solo el icono, el botón es estático) ── */
     @keyframes arrowRight {
@@ -1210,9 +1212,11 @@
       box-shadow: 3px 0 14px rgba(0,0,0,0.55);
       transition: background .2s, color .2s;
     }
-    .info-tab:hover { background: #1c1c24; color: #fff; }
+    @media (hover: hover) {
+      .info-tab:hover { background: #1c1c24; color: #fff; }
+      .info-tab:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+    }
     .info-tab svg { animation: arrowRight 1.6s ease-in-out infinite; }
-    .info-tab:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
     .info-tab.panel-open { opacity: 0; pointer-events: none; }
 
     /* Close button: píldora discreta (ahora anclada al wrapper) */
@@ -1233,10 +1237,12 @@
       cursor: pointer;
       transition: color .2s;
     }
-    .info-close:hover { color: #fff; }
+    @media (hover: hover) {
+      .info-close:hover { color: #fff; }
+      .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
+    }
     /* Por defecto (cerrado), la flecha apunta a la derecha */
     .info-close svg { animation: arrowRightHandle 1.6s ease-in-out infinite; }
-    .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
 
     @media (min-width: 901px) and (max-width: 1440px) {
       /* Ocultamos el tab estático, usaremos solo el tirador físico del panel */
@@ -1280,9 +1286,13 @@
       .vr-info-wrapper.panel-open .info-close svg {
         animation: arrowLeft 1.6s ease-in-out infinite;
       }
+    }
+    @media (min-width: 901px) and (max-width: 1440px) and (hover: hover) {
       .vr-info-wrapper.panel-open .info-close:hover svg {
         animation-play-state: paused; opacity: 1; transform: none;
       }
+    }
+    @media (min-width: 901px) and (max-width: 1440px) {
       .vr-info {
         width: 100%; height: 100%;
         overflow-y: auto; overflow-x: hidden;
@@ -1331,7 +1341,7 @@
       .vr-info {
         min-height: 100svh;
         height: auto !important; overflow: visible !important;
-        padding: 16px 36px 72px; position: relative !important;
+        padding: calc(var(--nh) + 12px) 24px 72px; position: relative !important;
       }
       .vr-num { margin-bottom: auto; }
       .vr-center { justify-content: flex-end; }
@@ -1345,7 +1355,7 @@
     }
 
     @media (max-width: 768px) {
-      .vr-info { padding: 16px 28px 64px; }
+      .vr-info { padding: calc(var(--nh) + 12px) 20px 64px; }
       .vr-title { font-size: clamp(38px, 9vw, 58px); }
       .vr-desc { font-size: 12px; }
       .lm-hero { height: 68vw; min-height: 280px; }

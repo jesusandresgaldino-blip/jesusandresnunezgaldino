@@ -353,7 +353,7 @@
       gap: 1.2rem;
     }
 
-    .vr-scroll-panel .wf-card:hover { transform: translateY(-4px); }
+    @media (hover: hover) { .vr-scroll-panel .wf-card:hover { transform: translateY(-4px); } }
 
     /* Override: dark cards must win over the base wf-card white bg */
     .vr-scroll-panel .wf-card.dark {
@@ -581,7 +581,7 @@
       transition: transform .3s var(--ease);
     }
 
-    .vr-scroll-panel .jtbd-card:hover { transform: translateY(-5px); }
+    @media (hover: hover) { .vr-scroll-panel .jtbd-card:hover { transform: translateY(-5px); } }
 
     .vr-scroll-panel .jtbd-chip {
       font-size: .58rem;
@@ -750,7 +750,7 @@
       transform: translateZ(0);
     }
 
-    .vr-scroll-panel .color-item:hover .color-glass { transform: translateY(-4px); }
+    @media (hover: hover) { .vr-scroll-panel .color-item:hover .color-glass { transform: translateY(-4px); } }
 
     .vr-scroll-panel .c-name {
       font-size: 10px;
@@ -949,9 +949,11 @@
       transition: transform .65s var(--ease);
       pointer-events: none;
     }
-    .vr-scroll-panel .wf-card.dark:hover::after        { transform: translateX(120%) skewX(-15deg); }
-    .vr-scroll-panel .jtbd-card.dark:hover::after      { transform: translateX(120%) skewX(-15deg); }
-    .vr-scroll-panel .hipo-featured.dark:hover::after  { transform: translateX(120%) skewX(-15deg); }
+    @media (hover: hover) {
+      .vr-scroll-panel .wf-card.dark:hover::after        { transform: translateX(120%) skewX(-15deg); }
+      .vr-scroll-panel .jtbd-card.dark:hover::after      { transform: translateX(120%) skewX(-15deg); }
+      .vr-scroll-panel .hipo-featured.dark:hover::after  { transform: translateX(120%) skewX(-15deg); }
+    }
 
     /* ── Responsive ── */
     @media (max-width: 1100px) {
@@ -988,7 +990,7 @@
       .vr-info {
         min-height: 100svh;
         height: auto !important; overflow: visible !important;
-        padding: 16px 36px 72px; position: relative !important;
+        padding: calc(var(--nh) + 12px) 24px 72px; position: relative !important;
       }
       .vr-num { margin-bottom: auto; }
       .vr-center { justify-content: flex-end; }
@@ -1002,7 +1004,7 @@
     }
 
     @media (max-width: 768px) {
-      .vr-info { padding: 16px 28px 64px; }
+      .vr-info { padding: calc(var(--nh) + 12px) 20px 64px; }
       .vr-title { font-size: clamp(38px, 9vw, 58px); }
       .vr-desc { font-size: 12px; }
       .fm-hero { height: 68vw; min-height: 280px; }
@@ -1218,9 +1220,11 @@
       box-shadow: 3px 0 14px rgba(0,0,0,0.55);
       transition: background .2s, color .2s;
     }
-    .info-tab:hover { background: #1c1c24; color: #fff; }
+    @media (hover: hover) {
+      .info-tab:hover { background: #1c1c24; color: #fff; }
+      .info-tab:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+    }
     .info-tab svg { animation: arrowRight 1.6s ease-in-out infinite; }
-    .info-tab:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
     .info-tab.panel-open { opacity: 0; pointer-events: none; }
 
     /* Close button: píldora discreta (ahora anclada al wrapper) */
@@ -1241,9 +1245,11 @@
       cursor: pointer;
       transition: color .2s;
     }
-    .info-close:hover { color: #fff; }
+    @media (hover: hover) {
+      .info-close:hover { color: #fff; }
+      .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
+    }
     .info-close svg { animation: arrowRightHandle 1.6s ease-in-out infinite; }
-    .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
 
     @media (min-width: 901px) and (max-width: 1440px) {
       /* Ocultamos el tab estático, usaremos solo el tirador físico del panel */
@@ -1282,9 +1288,13 @@
       .vr-info-wrapper.panel-open .info-close svg {
         animation: arrowLeft 1.6s ease-in-out infinite;
       }
+    }
+    @media (min-width: 901px) and (max-width: 1440px) and (hover: hover) {
       .vr-info-wrapper.panel-open .info-close:hover svg {
         animation-play-state: paused; opacity: 1; transform: none;
       }
+    }
+    @media (min-width: 901px) and (max-width: 1440px) {
       .vr-info {
         width: 100%; height: 100%;
         overflow-y: auto; overflow-x: hidden;

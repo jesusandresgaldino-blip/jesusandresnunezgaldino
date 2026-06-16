@@ -180,7 +180,6 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
 .pf-row{display:flex;align-items:center;gap:14px;padding:16px 20px;transition:transform .2s, filter .2s;cursor:pointer;border-radius:24px;border:1px solid rgba(255,255,255,0.08);position:relative;overflow:hidden}
 .pf-row.full{grid-column:1 / -1}
 .pf-row.half{flex-direction:column;align-items:flex-start;justify-content:space-between;min-height:140px;padding:20px}
-.pf-row:hover{transform:translateY(-3px);filter:brightness(1.1)}
 .pf-row-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:transparent!important;z-index:2}
 .pf-row.half .pf-row-icon{width:40px;height:40px}
 .pf-row.half .pf-row-icon svg{width:24px;height:24px}
@@ -322,6 +321,7 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
 }
 /* ── Hover states — solo en dispositivos con puntero real (mouse / trackpad) ── */
 @media (hover: hover) {
+  .pf-row:hover                          { transform:translateY(-3px);filter:brightness(1.1) }
   .sb-toggle:hover,.sb-icon:hover        { background:rgba(255,255,255,.1);color:#fff }
   .sb-close-btn:hover                    { background:rgba(255,255,255,.1);color:#fff }
   .sb-item:hover                         { background:rgba(255,255,255,.05);color:#fff }
