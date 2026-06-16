@@ -982,11 +982,11 @@ window._darkMode = true;
   var isMobile = window.matchMedia('(max-width: 768px) or (pointer: coarse)').matches;
   var config = {
     SIM_RESOLUTION:       128,
-    DYE_RESOLUTION:       isMobile ? 512 : 768,
+    DYE_RESOLUTION:       isMobile ? 256 : 768,
     DENSITY_DISSIPATION:  3.5,
     VELOCITY_DISSIPATION: 0.96,
     PRESSURE:             0.5,
-    PRESSURE_ITERATIONS:  25,
+    PRESSURE_ITERATIONS:  isMobile ? 16 : 25,
     CURL:                 5,
     SPLAT_RADIUS:         0.13,
     SPLAT_FORCE:          3000,
@@ -1034,6 +1034,13 @@ window._darkMode = true;
     formatRGBA = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
     formatRG   = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
     formatR    = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
+  }
+  if (!halfFloatTexType || !formatRGBA) {
+    halfFloatTexType = gl.UNSIGNED_BYTE;
+    supportLinearFiltering = true;
+    formatRGBA = { internalFormat: gl.RGBA, format: gl.RGBA };
+    formatRG   = { internalFormat: gl.RGBA, format: gl.RGBA };
+    formatR    = { internalFormat: gl.RGBA, format: gl.RGBA };
   }
 
   function getSupportedFormat(gl, iF, f, t) {
@@ -1150,8 +1157,10 @@ window._darkMode = true;
   function initFBOs() {
     var sR = getResolution(config.SIM_RESOLUTION), dR = getResolution(config.DYE_RESOLUTION);
     var tt = halfFloatTexType, filt = supportLinearFiltering ? gl.LINEAR : gl.NEAREST;
+    var dyeIF = (halfFloatTexType !== gl.UNSIGNED_BYTE && supportLinearFiltering) ? formatRGBA.internalFormat : gl.RGBA;
+    var dyeTT = (halfFloatTexType !== gl.UNSIGNED_BYTE && supportLinearFiltering) ? halfFloatTexType : gl.UNSIGNED_BYTE;
     gl.disable(gl.BLEND);
-    if (!dye)      dye      = createDoubleFBO(dR.width,dR.height,formatRGBA.internalFormat,formatRGBA.format,tt,filt);
+    if (!dye)      dye      = createDoubleFBO(dR.width,dR.height,dyeIF,formatRGBA.format,dyeTT,gl.LINEAR);
     if (!velocity) velocity = createDoubleFBO(sR.width,sR.height,formatRG.internalFormat,formatRG.format,tt,filt);
     divergence = createFBO(sR.width,sR.height,formatR.internalFormat,formatR.format,tt,gl.NEAREST);
     curl       = createFBO(sR.width,sR.height,formatR.internalFormat,formatR.format,tt,gl.NEAREST);
@@ -1509,7 +1518,7 @@ window._darkMode = true;
   var isMobile = window.matchMedia('(max-width:768px) or (pointer:coarse)').matches;
   var cfg = {
     SIM_RESOLUTION:       128,
-    DYE_RESOLUTION:       isMobile ? 512 : 768,
+    DYE_RESOLUTION:       isMobile ? 256 : 768,
     DENSITY_DISSIPATION:  1.8,
     VELOCITY_DISSIPATION: 0.9,
     PRESSURE:             0.5,
@@ -1537,6 +1546,7 @@ window._darkMode = true;
   var fmtRGBA,fmtRG,fmtR;
   if(isWebGL2){fmtRGBA=getFmt(gl,gl.RGBA16F,gl.RGBA,hfType);fmtRG=getFmt(gl,gl.RG16F,gl.RG,hfType);fmtR=getFmt(gl,gl.R16F,gl.RED,hfType);}
   else{fmtRGBA=getFmt(gl,gl.RGBA,gl.RGBA,hfType);fmtRG=getFmt(gl,gl.RGBA,gl.RGBA,hfType);fmtR=getFmt(gl,gl.RGBA,gl.RGBA,hfType);}
+  if(!hfType||!fmtRGBA){hfType=gl.UNSIGNED_BYTE;linFilt=true;fmtRGBA={internalFormat:gl.RGBA,format:gl.RGBA};fmtRG={internalFormat:gl.RGBA,format:gl.RGBA};fmtR={internalFormat:gl.RGBA,format:gl.RGBA};}
 
   function cShader(type,src,kw){if(kw)kw.forEach(function(k){src='#define '+k+'\n'+src;});var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
   function cProg(v,f){var p=gl.createProgram();gl.attachShader(p,v);gl.attachShader(p,f);gl.linkProgram(p);return p;}
@@ -1573,7 +1583,7 @@ window._darkMode = true;
   function mkDFBO(w,h,iF,f,t,pm){var f1=mkFBO(w,h,iF,f,t,pm),f2=mkFBO(w,h,iF,f,t,pm);return{width:w,height:h,texelSizeX:f1.texelSizeX,texelSizeY:f1.texelSizeY,get read(){return f1;},set read(v){f1=v;},get write(){return f2;},set write(v){f2=v;},swap:function(){var tmp=f1;f1=f2;f2=tmp;}};}
   function getRes(r){var ar=gl.drawingBufferWidth/gl.drawingBufferHeight;if(ar<1)ar=1/ar;var mn=Math.round(r),mx=Math.round(r*ar);return gl.drawingBufferWidth>gl.drawingBufferHeight?{width:mx,height:mn}:{width:mn,height:mx};}
 
-  function initFBOs(){var sR=getRes(cfg.SIM_RESOLUTION),dR=getRes(cfg.DYE_RESOLUTION),tt=hfType,fi=linFilt?gl.LINEAR:gl.NEAREST;gl.disable(gl.BLEND);dye=mkDFBO(dR.width,dR.height,fmtRGBA.internalFormat,fmtRGBA.format,tt,fi);velocity=mkDFBO(sR.width,sR.height,fmtRG.internalFormat,fmtRG.format,tt,fi);divergence=mkFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);curl=mkFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);pressure=mkDFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);}
+  function initFBOs(){var sR=getRes(cfg.SIM_RESOLUTION),dR=getRes(cfg.DYE_RESOLUTION),tt=hfType,fi=linFilt?gl.LINEAR:gl.NEAREST;var dyeIF=(hfType!==gl.UNSIGNED_BYTE&&linFilt)?fmtRGBA.internalFormat:gl.RGBA;var dyeTT=(hfType!==gl.UNSIGNED_BYTE&&linFilt)?hfType:gl.UNSIGNED_BYTE;gl.disable(gl.BLEND);dye=mkDFBO(dR.width,dR.height,dyeIF,fmtRGBA.format,dyeTT,gl.LINEAR);velocity=mkDFBO(sR.width,sR.height,fmtRG.internalFormat,fmtRG.format,tt,fi);divergence=mkFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);curl=mkFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);pressure=mkDFBO(sR.width,sR.height,fmtR.internalFormat,fmtR.format,tt,gl.NEAREST);}
 
   function genColor(){var v=0.78+Math.random()*0.14;return{r:v,g:v,b:v};}
   function spr(){return Math.floor(window.devicePixelRatio||1);}
@@ -1591,7 +1601,7 @@ window._darkMode = true;
 
   function step(dt){gl.disable(gl.BLEND);cuP.bind();gl.uniform2f(cuP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(cuP.uniforms.uVelocity,velocity.read.attach(0));blit(curl);voP.bind();gl.uniform2f(voP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(voP.uniforms.uVelocity,velocity.read.attach(0));gl.uniform1i(voP.uniforms.uCurl,curl.attach(1));gl.uniform1f(voP.uniforms.curl,cfg.CURL);gl.uniform1f(voP.uniforms.dt,dt);blit(velocity.write);velocity.swap();divP.bind();gl.uniform2f(divP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(divP.uniforms.uVelocity,velocity.read.attach(0));blit(divergence);clrP.bind();gl.uniform1i(clrP.uniforms.uTexture,pressure.read.attach(0));gl.uniform1f(clrP.uniforms.value,cfg.PRESSURE);blit(pressure.write);pressure.swap();prP.bind();gl.uniform2f(prP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(prP.uniforms.uDivergence,divergence.attach(0));for(var i=0;i<cfg.PRESSURE_ITERATIONS;i++){gl.uniform1i(prP.uniforms.uPressure,pressure.read.attach(1));blit(pressure.write);pressure.swap();}grP.bind();gl.uniform2f(grP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform1i(grP.uniforms.uPressure,pressure.read.attach(0));gl.uniform1i(grP.uniforms.uVelocity,velocity.read.attach(1));blit(velocity.write);velocity.swap();adP.bind();gl.uniform2f(adP.uniforms.texelSize,velocity.texelSizeX,velocity.texelSizeY);gl.uniform2f(adP.uniforms.dyeTexelSize,velocity.texelSizeX,velocity.texelSizeY);var vId=velocity.read.attach(0);gl.uniform1i(adP.uniforms.uVelocity,vId);gl.uniform1i(adP.uniforms.uSource,vId);gl.uniform1f(adP.uniforms.dt,dt);gl.uniform1f(adP.uniforms.dissipation,cfg.VELOCITY_DISSIPATION);blit(velocity.write);velocity.swap();gl.uniform2f(adP.uniforms.dyeTexelSize,dye.texelSizeX,dye.texelSizeY);gl.uniform1i(adP.uniforms.uVelocity,velocity.read.attach(0));gl.uniform1i(adP.uniforms.uSource,dye.read.attach(1));gl.uniform1f(adP.uniforms.dissipation,cfg.DENSITY_DISSIPATION);blit(dye.write);dye.swap();}
 
-  function render(){gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.enable(gl.BLEND);dispM.bind();dispM.setKeywords(['SHADING','LIGHT_MODE']);gl.uniform2f(dispM.uniforms.texelSize,1/gl.drawingBufferWidth,1/gl.drawingBufferHeight);gl.uniform1i(dispM.uniforms.uTexture,dye.read.attach(0));blit(null);}
+  function render(){gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.enable(gl.BLEND);dispM.setKeywords(['SHADING','LIGHT_MODE']);dispM.bind();gl.uniform2f(dispM.uniforms.texelSize,1/gl.drawingBufferWidth,1/gl.drawingBufferHeight);gl.uniform1i(dispM.uniforms.uTexture,dye.read.attach(0));blit(null);}
 
   initFBOs();
 
