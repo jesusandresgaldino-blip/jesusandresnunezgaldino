@@ -1147,7 +1147,7 @@ if(canvas){
     sheetEl.classList.remove('open');
     bdEl.classList.remove('open');
   }
-  function openSheet(ctxKey){
+  function openSheet(ctxKey,navBtn){
     var c=CONTEXTS[ctxKey];
     if(!c)return;
     sheetLbl.textContent=c.title;
@@ -1160,6 +1160,9 @@ if(canvas){
         sheetItems.querySelectorAll('.mob-sheet-item').forEach(function(x){x.classList.remove('active');});
         b.classList.add('active');
         activePanel=item.p;
+        activeCtx=ctxKey;
+        navEl.querySelectorAll('.mob-nav-btn').forEach(function(b){b.classList.remove('active');});
+        if(navBtn)navBtn.classList.add('active');
         showPanel(item.p);
         closeSheet();
       });
@@ -1190,16 +1193,16 @@ if(canvas){
     btn.innerHTML=item.svg;
     btn.addEventListener('click',function(){
       var prev=activeCtx;
-      navEl.querySelectorAll('.mob-nav-btn').forEach(function(b){b.classList.remove('active');});
-      btn.classList.add('active');
-      activeCtx=item.key;
       if(ctx.items.length===1){
+        navEl.querySelectorAll('.mob-nav-btn').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active');
+        activeCtx=item.key;
         closeSheet();
         activePanel=ctx.items[0].p;
         showPanel(ctx.items[0].p);
       } else {
         if(prev===item.key&&isOpen){closeSheet();}
-        else{openSheet(item.key);}
+        else{openSheet(item.key,btn);}
       }
     });
     navEl.appendChild(btn);
