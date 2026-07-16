@@ -25,7 +25,7 @@
   --nfg:   rgba(245, 245, 247, 0.84);
   --nmuted:rgba(245, 245, 247, 0.38);
   --nbdr:  rgba(255, 255, 255, 0.07);
-  --nblur: blur(24px) saturate(180%);
+  --nblur: blur(1px) saturate(100%);
   --nf:    var(--font);
 }
 

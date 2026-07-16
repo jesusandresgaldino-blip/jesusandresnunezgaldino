@@ -1226,7 +1226,7 @@ window._darkMode = true;
 
   var lastTime = Date.now(), colorTimer = 0;
   var fluidAnimId;
-  var isRunning = true;
+  var isRunning = false;
 
   /* ── Destellos autónomos — integrado en el loop a 60fps ── */
   var aX  = 0.3 + Math.random() * 0.4;
@@ -1272,18 +1272,37 @@ window._darkMode = true;
     fluidAnimId = requestAnimationFrame(frame);
   }
 
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) {
-      isRunning = false;
-      cancelAnimationFrame(fluidAnimId);
-    } else {
+  /* Solo corre mientras el hero esté visible en pantalla Y la pestaña esté activa */
+  var heroEl = document.querySelector('.hero');
+  var heroVisible = !heroEl;
+
+  function maybeStart() {
+    if (heroVisible && !document.hidden && !isRunning) {
       isRunning = true;
       lastTime = Date.now();
       frame();
     }
+  }
+  function stop() {
+    isRunning = false;
+    cancelAnimationFrame(fluidAnimId);
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) stop();
+    else maybeStart();
   });
 
-  frame();
+  if (heroEl) {
+    var heroObs = new IntersectionObserver(function (entries) {
+      heroVisible = entries[0].isIntersecting;
+      if (heroVisible) maybeStart();
+      else stop();
+    }, { threshold: 0 });
+    heroObs.observe(heroEl);
+  } else {
+    maybeStart();
+  }
 
   window.addEventListener('mousedown', function (e) {
     var p = pointers[0];

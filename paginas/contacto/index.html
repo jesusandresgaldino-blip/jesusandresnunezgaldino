@@ -445,40 +445,46 @@
   var inner = document.getElementById('marqueeInner');
   if (!wrap || !inner) return;
 
-  var original = inner.innerHTML;
   function fillTrack() {
     var tries = 0;
-    while (inner.scrollWidth < window.innerWidth * 4 && tries < 10) {
-      inner.innerHTML += original;
+    do {
+      inner.innerHTML += inner.innerHTML;
       tries++;
-    }
+    } while (inner.scrollWidth < window.innerWidth * 4 && tries < 10);
   }
   if (document.readyState === 'complete') fillTrack();
   else window.addEventListener('load', fillTrack);
 
   var track = wrap.querySelector('.marquee-track');
+  var spotlightAnimId;
   function updateSpotlight() {
-    var rect   = track.getBoundingClientRect();
-    var center = rect.left + rect.width / 2;
-    var zone   = rect.width * 0.15;
-    var imgs   = inner.querySelectorAll('img');
-    for (var i = 0; i < imgs.length; i++) {
-      var img = imgs[i];
-      var r = img.getBoundingClientRect();
-      var imgCenter = r.left + r.width / 2;
-      var dist = Math.abs(imgCenter - center);
-      if (dist < zone) {
-        var intensity = 1 - dist / zone;
-        img.style.filter  = 'grayscale(' + (1 - intensity) + ')';
-        img.style.opacity = 0.35 + 0.65 * intensity;
-      } else {
-        img.style.filter  = 'grayscale(1)';
-        img.style.opacity = '0.35';
+    if (!document.hidden) {
+      var rect   = track.getBoundingClientRect();
+      var center = rect.left + rect.width / 2;
+      var zone   = 60;
+      var imgs   = inner.querySelectorAll('img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        var r = img.getBoundingClientRect();
+        var imgCenter = r.left + r.width / 2;
+        var dist = Math.abs(imgCenter - center);
+        if (dist < zone) {
+          var intensity = 1 - dist / zone;
+          img.style.filter  = 'grayscale(' + (1 - intensity) + ')';
+          img.style.opacity = 0.35 + 0.65 * intensity;
+        } else {
+          img.style.filter  = 'grayscale(1)';
+          img.style.opacity = '0.35';
+        }
       }
     }
-    requestAnimationFrame(updateSpotlight);
+    spotlightAnimId = requestAnimationFrame(updateSpotlight);
   }
   updateSpotlight();
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) cancelAnimationFrame(spotlightAnimId);
+    else updateSpotlight();
+  });
 })();
 </script>
 </body>
