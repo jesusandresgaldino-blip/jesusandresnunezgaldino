@@ -72,8 +72,8 @@
     .hero-scrim {
       position: absolute; inset: 0; z-index: -1;
       background: radial-gradient(ellipse 70% 60% at 50% 45%, rgba(0,0,0,.6) 0%, rgba(0,0,0,.92) 100%);
-      mask-image: linear-gradient(to bottom, black 0%, black 88%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 88%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
       pointer-events: none;
     }
     .hero-scrim::after {
@@ -231,7 +231,7 @@
     #svOverlay {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 35%, rgba(0,0,0,0.4) 100%);
+      background: radial-gradient(ellipse 100% 100% at 50% 50%, rgba(0,0,0,.15) 0%, rgba(0,0,0,.55) 100%);
       pointer-events: none;
     }
     #svOverlay::after {
