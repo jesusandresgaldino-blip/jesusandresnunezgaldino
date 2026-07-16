@@ -16,7 +16,7 @@
   <meta name="twitter:card"       content="summary_large_image">
 
   <link rel="canonical" href="https://andresgaldino.com/">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/profile-round.png" type="image/png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,60 +51,9 @@
       30%          { opacity: 1;   transform: translateY(-6px); }
     }
 
-    /* ── Cinema letterbox ── */
-    #cinemaWrap {
-      position: fixed;
-      inset: 0;
-      z-index: 500;
-      background: #000;
-      overflow: hidden;
-      transition: opacity 1.2s ease;
-    }
-    #cinemaWrap.fade-out { opacity: 0; pointer-events: none; }
-    #heroVideo {
-      position: absolute;
-      inset: 0; width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .cbar {
-      position: absolute;
-      left: 0; right: 0; height: 50%;
-      background: #000;
-      z-index: 2;
-      transition: transform 1.4s cubic-bezier(.76,0,.24,1);
-    }
-    #cbarTop    { top: 0; }
-    #cbarBottom { bottom: 0; }
-    #cinemaWrap.open #cbarTop    { transform: translateY(-100%); }
-    #cinemaWrap.open #cbarBottom { transform: translateY(100%); }
-
     html, body { background: #000; }
     html { overscroll-behavior-y: none; }
-    body.cinema-on { overflow: hidden; height: 100%; }
-    .hero { min-height: 100vh; max-height: 100vh; overflow: hidden; }
     .cursor { background: #fff !important; mix-blend-mode: difference !important; }
-
-    /* ── Botón omitir intro ── */
-    #skipBtn {
-      position: absolute; bottom: 2.2rem; right: 2.2rem; z-index: 10;
-      display: inline-flex; align-items: center; gap: .45rem;
-      font-family: var(--font); font-size: 11px; font-weight: 600;
-      letter-spacing: .5px;
-      color: rgba(0,0,0,.7);
-      background: rgba(0,0,0,.07);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(0,0,0,.14);
-      border-radius: 100px; padding: 9px 18px;
-      cursor: none;
-      opacity: 0; transform: translateY(6px);
-      transition: opacity .5s ease, transform .5s ease, background .2s, color .2s;
-    }
-    #skipBtn.visible { opacity: 1; transform: translateY(0); }
-    #skipBtn svg     { width: 12px; height: 12px; flex-shrink: 0; }
-    @media (hover: hover) {
-      #skipBtn:hover { background: rgba(0,0,0,.13); color: rgba(0,0,0,.9); }
-    }
 
     /* ── Canvases de fondo ── */
     #dot-grid {
@@ -578,31 +527,18 @@
   }
   </script>
 </head>
-<body class="cinema-on">
+<body>
 
 <!-- Page loader -->
 <div id="pageLoader" role="status" aria-label="Cargando sitio">
   <div class="pl-inner">
-    <img class="pl-logo" src="/assets/favicon.svg" alt="" aria-hidden="true" width="72" height="72">
+    <img class="pl-logo" src="/assets/profile-round.png" alt="" aria-hidden="true" width="72" height="72">
     <div class="pl-dots" aria-hidden="true">
       <span class="pl-dot"></span>
       <span class="pl-dot"></span>
       <span class="pl-dot"></span>
     </div>
   </div>
-</div>
-
-<!-- Cinema letterbox: barras se abren revelando el video -->
-<div id="cinemaWrap">
-  <video id="heroVideo" src="assets/videohero.mp4" autoplay muted playsinline preload="auto"></video>
-  <div class="cbar" id="cbarTop"></div>
-  <div class="cbar" id="cbarBottom"></div>
-  <button id="skipBtn" aria-label="Omitir introducción">
-    Omitir
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
-    </svg>
-  </button>
 </div>
 
 <div id="nav-container"></div>
@@ -627,8 +563,8 @@
   <p class="hero-sub" id="heroSub"></p>
 
   <div class="hero-btns">
-    <a class="btn-dark" href="paginas/proyectos.html">Ver proyectos →</a>
-    <a class="btn-light" href="assets/cv-andres-galdino.pdf" download>Descargar Perfil</a>
+    <a class="btn-dark" href="/paginas/proyectos/">Ver proyectos →</a>
+    <a class="btn-light" href="/assets/CV_AndresGaldino_EN.pdf" download>Descargar Perfil</a>
   </div>
 
 </main>
@@ -1371,25 +1307,9 @@ window._darkMode = true;
 
 })();
 </script>
-<!-- Cinema letterbox handler -->
+<!-- Hero reveal (typewriter + fade-up) -->
 <script>
 (function () {
-  var wrap    = document.getElementById('cinemaWrap');
-  var video   = document.getElementById('heroVideo');
-  var skipBtn = document.getElementById('skipBtn');
-  if (!wrap || !video) return;
-
-  /* Bloquear scroll en html Y body durante la intro */
-  document.documentElement.style.overflow = 'hidden';
-
-  /* Abrir las barras al arrancar */
-  setTimeout(function () { wrap.classList.add('open'); }, 200);
-
-  /* Mostrar skip button cuando las barras ya están abiertas */
-  setTimeout(function () {
-    if (skipBtn) skipBtn.classList.add('visible');
-  }, 1600);
-
   function startTypewriter() {
     var el = document.getElementById('heroSub');
     if (!el || el._twDone) return;
@@ -1410,32 +1330,9 @@ window._darkMode = true;
     }, 55);
   }
 
-  function dismiss() {
-    if (skipBtn) { skipBtn.classList.remove('visible'); skipBtn.style.pointerEvents = 'none'; }
-    wrap.classList.remove('open');
-    setTimeout(function () {
-      wrap.classList.add('fade-out');
-      setTimeout(function () {
-        wrap.style.display = 'none';
-        document.body.classList.remove('cinema-on');
-        document.documentElement.style.overflow = '';
-        startTypewriter();
-        var heroEl = document.querySelector('.hero');
-        if (heroEl) heroEl.classList.add('hero--in');
-      }, 1200);
-    }, 600);
-  }
-
-  if (skipBtn) skipBtn.addEventListener('click', dismiss);
-  video.addEventListener('ended', dismiss);
-  video.addEventListener('error', function () {
-    wrap.style.display = 'none';
-    document.body.classList.remove('cinema-on');
-    document.documentElement.style.overflow = '';
-    startTypewriter();
-    var heroEl = document.querySelector('.hero');
-    if (heroEl) heroEl.classList.add('hero--in');
-  });
+  startTypewriter();
+  var heroEl = document.querySelector('.hero');
+  if (heroEl) heroEl.classList.add('hero--in');
 })();
 </script>
 

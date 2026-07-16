@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="base-depth" content="3">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dreams — Andrés Galdino</title>
+  <meta name="description" content="Diseño de experiencia e identidad visual para un videojuego de exploración onírica.">
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Dreams — Andrés Galdino">
+  <meta property="og:description" content="Diseño UX/UI y motion design para una app móvil con mecánicas de exploración onírica y criaturas coleccionables.">
+  <meta property="og:url"         content="https://andresgaldino.com/paginas/proyectos/dreams/">
+  <meta property="og:image"       content="/assets/og-image.png">
+  <meta name="twitter:card"       content="summary_large_image">
+  <link rel="canonical"           href="https://andresgaldino.com/paginas/proyectos/dreams/">
+  <link rel="icon" href="/assets/profile-round.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../../../css/tokens.css">
+  <link rel="stylesheet" href="../../../css/main.css">
+  <link rel="stylesheet" href="../../../css/proyecto-page.css">
+  <style>
+    .vr-title { margin-bottom: 24px; }
+    .vr-info-wrapper { height: 100%; position: relative; }
+    .vr-info { height: 100%; padding: 32px 32px 36px; }
+
+    /* ── Flechas animadas ── */
+    @keyframes arrowRight {
+      0%,100% { transform: translateX(0) scale(1); opacity: .55; }
+      50%      { transform: translateX(3px) scale(1.25); opacity: 1; }
+    }
+    @keyframes arrowLeft {
+      0%,100% { transform: translateX(0) scale(1); opacity: .55; }
+      50%      { transform: translateX(-3px) scale(1.25); opacity: 1; }
+    }
+    @keyframes arrowRightHandle {
+      0%,100% { transform: translateX(0) rotate(180deg) scale(1); opacity: .55; }
+      50%      { transform: translateX(3px) rotate(180deg) scale(1.25); opacity: 1; }
+    }
+
+    /* ── Tab handle (visible 901–1440px) ── */
+    .info-tab {
+      display: none;
+      position: fixed; left: 0; top: 50%;
+      transform: translateY(-50%);
+      z-index: 400;
+      width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: .5px solid rgba(255,255,255,.1);
+      border-left: none;
+      color: rgba(255,255,255,.8);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 3px 0 14px rgba(0,0,0,.55);
+      transition: background .2s, color .2s;
+    }
+    .info-tab:hover { background: #1c1c24; color: #fff; }
+    .info-tab svg { animation: arrowRight 1.6s ease-in-out infinite; }
+    .info-tab:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+    .info-tab.panel-open { opacity: 0; pointer-events: none; }
+
+    /* ── Close button (anclado al wrapper) ── */
+    .info-close {
+      display: none;
+      position: absolute;
+      right: -22px; top: 50%;
+      transform: translateY(-50%);
+      z-index: 500;
+      width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: none; box-shadow: none;
+      color: rgba(255,255,255,.8);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .info-close:hover { color: #fff; }
+    .info-close svg { animation: arrowRightHandle 1.6s ease-in-out infinite; }
+    .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
+
+    /* ── Panel slide 901–1440px ── */
+    @media (min-width: 901px) and (max-width: 1440px) {
+      .info-tab   { display: none !important; }
+      .info-close { display: flex; opacity: 1; pointer-events: all; }
+      .vr-stage   { grid-template-columns: 1fr !important; }
+      .vr-stage::after {
+        content: ''; position: fixed; inset: 0;
+        background: transparent; pointer-events: none;
+        transition: background .35s ease; z-index: 2;
+      }
+      .vr-stage.panel-open::after {
+        background: rgba(0,0,0,.58); pointer-events: all;
+      }
+      .vr-info-wrapper {
+        position: fixed !important;
+        top: var(--nh) !important; bottom: -20px !important; left: 0;
+        width: min(460px, 88vw); z-index: 3;
+        transform: translateX(-100%);
+        transition: transform .4s cubic-bezier(0.16,1,0.3,1), filter .4s ease;
+        filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+      }
+      .vr-info-wrapper.panel-open {
+        transform: translateX(0);
+        filter: drop-shadow(12px 0 40px rgba(0,0,0,.55));
+      }
+      .vr-info-wrapper.panel-open .info-close svg { animation: arrowLeft 1.6s ease-in-out infinite; }
+      .vr-info-wrapper.panel-open .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+      .vr-info {
+        width: 100%; height: 100%;
+        overflow-y: auto; overflow-x: hidden;
+        border-right: none; background: #0d0d0f;
+        padding-bottom: 60px;
+      }
+    }
+
+    /* ── Dreams: coming-soon panel ── */
+    .dr-stage {
+      width: 100%; height: 100%;
+      background-color: #000;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    
+    .dr-stage::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url('../../../assets/Dreams/dreams.webp');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.4;
+      z-index: 0;
+    }
+
+    /* Campo de estrellas */
+    .dr-stars {
+      position: absolute; inset: 0; pointer-events: none; z-index: 1;
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.75) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,.4) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,.25) 1px, transparent 1px);
+      background-size: 220px 220px, 330px 330px, 155px 155px;
+      background-position: 0 0, 65px 95px, 28px 138px;
+      animation: drStars 90s linear infinite;
+    }
+    @keyframes drStars {
+      to { background-position: 220px 220px, 395px 425px, 183px 293px; }
+    }
+
+    /* Orbes de luz */
+    .dr-orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(65px); }
+    @keyframes drOrb1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      35%     { transform: translate(22px,-18px) scale(1.06); }
+      70%     { transform: translate(-12px,12px) scale(.96); }
+    }
+    @keyframes drOrb2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      40%     { transform: translate(-18px,22px) scale(1.09); }
+      72%     { transform: translate(12px,-10px) scale(.94); }
+    }
+
+    /* Contenido central */
+    .dr-content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding: 3rem;
+      max-width: 420px;
+    }
+
+    .dr-chip {
+      display: inline-flex; align-items: center; gap: .55rem;
+      font-size: 9px; font-weight: 700; letter-spacing: 3.5px;
+      text-transform: uppercase; color: #fff;
+      border: .5px solid rgba(255,255,255,.4);
+      background: rgba(255,255,255,.15);
+      border-radius: 999px; padding: 7px 18px;
+      margin-bottom: 2.4rem;
+    }
+    .dr-chip-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,.85);
+      animation: drBlink 2.2s ease-in-out infinite;
+    }
+    @keyframes drBlink {
+      0%,100% { opacity: .35; } 50% { opacity: 1; }
+    }
+
+    .dr-title {
+      font-family: var(--font);
+      font-size: clamp(3rem, 5vw, 4.8rem);
+      font-weight: 800; letter-spacing: -2.5px; line-height: 1;
+      color: #fff; margin-bottom: 1.2rem;
+    }
+
+    .dr-sub {
+      font-size: .7rem; font-weight: 500;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 3.2rem;
+    }
+    .dr-sub em { font-style: normal; color: #fff; margin: 0 .5rem; }
+
+    .dr-progress {
+      width: 160px; height: 1.5px;
+      background: rgba(255,255,255,.06);
+      border-radius: 999px; margin-bottom: 1.1rem;
+      overflow: hidden;
+    }
+    .dr-progress-fill {
+      height: 100%; border-radius: 999px;
+      background: linear-gradient(to right, #444, #fff);
+      animation: drFill 4.5s ease-in-out infinite;
+    }
+    @keyframes drFill {
+      0%   { width: 18%; opacity: .45; }
+      45%  { width: 58%; opacity: 1; }
+      60%  { width: 58%; opacity: 1; }
+      100% { width: 18%; opacity: .45; }
+    }
+
+    .dr-caption {
+      font-size: 9px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,.6);
+    }
+
+    /* ── Mobile ≤900px: info arriba, coming-soon debajo ── */
+    @media (max-width: 900px) {
+      html, body { height: auto !important; overflow: auto !important; min-height: 100%; }
+      .vr-stage {
+        position: relative !important; inset: auto !important;
+        display: flex !important; flex-direction: column !important;
+        height: auto !important; overflow: visible !important;
+      }
+      .vr-info-wrapper { height: auto !important; }
+      .vr-info {
+        min-height: 100svh;
+        height: auto !important; overflow: visible !important;
+        padding: 16px 36px 72px; position: relative !important;
+      }
+      .vr-num { margin-bottom: auto; }
+      .vr-center { justify-content: flex-end; }
+      .vr-video-panel {
+        display: block !important;
+        position: relative !important;
+        height: 70vw; min-height: 300px;
+        width: 100%;
+      }
+      .vr-title { font-size: clamp(42px, 9vw, 68px); }
+      .vr-desc  { max-width: 100%; font-size: 12.5px; }
+      .dr-title { font-size: clamp(2.2rem, 6vw, 3.6rem); }
+      .dr-content { padding: 2rem; }
+    }
+    @media (max-width: 768px) {
+      .vr-info { padding: 16px 28px 64px; }
+      .vr-video-panel { height: 75vw; min-height: 280px; }
+    }
+    @media (max-width: 640px) {
+      .vr-info { padding: 16px 20px 56px; }
+      .dr-title { font-size: clamp(2rem, 7vw, 3rem); }
+    }
+    @media (max-width: 390px) {
+      .vr-info { padding: 16px 16px 48px; }
+    }
+    /* ══════════════════════════════════════
+       PANEL IZQUIERDO — Dreams skin
+    ══════════════════════════════════════ */
+    .vr-category    { margin-bottom: 8px; }
+    .vr-title       { margin-bottom: 12px; }
+    .vr-subtitle    { margin-bottom: 16px; }
+    .vr-desc        { margin-bottom: 12px; max-width: 100%; font-size: 11.5px; line-height: 1.7; }
+    .vr-role        { margin-bottom: 16px; }
+    .vr-tools-label { margin-bottom: 8px; }
+    .vr-btns        { gap: 8px; flex-direction: column; align-items: stretch; flex-shrink: 0; }
+    .btn-primary, .btn-secondary { text-align: center; width: 100%; box-sizing: border-box; }
+
+    .vr-tools-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 16px; }
+    .vr-tools-grid .tool-card:last-child:nth-child(odd) { grid-column: span 2; }
+    .tool-card      { border-radius: 14px; padding: 12px 12px 11px; display: flex;
+                      flex-direction: column; justify-content: space-between; min-height: 76px;
+                      background: linear-gradient(145deg, #2E2E2E 0%, #111111 100%);
+                      border: 1px solid rgba(255,255,255,0.10);
+                      box-shadow: 0 6px 18px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.12);
+                      user-select: none; pointer-events: none; }
+    .tool-card__icon { width: 26px; height: 26px; display: block; flex-shrink: 0; }
+    .tool-card__name { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: -.01em; line-height: 1; }
+    .tool-card--figma       { background: linear-gradient(145deg, #301616 0%, #1a0808 100%) !important; border: 1px solid rgba(255, 90, 90, 0.35) !important; }
+    .tool-card--illustrator { background: linear-gradient(145deg, #301a05 0%, #150b02 100%) !important; border: 1px solid rgba(255, 140, 40, 0.4) !important; }
+    .tool-card--notion      { background: linear-gradient(145deg, #2a2520 0%, #161210 100%) !important; border: 1px solid rgba(240, 210, 180, 0.35) !important; }
+    .tool-card--vscode      { background: linear-gradient(145deg, #072238 0%, #020d18 100%) !important; border: 1px solid rgba(60, 160, 255, 0.35) !important; }
+    .tool-card--photoshop   { background: linear-gradient(145deg, #07223b 0%, #020d1a 100%) !important; border: 1px solid rgba(80, 180, 255, 0.35) !important; }
+    .tool-card--lightroom   { background: linear-gradient(145deg, #0a2a34 0%, #031015 100%) !important; border: 1px solid rgba(90, 210, 255, 0.35) !important; }
+    .tool-card--meta        { background: linear-gradient(145deg, #071f3b 0%, #020b18 100%) !important; border: 1px solid rgba(70, 150, 255, 0.35) !important; }
+    .tool-card--canva       { background: linear-gradient(145deg, #07213b 0%, #020b18 100%) !important; border: 1px solid rgba(60, 170, 255, 0.35) !important; }
+    .tool-card--claude      { background: linear-gradient(145deg, #281d16 0%, #120c0a 100%) !important; border: 1px solid rgba(240, 190, 150, 0.35) !important; }
+    .tool-card--unity       { background: linear-gradient(145deg, #282828 0%, #111111 100%) !important; border: 1px solid rgba(190, 190, 190, 0.35) !important; }
+
+    .vr-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 16px; flex-shrink: 0; }
+
+    .btn-secondary { background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+                     color: rgba(255,255,255,0.50); border: .5px solid rgba(255,255,255,0.12);
+                     box-shadow: inset 0 1px 0 rgba(255,255,255,0.08); }
+  </style>
+</head>
+<body>
+<div id="nav-container"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<button class="info-tab" id="infoToggle" aria-label="Ver ficha del proyecto">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 18 15 12 9 6"/>
+  </svg>
+</button>
+
+<div class="vr-stage">
+
+  <!-- ═══ LEFT PANEL WRAPPER ═══ -->
+  <div class="vr-info-wrapper" id="infoWrapper">
+    <div class="vr-info">
+      <span class="vr-num">06 / 07 &nbsp;—&nbsp; Dreams</span>
+      <div class="vr-center">
+        <p class="vr-category">Videojuego · Unity · Proyecto Personal</p>
+        <h1 class="vr-title">Dreams</h1>
+        <p class="vr-desc">
+          Proyecto personal en desarrollo. Un juego social de construcción y exploración onírica hecho en Unity —
+          desde cero, en tiempo libre, como campo de aprendizaje real.
+          Lo que existe hoy: cinemática de entrada, mecánica de movimiento, sistema de construcción y prototipo jugable.
+          Lo que viene: interfaz, narrativa, multijugador.
+        </p>
+        <p class="vr-role"><strong>Game Designer · Developer</strong><br>Unity · Diseño de mecánicas · Prototipado · Cinemáticas</p>
+        <p class="vr-tools-label">Herramientas</p>
+        <div class="vr-tools-grid">
+          <div class="tool-card tool-card--figma">
+            <img src="../../../assets/iconos/herramientas/Figma.svg" class="tool-card__icon" alt="">
+            <span class="tool-card__name">Figma</span>
+          </div>
+          <div class="tool-card tool-card--unity">
+            <img src="../../../assets/iconos/unity.svg" class="tool-card__icon" alt="" style="filter:invert(1) opacity(0.85);">
+            <span class="tool-card__name">Unity</span>
+          </div>
+          <div class="tool-card tool-card--claude">
+            <img src="../../../assets/iconos/herramientas/claude-1.svg" class="tool-card__icon" alt="">
+            <span class="tool-card__name">Claude</span>
+          </div>
+        </div>
+        <div class="vr-divider"></div>
+        <div class="vr-btns">
+          <a class="btn-secondary" href="/paginas/proyectos/">← Proyectos</a>
+        </div>
+      </div>
+    </div>
+
+    <button class="info-close" id="infoClose" aria-label="Cerrar panel">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ═══ RIGHT PANEL: Coming Soon ═══ -->
+  <div class="vr-video-panel">
+    <div class="dr-stage">
+      <div class="dr-orb" style="width:520px;height:520px;background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 68%);top:-170px;left:-130px;animation:drOrb1 12s ease-in-out infinite;z-index:1;"></div>
+      <div class="dr-orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,255,.03) 0%,transparent 68%);bottom:-110px;right:-70px;animation:drOrb2 15s ease-in-out infinite;z-index:1;"></div>
+      <div class="dr-orb" style="width:260px;height:260px;background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 68%);top:45%;right:18%;animation:drOrb1 9s ease-in-out infinite reverse;animation-delay:-5s;z-index:1;"></div>
+      <div class="dr-stars"></div>
+      <div class="dr-content">
+        <div class="dr-chip"><span class="dr-chip-dot"></span>En desarrollo</div>
+        <h2 class="dr-title">Próximamente</h2>
+        <p class="dr-sub">En construcción <em>·</em> Tiempo libre</p>
+        <div class="dr-progress"><div class="dr-progress-fill"></div></div>
+        <p class="dr-caption">Dreams &nbsp;·&nbsp; Unity</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="../../../js/loader.js"></script>
+<script>
+(function(){
+  'use strict';
+  var cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', function(e) {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  window.addEventListener('load', function() {
+    document.querySelectorAll('a,button').forEach(function(el) {
+      el.addEventListener('mouseenter', function() { cursor.classList.add('big'); });
+      el.addEventListener('mouseleave', function() { cursor.classList.remove('big'); });
+    });
+  });
+
+  var infoTab     = document.getElementById('infoToggle');
+  var infoClose   = document.getElementById('infoClose');
+  var infoWrapper = document.getElementById('infoWrapper');
+  var stage       = document.querySelector('.vr-stage');
+
+  function openInfoPanel() {
+    infoWrapper.classList.add('panel-open');
+    stage.classList.add('panel-open');
+    infoTab.classList.add('panel-open');
+  }
+  function closeInfoPanel() {
+    infoWrapper.classList.remove('panel-open');
+    stage.classList.remove('panel-open');
+    infoTab.classList.remove('panel-open');
+  }
+
+  infoTab.addEventListener('click', openInfoPanel);
+  infoClose.addEventListener('click', function() {
+    if (infoWrapper.classList.contains('panel-open')) closeInfoPanel();
+    else openInfoPanel();
+  });
+  stage.addEventListener('click', function(e) {
+    if (stage.classList.contains('panel-open') && !infoWrapper.contains(e.target)) closeInfoPanel();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeInfoPanel();
+  });
+})();
+</script>
+</body>
+</html>

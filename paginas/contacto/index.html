@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="base-depth" content="2">
+  <title>Contacto — Andrés Galdino</title>
+  <meta name="description" content="Escríbeme directamente. Andrés Galdino, diseñador con base en Bogotá disponible para proyectos de branding, producto y dirección creativa — Colombia, México, Brasil y remoto.">
+
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Contacto — Andrés Galdino">
+  <meta property="og:description" content="Diseñador con base en Bogotá disponible para proyectos remotos en Latinoamérica. Branding, producto y dirección creativa.">
+  <meta property="og:url"         content="https://andresgaldino.com/paginas/contacto/">
+  <meta property="og:image"       content="/assets/og-image.png">
+  <meta name="twitter:card"       content="summary_large_image">
+
+  <link rel="canonical" href="https://andresgaldino.com/paginas/contacto/">
+  <link rel="icon" href="../../assets/profile-round.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../../css/tokens.css">
+  <link rel="stylesheet" href="../../css/main.css">
+  <style>
+    html, body {
+      background: url('../../assets/contact-bg.webp') center/cover no-repeat fixed #0a0a0e;
+      min-height:100svh; overflow-x:hidden;
+    }
+    .cursor { background:#fff !important; mix-blend-mode:difference !important; }
+
+    .contact-stage {
+      position:relative; z-index:3;
+      min-height:calc(100svh - var(--nh));
+      padding-top:calc(var(--nh) + 48px);
+      padding-bottom:64px;
+      display:flex; align-items:center; justify-content:center;
+      padding-left:20px; padding-right:20px;
+    }
+
+    .pc-wrap {
+      position:relative;
+      width:100%; max-width:380px; 
+      perspective:700px;
+      animation: cardIn .8s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity:0; transform:translateY(24px) scale(.97); }
+      to   { opacity:1; transform:translateY(0) scale(1); }
+    }
+
+    .pc-shell {
+      position:relative;
+      border-radius:28px;
+      transform-style:preserve-3d;
+      transform: rotateX(var(--rotate-y,0deg)) rotateY(var(--rotate-x,0deg));
+      will-change:transform;
+    }
+    .pc-shell::before {
+      content:'';
+      position:absolute;
+      inset:-5px;
+      border-radius:30px;
+      z-index:0;
+      background: conic-gradient(
+        from 0deg,
+        #ff0000, #ff8000, #ffee00, #00ee44, #00ccff, #aa00ff, #ff0080, #ff0000
+      );
+      filter: blur(1.5px);
+      -webkit-mask: radial-gradient(circle 180px at var(--pointer-x,50%) var(--pointer-y,50%),
+        black 0%, black 40%, transparent 100%);
+      mask: radial-gradient(circle 180px at var(--pointer-x,50%) var(--pointer-y,50%),
+        black 0%, black 40%, transparent 100%);
+      opacity: var(--border-glow, 0);
+      transition: opacity .2s ease;
+    }
+
+    /* Touch / no-mouse: sin tilt, glow animado por JS */
+    .pc-shell.no-mouse {
+      transform: none !important;
+    }
+    .pc-shell.no-mouse::before {
+      transition: none;
+    }
+
+    /* Responsive */
+    @media(max-width:480px){
+      .contact-stage{
+        padding-top: calc(var(--nh) + 20px);
+        padding-bottom: 32px;
+      }
+    }
+    @media(max-height:660px) and (max-width:520px){
+      .pc-wrap{ max-width:230px; }
+    }
+
+    .pc {
+      position:relative; z-index:1;
+      border-radius:28px;
+      overflow:hidden;
+      aspect-ratio:9/14;
+      background:#111;
+      border:1px solid rgba(255,255,255,.1);
+    }
+
+    /* Glare diagonal sutil */
+    .pc::after {
+      content:'';
+      position:absolute; inset:0; z-index:11;
+      border-radius:inherit;
+      background: linear-gradient(125deg, rgba(255,255,255,.07) 0%, transparent 55%);
+      opacity: calc(var(--pointer-from-top, 0.5) * 0.3);
+      pointer-events:none;
+    }
+
+    /* Foto */
+    .pc-photo {
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover; object-position:center top;
+      display:block;
+    }
+
+    /* Overlay */
+    .pc-overlay {
+      position:absolute; inset:0;
+      background: linear-gradient(
+        to bottom,
+        transparent 30%,
+        rgba(8,8,12,.5) 55%,
+        rgba(8,8,12,.88) 72%,
+        rgba(8,8,12,.97) 100%
+      );
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:20px;
+    }
+
+    .pc-name {
+      display:flex; align-items:center; gap:7px;
+      font-size:20px; font-weight:700;
+      color:#fff; letter-spacing:-.02em;
+      margin-bottom:7px; line-height:1.2;
+    }
+    .pc-badge {
+      flex-shrink:0;
+      display:inline-flex; align-items:center; justify-content:center;
+      width:20px; height:20px; border-radius:50%;
+      background:#3897f0;
+    }
+    .pc-desc {
+      font-size:12.5px; color:rgba(255,255,255,.68);
+      line-height:1.55; margin-bottom:16px;
+    }
+    .pc-row { display:flex; align-items:center; justify-content:space-between; }
+    .pc-socials { display:flex; gap:14px; align-items:center; }
+    .pc-soc {
+      color:rgba(255,255,255,.6); text-decoration:none;
+      display:flex; align-items:center; justify-content:center;
+      min-width:44px; min-height:44px;
+      transition:color .18s, transform .15s;
+    }
+    .pc-btn {
+      display:inline-flex; align-items:center; gap:5px;
+      background: linear-gradient(145deg, #333 0%, #111 100%); color: #fff;
+      font-family:var(--font); font-size:12.5px; font-weight:700;
+      border: 1px solid rgba(255,255,255,0.15); border-radius:999px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.15);
+      padding:9px 16px; min-height:44px; text-decoration:none; cursor:pointer;
+      transition: transform .25s, box-shadow .25s, background .25s;
+      letter-spacing:-.01em; white-space:nowrap;
+    }
+    @media (hover: hover) {
+      .pc-soc:hover { color:#fff; transform:scale(1.12); }
+      .pc-btn:hover { background: linear-gradient(145deg, #222 0%, #050505 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1); transform: translateY(-1px) scale(0.98); }
+    }
+    .pc-btn-plus { font-size:15px; font-weight:300; line-height:1; }
+  </style>
+</head>
+<body>
+
+<div id="nav-container"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<div class="contact-stage">
+  <h1 class="sr-only">Contacto — Andrés Galdino, Product &amp; Creative Designer</h1>
+  <div class="pc-wrap">
+    <div class="pc-shell">
+      <div class="pc">
+        <img class="pc-photo" src="../../assets/profile.webp" alt="Andrés Galdino">
+        <div class="pc-overlay">
+          <div class="pc-name">
+            Andrés Galdino
+            <span class="pc-badge" title="Verificado" aria-label="verificado">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+                <path d="M2 6.5l2.5 2.5 5.5-6" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+          <p class="pc-desc">Diseñador que construye desde la identidad visual hasta la interfaz terminada — con criterio, no con plantillas.</p>
+          <div class="pc-row">
+            <div class="pc-socials">
+              <a class="pc-soc" href="https://www.instagram.com/andri_galdi/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+              </a>
+              <a class="pc-soc" href="https://www.linkedin.com/in/andresgaldino/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </a>
+            </div>
+            <a class="pc-btn" href="mailto:jesusandresgaldino@gmail.com">
+              Contactar <span class="pc-btn-plus" aria-hidden="true">+</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../js/loader.js"></script>
+
+<!-- Cursor -->
+<script>
+(function(){
+  'use strict';
+  var cursor=document.getElementById('cursor');
+  document.addEventListener('mousemove',function(e){
+    cursor.style.left=e.clientX+'px';
+    cursor.style.top=e.clientY+'px';
+  });
+  window.addEventListener('load',function(){
+    document.querySelectorAll('button,a').forEach(function(el){
+      el.addEventListener('mouseenter',function(){cursor.classList.add('big');});
+      el.addEventListener('mouseleave',function(){cursor.classList.remove('big');});
+    });
+  });
+})();
+</script>
+
+<!-- Tilt + borde arcoíris -->
+<script>
+(function(){
+  'use strict';
+  var wrap  = document.querySelector('.pc-wrap');
+  var shell = document.querySelector('.pc-shell');
+  var card  = document.querySelector('.pc');
+  if(!wrap||!shell||!card) return;
+
+  var clamp  = function(v,mn,mx){ return Math.min(Math.max(v,mn||0),mx===undefined?100:mx); };
+  var round  = function(v,p){ return parseFloat(v.toFixed(p||3)); };
+  var adjust = function(v,fMin,fMax,tMin,tMax){ return round(tMin+((tMax-tMin)*(v-fMin))/(fMax-fMin)); };
+
+  /* Detectar si hay puntero preciso (mouse/trackpad). Si no, modo auto-órbita */
+  var hasPointer = window.matchMedia('(pointer: fine)').matches;
+
+  if(!hasPointer){
+    /* Touch / sin mouse: sin tilt, glow orbita automáticamente */
+    shell.classList.add('no-mouse');
+    wrap.style.setProperty('--border-glow','1');
+    var angle = 0;
+    (function autoGlow(){
+      angle += 0.018;
+      wrap.style.setProperty('--pointer-x', (50 + 55 * Math.cos(angle)).toFixed(2)+'%');
+      wrap.style.setProperty('--pointer-y', (50 + 55 * Math.sin(angle)).toFixed(2)+'%');
+      requestAnimationFrame(autoGlow);
+    })();
+    return;
+  }
+
+  /* Mouse: tilt + glow siguiendo el puntero */
+  var curX=0,curY=0,tgtX=0,tgtY=0;
+  var running=false,lastTs=0,initialUntil=0;
+  var DEFAULT_TAU=0.14, INITIAL_TAU=0.6;
+
+  function setVars(x,y){
+    var w=card.clientWidth||1, h=card.clientHeight||1;
+    var px=clamp((100/w)*x,0,100), py=clamp((100/h)*y,0,100);
+    var cx=px-50, cy=py-50;
+    wrap.style.setProperty('--pointer-x',          px+'%');
+    wrap.style.setProperty('--pointer-y',          py+'%');
+    wrap.style.setProperty('--background-x',       adjust(px,0,100,35,65)+'%');
+    wrap.style.setProperty('--background-y',       adjust(py,0,100,35,65)+'%');
+    wrap.style.setProperty('--pointer-from-center',clamp(Math.hypot(py-50,px-50)/50,0,1));
+    wrap.style.setProperty('--pointer-from-top',   py/100);
+    wrap.style.setProperty('--pointer-from-left',  px/100);
+    wrap.style.setProperty('--rotate-x',           round(-(cx/6))+'deg');
+    wrap.style.setProperty('--rotate-y',           round(cy/5)+'deg');
+    var fromCenter = Math.max(Math.abs(cx),Math.abs(cy))/50;
+    wrap.style.setProperty('--border-glow', round(fromCenter>0.1?Math.min(1,fromCenter*1.2):0,3));
+  }
+
+  function step(ts){
+    if(!running) return;
+    if(lastTs===0) lastTs=ts;
+    var dt=(ts-lastTs)/1000; lastTs=ts;
+    var k=1-Math.exp(-dt/(ts<initialUntil?INITIAL_TAU:DEFAULT_TAU));
+    curX+=(tgtX-curX)*k; curY+=(tgtY-curY)*k;
+    setVars(curX,curY);
+    if(Math.abs(tgtX-curX)>0.05||Math.abs(tgtY-curY)>0.05){ requestAnimationFrame(step); }
+    else { running=false; lastTs=0; }
+  }
+  function start(){ if(running)return; running=true; lastTs=0; requestAnimationFrame(step); }
+  function toCenter(){ tgtX=card.clientWidth/2; tgtY=card.clientHeight/2; start(); }
+
+  card.addEventListener('pointermove',function(e){
+    if(e.pointerType==='touch') return;
+    var r=card.getBoundingClientRect();
+    tgtX=e.clientX-r.left; tgtY=e.clientY-r.top;
+    if(!running) start();
+  });
+  card.addEventListener('pointerleave',function(){
+    wrap.style.setProperty('--border-glow','0');
+    toCenter();
+  });
+
+  curX=(card.clientWidth||300)-70; curY=60;
+  setVars(curX,curY);
+  initialUntil=performance.now()+1200;
+  toCenter();
+})();
+</script>
+</body>
+</html>

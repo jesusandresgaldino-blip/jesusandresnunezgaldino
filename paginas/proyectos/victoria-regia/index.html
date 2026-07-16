@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="base-depth" content="3">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Victoria Regia — Andrés Galdino</title>
+  <meta name="description" content="Identidad visual inspirada en la flora amazónica para una marca de cosméticos naturales.">
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Victoria Regia — Andrés Galdino">
+  <meta property="og:description" content="Identidad de marca, presencia digital y gestión web para la Reserva Natural Victoria Regia en la Amazonía colombiana.">
+  <meta property="og:url"         content="https://andresgaldino.com/paginas/proyectos/victoria-regia/">
+  <meta property="og:image"       content="/assets/og-image.png">
+  <meta name="twitter:card"       content="summary_large_image">
+  <link rel="canonical"           href="https://andresgaldino.com/paginas/proyectos/victoria-regia/">
+  <link rel="icon" href="/assets/profile-round.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../../../css/tokens.css">
+  <link rel="stylesheet" href="../../../css/main.css">
+  <link rel="stylesheet" href="../../../css/proyecto-page.css">
+  <style>
+    .vr-title { margin-bottom: 28px; }
+    .vr-info-wrapper { height: 100%; position: relative; }
+    .vr-info { height: 100%; padding: 32px 32px 36px; }
+
+    /* ── Flechas animadas ── */
+    @keyframes arrowRight {
+      0%,100% { transform: translateX(0) scale(1); opacity: .55; }
+      50%      { transform: translateX(3px) scale(1.25); opacity: 1; }
+    }
+    @keyframes arrowLeft {
+      0%,100% { transform: translateX(0) scale(1); opacity: .55; }
+      50%      { transform: translateX(-3px) scale(1.25); opacity: 1; }
+    }
+    @keyframes arrowRightHandle {
+      0%,100% { transform: translateX(0) rotate(180deg) scale(1); opacity: .55; }
+      50%      { transform: translateX(3px) rotate(180deg) scale(1.25); opacity: 1; }
+    }
+
+    /* ── Tab handle (visible 901–1440px) ── */
+    .info-tab {
+      display: none;
+      position: fixed; left: 0; top: 50%;
+      transform: translateY(-50%);
+      z-index: 400;
+      width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: .5px solid rgba(255,255,255,.1);
+      border-left: none;
+      color: rgba(255,255,255,.8);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 3px 0 14px rgba(0,0,0,.55);
+      transition: background .2s, color .2s;
+    }
+    @media (hover: hover) {
+      .info-tab:hover { background: #1c1c24; color: #fff; }
+      .info-tab:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+    }
+    .info-tab svg { animation: arrowRight 1.6s ease-in-out infinite; }
+    .info-tab.panel-open { opacity: 0; pointer-events: none; }
+
+    /* ── Close button (anclado al wrapper) ── */
+    .info-close {
+      display: none;
+      position: absolute;
+      right: -22px; top: 50%;
+      transform: translateY(-50%);
+      z-index: 500;
+      width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: none; box-shadow: none;
+      color: rgba(255,255,255,.8);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    @media (hover: hover) {
+      .info-close:hover { color: #fff; }
+      .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
+    }
+    .info-close svg { animation: arrowRightHandle 1.6s ease-in-out infinite; }
+
+    /* ── Panel slide 901–1440px ── */
+    @media (min-width: 901px) and (max-width: 1440px) {
+      .info-tab   { display: none !important; }
+      .info-close { display: flex; opacity: 1; pointer-events: all; }
+      .vr-stage   { grid-template-columns: 1fr !important; }
+      .vr-stage::after {
+        content: ''; position: fixed; inset: 0;
+        background: transparent; pointer-events: none;
+        transition: background .35s ease; z-index: 2;
+      }
+      .vr-stage.panel-open::after {
+        background: rgba(0,0,0,.58); pointer-events: all;
+      }
+      .vr-info-wrapper {
+        position: fixed !important;
+        top: var(--nh) !important; bottom: -20px !important; left: 0;
+        width: min(460px, 88vw); z-index: 3;
+        transform: translateX(-100%);
+        transition: transform .4s cubic-bezier(0.16,1,0.3,1), filter .4s ease;
+        filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+      }
+      .vr-info-wrapper.panel-open {
+        transform: translateX(0);
+        filter: drop-shadow(12px 0 40px rgba(0,0,0,.55));
+      }
+      .vr-info-wrapper.panel-open .info-close svg { animation: arrowLeft 1.6s ease-in-out infinite; }
+    }
+    @media (min-width: 901px) and (max-width: 1440px) and (hover: hover) {
+      .vr-info-wrapper.panel-open .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+    }
+    @media (min-width: 901px) and (max-width: 1440px) {
+      .vr-info {
+        width: 100%; height: 100%;
+        overflow-y: auto; overflow-x: hidden;
+        border-right: none; background: #0d0d0f;
+        padding-bottom: 60px;
+      }
+    }
+
+    /* ── Mobile ≤900px: info arriba, video debajo al scrollear ── */
+    @media (max-width: 900px) {
+      html, body { height: auto !important; overflow: auto !important; min-height: 100%; }
+      .vr-stage {
+        position: relative !important; inset: auto !important;
+        display: flex !important; flex-direction: column !important;
+        height: auto !important; overflow: visible !important;
+      }
+      .vr-info-wrapper { height: auto !important; }
+      .vr-info {
+        min-height: 100svh;
+        height: auto !important; overflow: visible !important;
+        padding: calc(var(--nh) + 12px) 24px 72px; position: relative !important;
+      }
+      .vr-num { margin-bottom: auto; }
+      .vr-center { justify-content: flex-end; }
+      /* Video visible debajo del panel */
+      .vr-video-panel {
+        display: block !important;
+        position: relative !important;
+        height: 65vw; min-height: 260px;
+        width: 100%;
+      }
+      .vr-video { width: 100%; height: 100%; object-fit: cover; }
+      .vr-title { font-size: clamp(42px, 9vw, 68px); }
+      .vr-desc { max-width: 100%; font-size: 12.5px; }
+      .vr-tools { flex-wrap: wrap; }
+    }
+
+    @media (max-width: 768px) {
+      .vr-info { padding: calc(var(--nh) + 12px) 20px 64px; }
+      .vr-title { font-size: clamp(38px, 9vw, 58px); }
+      .vr-desc { font-size: 12px; }
+      .vr-video-panel { height: 70vw; min-height: 240px; }
+    }
+
+    @media (max-width: 640px) {
+      .vr-info { padding: 16px 20px 56px; min-height: 100svh; }
+      .vr-title { font-size: clamp(34px, 10vw, 50px); }
+      .vr-subtitle { font-size: 9px; }
+      .vr-desc { font-size: 11.5px; margin-bottom: 16px; }
+      .vr-role { font-size: 9.5px; }
+      .vr-tools-label { font-size: 7px; }
+      .vr-tools { gap: 5px; margin-bottom: 24px; }
+      .tool-pill { font-size: 9.5px; padding: 5px 10px; }
+      .vr-btns { flex-direction: column; gap: 8px; }
+      .btn-primary, .btn-secondary { text-align: center; font-size: 11px; padding: 12px 18px; }
+      .vr-video-panel { height: 72vw; min-height: 220px; }
+    }
+
+    @media (max-width: 390px) {
+      .vr-info { padding: 16px 16px 48px; }
+      .vr-title { font-size: 30px; }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      html, body { height: auto !important; overflow: auto !important; min-height: 100%; }
+      .vr-stage { position: relative !important; inset: auto !important; display: flex !important; flex-direction: column !important; height: auto !important; overflow: visible !important; }
+      .vr-info-wrapper { height: auto !important; }
+      .vr-info { height: auto !important; overflow: visible !important; position: relative !important; min-height: auto; padding: 24px 28px 28px; }
+      .vr-num { margin-bottom: 12px; }
+      .vr-title { font-size: 30px; margin-bottom: 4px; }
+      .vr-subtitle { margin-bottom: 6px; font-size: 8px; }
+      .vr-desc { font-size: 10.5px; margin-bottom: 10px; line-height: 1.6; }
+      .vr-role { font-size: 9px; margin-bottom: 10px; }
+      .vr-tools { margin-bottom: 10px; gap: 4px; }
+      .tool-pill { font-size: 9px; padding: 4px 8px; }
+      .vr-btns { gap: 6px; flex-wrap: wrap; }
+      .btn-primary, .btn-secondary { font-size: 10px; padding: 9px 14px; }
+      .vr-video-panel { display: block !important; height: 45vw; min-height: 180px; }
+    }
+    /* ══════════════════════════════════════
+       PANEL IZQUIERDO — Victoria Regia skin
+    ══════════════════════════════════════ */
+    .vr-category    { margin-bottom: 8px; }
+    .vr-title       { margin-bottom: 12px; }
+    .vr-subtitle    { margin-bottom: 16px; }
+    .vr-desc        { margin-bottom: 12px; max-width: 100%; font-size: 11.5px; line-height: 1.7; }
+    .vr-role        { margin-bottom: 16px; }
+    .vr-tools-label { margin-bottom: 8px; }
+    .vr-btns        { gap: 8px; flex-direction: column; align-items: stretch; flex-shrink: 0; }
+    .btn-primary, .btn-secondary { text-align: center; width: 100%; box-sizing: border-box; }
+
+    .vr-tools-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 16px; }
+    .vr-tools-grid .tool-card:last-child:nth-child(odd) { grid-column: span 2; }
+    .tool-card      { border-radius: 14px; padding: 12px 12px 11px; display: flex;
+                      flex-direction: column; justify-content: space-between; min-height: 76px;
+                      background: linear-gradient(145deg, #2E2E2E 0%, #111111 100%);
+                      border: 1px solid rgba(255,255,255,0.10);
+                      box-shadow: 0 6px 18px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.12);
+                      user-select: none; pointer-events: none; }
+    .tool-card__icon { width: 26px; height: 26px; display: block; flex-shrink: 0; }
+    .tool-card__name { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: -.01em; line-height: 1; }
+    .tool-card--figma       { background: linear-gradient(145deg, #301616 0%, #1a0808 100%) !important; border: 1px solid rgba(255, 90, 90, 0.35) !important; }
+    .tool-card--illustrator { background: linear-gradient(145deg, #301a05 0%, #150b02 100%) !important; border: 1px solid rgba(255, 140, 40, 0.4) !important; }
+    .tool-card--notion      { background: linear-gradient(145deg, #2a2520 0%, #161210 100%) !important; border: 1px solid rgba(240, 210, 180, 0.35) !important; }
+    .tool-card--vscode      { background: linear-gradient(145deg, #072238 0%, #020d18 100%) !important; border: 1px solid rgba(60, 160, 255, 0.35) !important; }
+    .tool-card--photoshop   { background: linear-gradient(145deg, #07223b 0%, #020d1a 100%) !important; border: 1px solid rgba(80, 180, 255, 0.35) !important; }
+    .tool-card--lightroom   { background: linear-gradient(145deg, #0a2a34 0%, #031015 100%) !important; border: 1px solid rgba(90, 210, 255, 0.35) !important; }
+    .tool-card--meta        { background: linear-gradient(145deg, #071f3b 0%, #020b18 100%) !important; border: 1px solid rgba(70, 150, 255, 0.35) !important; }
+    .tool-card--canva       { background: linear-gradient(145deg, #07213b 0%, #020b18 100%) !important; border: 1px solid rgba(60, 170, 255, 0.35) !important; }
+    .tool-card--claude      { background: linear-gradient(145deg, #281d16 0%, #120c0a 100%) !important; border: 1px solid rgba(240, 190, 150, 0.35) !important; }
+    .tool-card--unity       { background: linear-gradient(145deg, #282828 0%, #111111 100%) !important; border: 1px solid rgba(190, 190, 190, 0.35) !important; }
+
+    .vr-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 16px; flex-shrink: 0; }
+
+    .btn-primary   { background: linear-gradient(145deg, #1A6B3C 0%, #0B3120 100%); color: #fff;
+                     border: 1px solid rgba(50,160,90,0.42); box-shadow: 0 6px 22px rgba(11,49,32,0.50), inset 0 1px 0 rgba(100,210,130,0.32); }
+    .btn-secondary { background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+                     color: rgba(255,255,255,0.50); border: .5px solid rgba(255,255,255,0.12);
+                     box-shadow: inset 0 1px 0 rgba(255,255,255,0.08); }
+  </style>
+</head>
+<body>
+<div id="nav-container"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<button class="info-tab" id="infoToggle" aria-label="Ver ficha del proyecto">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 18 15 12 9 6"/>
+  </svg>
+</button>
+
+<div class="vr-stage">
+
+  <!-- ═══ LEFT PANEL WRAPPER ═══ -->
+  <div class="vr-info-wrapper" id="infoWrapper">
+    <div class="vr-info">
+
+      <span class="vr-num">02 / 07 &nbsp;—&nbsp; Victoria Regia</span>
+
+      <div class="vr-center">
+        <p class="vr-category">Branding · UX Research · Product Design</p>
+
+        <h1 class="vr-title">Victoria<br>Regia</h1>
+
+        <p class="vr-desc">
+          Reserva natural familiar con más de 100 años de historia en el Amazonas colombiano.
+          Operaba sin canal digital propio a pesar de 4.8 ★ en Google Maps y presencia en medios nacionales e internacionales.
+          Este proyecto comprende manual de marca, research estratégico y sitio web publicado — su primera voz digital propia.
+        </p>
+
+        <p class="vr-role">
+          <strong>Lead Designer</strong><br>
+          Brand Identity · UX Strategy · UI Design
+        </p>
+
+        <p class="vr-tools-label">Herramientas</p>
+        <div class="vr-tools-grid">
+          <div class="tool-card tool-card--figma">
+            <img src="../../../assets/iconos/herramientas/Figma.svg" class="tool-card__icon" alt="">
+            <span class="tool-card__name">Figma</span>
+          </div>
+          <div class="tool-card tool-card--illustrator">
+            <img src="../../../assets/iconos/herramientas/illustrator.svg" class="tool-card__icon" alt="">
+            <span class="tool-card__name">Illustrator</span>
+          </div>
+          <div class="tool-card tool-card--notion">
+            <img src="../../../assets/iconos/herramientas/notion.svg" class="tool-card__icon" alt="">
+            <span class="tool-card__name">Notion</span>
+          </div>
+          <div class="tool-card tool-card--vscode">
+            <img src="../../../assets/iconos/herramientas/visualcodeblanco.svg" class="tool-card__icon" alt="">
+            <span class="tool-card__name">VS Code</span>
+          </div>
+        </div>
+        <div class="vr-divider"></div>
+        <div class="vr-btns">
+          <a class="btn-primary"
+             href="https://cobalt-consonant-785.notion.site/Case-Study-Victoria-Regia-1ed852fcc04482dd845e018c307256f7?pvs=74"
+             target="_blank" rel="noopener noreferrer">
+            Ver caso completo →
+          </a>
+          <a class="btn-secondary" href="https://reservavictoriaregia.com" target="_blank" rel="noopener noreferrer">
+            Visitar sitio ↗
+          </a>
+          <a class="btn-secondary" href="/paginas/proyectos/">← Proyectos</a>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="info-close" id="infoClose" aria-label="Cerrar panel">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ═══ RIGHT PANEL: video ═══ -->
+  <div class="vr-video-panel">
+    <video
+      class="vr-video"
+      id="projVideo"
+      src="../../../assets/victoria-regia-trailer.mp4"
+      loop playsinline preload="auto"
+    ></video>
+    <div class="vr-vignette"></div>
+    <div class="vr-controls">
+      <button class="ctrl-btn" id="ctrlPlay" aria-label="Play / Pausa">
+        <svg id="iconPause" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>
+        </svg>
+        <svg id="iconPlay" width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+          <polygon points="5,3 19,12 5,21"/>
+        </svg>
+      </button>
+      <div class="ctrl-bar"><div class="ctrl-bar-fill" id="ctrlFill"></div></div>
+      <button class="ctrl-btn" id="ctrlMute" aria-label="Silenciar">
+        <svg id="iconSound" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+        <svg id="iconMuted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none">
+          <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script src="../../../js/loader.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── Cursor ── */
+  var cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', function (e) {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  window.addEventListener('load', function () {
+    document.querySelectorAll('a, button').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
+      el.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
+    });
+  });
+
+  /* ── Video ── */
+  var video     = document.getElementById('projVideo');
+  var btnPlay   = document.getElementById('ctrlPlay');
+  var btnMute   = document.getElementById('ctrlMute');
+  var fill      = document.getElementById('ctrlFill');
+  var iconPause = document.getElementById('iconPause');
+  var iconPlay  = document.getElementById('iconPlay');
+  var iconSound = document.getElementById('iconSound');
+  var iconMuted = document.getElementById('iconMuted');
+
+  if (video) {
+    function syncPlay() {
+      iconPause.style.display = video.paused ? 'none' : '';
+      iconPlay.style.display  = video.paused ? ''     : 'none';
+    }
+    video.addEventListener('play',  syncPlay);
+    video.addEventListener('pause', syncPlay);
+    syncPlay();
+
+    btnPlay.addEventListener('click', function () {
+      video.paused ? video.play() : video.pause();
+    });
+    btnMute.addEventListener('click', function () {
+      video.muted = !video.muted;
+      iconSound.style.display = video.muted ? 'none' : '';
+      iconMuted.style.display = video.muted ? ''     : 'none';
+    });
+    video.addEventListener('timeupdate', function () {
+      if (video.duration) fill.style.width = (video.currentTime / video.duration * 100) + '%';
+    });
+
+    /* Mobile: solo reproducir cuando el video llega al viewport */
+    if (window.matchMedia('(max-width: 900px)').matches) {
+      video.pause();
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) video.play().catch(function () {});
+          else video.pause();
+        }, { threshold: 0.3 }).observe(video);
+      }
+    }
+  }
+
+  /* ── Info panel slide (901–1440px) ── */
+  var infoTab     = document.getElementById('infoToggle');
+  var infoClose   = document.getElementById('infoClose');
+  var infoWrapper = document.getElementById('infoWrapper');
+  var stage       = document.querySelector('.vr-stage');
+
+  function openInfoPanel() {
+    infoWrapper.classList.add('panel-open');
+    stage.classList.add('panel-open');
+    infoTab.classList.add('panel-open');
+  }
+  function closeInfoPanel() {
+    infoWrapper.classList.remove('panel-open');
+    stage.classList.remove('panel-open');
+    infoTab.classList.remove('panel-open');
+  }
+
+  infoTab.addEventListener('click', openInfoPanel);
+  infoClose.addEventListener('click', function () {
+    if (infoWrapper.classList.contains('panel-open')) closeInfoPanel();
+    else openInfoPanel();
+  });
+  stage.addEventListener('click', function (e) {
+    if (stage.classList.contains('panel-open') && !infoWrapper.contains(e.target)) closeInfoPanel();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeInfoPanel();
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1440 || window.innerWidth <= 900) closeInfoPanel();
+  });
+
+})();
+</script>
+</body>
+</html>

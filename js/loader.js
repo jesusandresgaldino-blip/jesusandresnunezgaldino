@@ -10,17 +10,17 @@
      Índice de páginas para el buscador
   ───────────────────────────────────────────── */
   var PAGES = [
-    { title: 'Inicio',                url: 'index.html',                                   tags: 'home portafolio' },
-    { title: 'Proyectos',             url: 'paginas/proyectos.html',                       tags: 'trabajos diseño ux ui' },
-    { title: 'Perfil',                url: 'paginas/sobre-mi.html',                        tags: 'bio historia habilidades skills sobre mi' },
-    { title: 'Contacto',              url: 'paginas/contacto.html',                        tags: 'email linkedin behance redes' },
-    { title: 'Universidad',           url: 'paginas/proyectos/universitario.html',         tags: 'editorial educacion universitario' },
-    { title: 'Victoria Regia',        url: 'paginas/proyectos/victoria-regia.html',        tags: 'branding naturaleza cosmeticos amazonia' },
-    { title: 'Moda Week',             url: 'paginas/proyectos/moda-week-international.html', tags: 'branding eventos moda' },
-    { title: 'Chiper',                url: 'paginas/proyectos/chiper.html',                tags: 'b2b e-commerce app' },
-    { title: 'Farmalaxia',            url: 'paginas/proyectos/farmalaxia.html',            tags: 'branding salud farmacia identidad' },
-    { title: 'Dreams',                url: 'paginas/proyectos/dreams.html',                tags: 'ux ui app motion producto juego 3d cozy' },
-    { title: 'Museo',                 url: 'paginas/proyectos/museo.html',                 tags: 'cultura arte exposicion' }
+    { title: 'Inicio',                url: '',                                             tags: 'home portafolio' },
+    { title: 'Proyectos',             url: 'paginas/proyectos/',                           tags: 'trabajos diseño ux ui' },
+    { title: 'Perfil',                url: 'paginas/sobre-mi/',                            tags: 'bio historia habilidades skills sobre mi' },
+    { title: 'Contacto',              url: 'paginas/contacto/',                            tags: 'email linkedin behance redes' },
+    { title: 'Universidad',           url: 'paginas/proyectos/universitario/',             tags: 'editorial educacion universitario' },
+    { title: 'Victoria Regia',        url: 'paginas/proyectos/victoria-regia/',            tags: 'branding naturaleza cosmeticos amazonia' },
+    { title: 'Moda Week',             url: 'paginas/proyectos/moda-week-international/',   tags: 'branding eventos moda' },
+    { title: 'Chiper',                url: 'paginas/proyectos/chiper/',                    tags: 'b2b e-commerce app' },
+    { title: 'Farmalaxia',            url: 'paginas/proyectos/farmalaxia/',                tags: 'branding salud farmacia identidad' },
+    { title: 'Dreams',                url: 'paginas/proyectos/dreams/',                    tags: 'ux ui app motion producto juego 3d cozy' },
+    { title: 'Museo',                 url: 'paginas/proyectos/museo/',                     tags: 'cultura arte exposicion' }
   ];
 
   /* ─────────────────────────────────────────────
@@ -127,11 +127,11 @@
         '</div>' +
         '<div class="cn-sp-sugg" id="cnSugg"><span class="cn-sp-sugg-lbl">Accesos rápidos</span>' +
           '<div class="cn-sp-chips">' +
-            '<a class="cn-sp-chip" href="/paginas/proyectos.html">Todos los Proyectos</a>' +
-            '<a class="cn-sp-chip" href="/paginas/proyectos/moda-week-international.html">Moda Week</a>' +
-            '<a class="cn-sp-chip" href="/paginas/proyectos/chiper.html">Chiper</a>' +
-            '<a class="cn-sp-chip" href="/paginas/sobre-mi.html">Perfil</a>' +
-            '<a class="cn-sp-chip" href="/paginas/contacto.html">Contacto</a>' +
+            '<a class="cn-sp-chip" href="/paginas/proyectos/">Todos los Proyectos</a>' +
+            '<a class="cn-sp-chip" href="/paginas/proyectos/moda-week-international/">Moda Week</a>' +
+            '<a class="cn-sp-chip" href="/paginas/proyectos/chiper/">Chiper</a>' +
+            '<a class="cn-sp-chip" href="/paginas/sobre-mi/">Perfil</a>' +
+            '<a class="cn-sp-chip" href="/paginas/contacto/">Contacto</a>' +
           '</div></div>' +
         '<div class="cn-sp-results cn-sp-chips" id="cnSPResults" aria-live="polite" aria-label="Resultados de búsqueda"></div>';
       document.body.appendChild(sp);
@@ -143,13 +143,13 @@
     if (!mob.querySelector('a[href*="sobre-mi"]')) {
       var _mf = mob.querySelector('.cn-mob-footer');
       var _r1 = document.createElement('div'); _r1.className = 'cn-mob-row';
-      _r1.innerHTML = '<a class="cn-mob-link" href="/paginas/sobre-mi.html">Perfil</a>';
+      _r1.innerHTML = '<a class="cn-mob-link" href="/paginas/sobre-mi/">Perfil</a>';
       mob.insertBefore(_r1, _mf || null);
     }
     if (!mob.querySelector('a[href*="contacto"]')) {
       var _mf2 = mob.querySelector('.cn-mob-footer');
       var _r2 = document.createElement('div'); _r2.className = 'cn-mob-row';
-      _r2.innerHTML = '<a class="cn-mob-link" href="/paginas/contacto.html">Contacto</a>';
+      _r2.innerHTML = '<a class="cn-mob-link" href="/paginas/contacto/">Contacto</a>';
       mob.insertBefore(_r2, _mf2 || null);
     }
 

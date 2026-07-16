@@ -1,0 +1,2468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="base-depth" content="3">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMI — Andrés Galdino</title>
+  <meta name="description" content="Case Study UX/UI de LUMI — Aplicación de acompañamiento emocional y gamificación para jóvenes.">
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="LUMI — Andrés Galdino">
+  <meta property="og:description" content="Case study UX/UI de LUMI, aplicación de acompañamiento emocional y gamificación para jóvenes. Sistema de personajes, onboarding y flujo de usuario.">
+  <meta property="og:url"         content="https://andresgaldino.com/paginas/proyectos/universitario/">
+  <meta property="og:image"       content="/assets/og-image.png">
+  <meta name="twitter:card"       content="summary_large_image">
+  <link rel="canonical"           href="https://andresgaldino.com/paginas/proyectos/universitario/">
+  <link rel="icon" href="/assets/profile-round.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+One&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap">
+  <link rel="stylesheet" href="../../../css/tokens.css">
+  <link rel="stylesheet" href="../../../css/main.css">
+  <link rel="stylesheet" href="../../../css/proyecto-page.css">
+  <style>
+    /* Eliminar grano del panel en todas las resoluciones */
+    .vr-info::before { display: none !important; }
+
+    /* Fix para pantallas grandes (>1440px): el wrapper debe ocupar toda la altura */
+    .vr-info-wrapper { height: 100%; position: relative; }
+    .vr-info { height: 100%; padding: 32px 32px 36px; }
+
+
+
+    /* ── Right panel: LUMI tokens ── */
+    .vr-scroll-panel {
+      overflow-y: auto;
+      height: 100%;
+      scroll-behavior: smooth;
+      position: relative;
+      --primary:  #7149FF;
+      --secondary:#9B6FFF;
+      --accent:   #E5A0FF;
+      --pale:     #F3EEFF;
+      --ink:      #1a0a3b;
+      --lm-muted: rgba(26,10,59,0.44);
+      --bg:       #faf8ff;
+      --white:    #ffffff;
+      --ease:     cubic-bezier(0.16,1,0.3,1);
+      --r:        20px;
+      --max:      1260px;
+      background: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Glass cards ── */
+    .vr-scroll-panel .gc {
+      background: linear-gradient(145deg, rgba(255,255,255,0.88) 0%, rgba(245,240,255,0.65) 100%);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(113,73,255,0.30);
+      box-shadow: 0 4px 22px rgba(113,73,255,0.07), inset 0 1px 0 rgba(255,255,255,0.95);
+      will-change: transform;
+      transform: translateZ(0);
+      isolation: isolate;
+    }
+
+    .vr-scroll-panel .dark {
+      background: linear-gradient(145deg, #6040F0 0%, #2D0E90 100%);
+      border: 1px solid rgba(180,150,255,0.38);
+      box-shadow: 0 12px 40px rgba(45,14,144,0.40), inset 0 1px 0 rgba(180,150,255,0.42);
+      color: #fff;
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    /* ── Scroll to Top Button ── */
+    .scroll-top-wrap {
+      text-align: center;
+      margin-top: 7rem;
+      margin-bottom: 0;
+      position: relative;
+      z-index: 10;
+    }
+    .scroll-top-btn {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #9B6FFF 0%, #7149FF 100%);
+      border: 1px solid rgba(229,160,255,0.38);
+      box-shadow: 0 12px 30px rgba(113,73,255,0.30), inset 0 1px 0 rgba(229,160,255,0.42);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background 0.3s ease;
+      padding: 0;
+    }
+    .scroll-top-btn svg {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s ease;
+    }
+    @media(hover: hover) {
+      .scroll-top-btn:hover {
+        transform: translateY(-5px) scale(1.05);
+        background: linear-gradient(145deg, #B58AFF 0%, #8A5CFF 100%);
+        box-shadow: 0 18px 40px rgba(140,100,255,0.45), inset 0 1px 0 rgba(229,160,255,0.55);
+      }
+      .scroll-top-btn:hover svg {
+        transform: translateY(-3px);
+      }
+    }
+    .scroll-top-btn:active {
+      transform: scale(0.95) !important;
+      transition-duration: 0.1s;
+    }
+
+    /* ── Hero ── */
+    .lm-hero {
+      width: 100%;
+      height: 100svh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0d0818;
+    }
+
+    .lm-hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lm-hero-veil {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,4,30,0.45);
+      pointer-events: none;
+    }
+
+    .lm-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .lm-hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 18vh;
+    }
+
+    .lm-hero-eyebrow {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      animation: lmFadeUp 1s var(--ease) .3s both;
+    }
+
+    .lm-wordmark {
+      font-family: 'Rubik One', sans-serif;
+      font-size: clamp(88px, 17vw, 220px);
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -5px;
+      text-shadow: 0 0 140px rgba(229,160,255,0.45), 0 0 40px rgba(255,255,255,0.08);
+      animation: lmFadeUp 1s var(--ease) .5s both;
+    }
+
+    .lm-hero-desc {
+      font-size: .92rem;
+      color: rgba(255,255,255,0.48);
+      font-weight: 400;
+      animation: lmFadeUp 1s var(--ease) .7s both;
+    }
+
+    .lm-creatures {
+      position: absolute;
+      top: 32%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(820px, 95%);
+      z-index: 0;
+      pointer-events: none;
+      animation: lmCreatFade 1.4s var(--ease) .6s both;
+      filter: drop-shadow(0 40px 80px rgba(30,0,80,0.55));
+    }
+    @keyframes lmCreatFade {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .lm-sc {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: lmScl 2s ease-in-out infinite;
+    }
+
+    @keyframes lmScl {
+      0%, 100% { height: 22px; opacity: .3 }
+      50%       { height: 44px; opacity: .7 }
+    }
+
+    @keyframes lmFadeUp {
+      from { opacity: 0; transform: translateY(18px) }
+      to   { opacity: 1; transform: translateY(0) }
+    }
+
+    @keyframes lmOrb1 {
+      0%, 100% { transform: translate(0,0); }
+      33%  { transform: translate(-40px,30px); }
+      66%  { transform: translate(20px,-20px); }
+    }
+    @keyframes lmOrb2 {
+      0%, 100% { transform: translate(0,0); }
+      50%  { transform: translate(30px,-40px); }
+    }
+    @keyframes lmOrb3 {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      50%  { transform: translate(-20px,15px) scale(1.08); }
+    }
+
+    /* ── Layout ── */
+    .vr-scroll-panel .section {
+      padding: 13rem 6vw;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vr-scroll-panel .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .vr-scroll-panel hr.div {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(113,73,255,0.09), transparent);
+      margin: 0 6vw;
+    }
+
+    /* ── Chip ── */
+    .vr-scroll-panel .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: 2rem;
+    }
+
+    .vr-scroll-panel .chip::before { display: none; }
+
+    /* ── Section heading ── */
+    .vr-scroll-panel h2.st {
+      font-family: 'Rubik One', sans-serif;
+      font-size: clamp(1.9rem, 3vw, 3.5rem);
+      font-weight: 400;
+      letter-spacing: -1.5px;
+      line-height: 1.05;
+      color: var(--primary);
+      margin-bottom: 1.6rem;
+    }
+
+    .vr-scroll-panel .sb {
+      font-size: .95rem;
+      line-height: 1.8;
+      color: var(--lm-muted);
+    }
+
+    /* ── Cover ── */
+    .vr-scroll-panel .cover {
+      padding: 12rem 6vw 13rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vr-scroll-panel .cover-grid {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .vr-scroll-panel .cover-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: 1.6rem;
+    }
+
+    .vr-scroll-panel .ey-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .vr-scroll-panel .cover-h1 {
+      font-family: 'Rubik One', sans-serif;
+      font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+      font-weight: 400;
+      letter-spacing: -2.5px;
+      line-height: 1;
+      color: var(--primary);
+      margin-bottom: 1.4rem;
+    }
+
+    .vr-scroll-panel .cover-h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .vr-scroll-panel .cover-desc {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--lm-muted);
+      max-width: 420px;
+      margin-bottom: 2.8rem;
+    }
+
+    .vr-scroll-panel .cover-meta {
+      display: flex;
+      gap: 2.5rem;
+      padding-top: 1.8rem;
+      border-top: 1px solid rgba(113,73,255,0.08);
+      flex-wrap: wrap;
+    }
+
+    .vr-scroll-panel .cover-meta-item span {
+      display: block;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .25rem;
+    }
+
+    .vr-scroll-panel .cover-meta-item strong {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Cover right: phone image */
+    .vr-scroll-panel .cover-phone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+    }
+
+    /* ── Workflow cards ── */
+    .vr-scroll-panel .wf-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 5rem;
+    }
+
+    .vr-scroll-panel .wf-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .vr-scroll-panel .wf-card {
+      border-radius: var(--r);
+      padding: 1.8rem 1.4rem;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.9);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      box-shadow: 0 2px 16px rgba(113,73,255,0.05), 0 1px 4px rgba(0,0,0,0.02);
+      will-change: transform;
+      transform: translateZ(0);
+      transition: transform .3s var(--ease);
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    @media (hover: hover) { .vr-scroll-panel .wf-card:hover { transform: translateY(-4px); } }
+
+    .vr-scroll-panel .wf-card.dark {
+      background: linear-gradient(145deg, #6040F0 0%, #2D0E90 100%);
+      border: 1px solid rgba(180,150,255,0.38);
+      box-shadow: 0 12px 40px rgba(45,14,144,0.40), inset 0 1px 0 rgba(180,150,255,0.42);
+    }
+    .vr-scroll-panel .wf-card.gc {
+      background: linear-gradient(145deg, rgba(255,255,255,0.88) 0%, rgba(245,240,255,0.65) 100%);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(113,73,255,0.30);
+      box-shadow: 0 4px 22px rgba(113,73,255,0.07), inset 0 1px 0 rgba(255,255,255,0.95);
+    }
+
+    .vr-scroll-panel .wf-n {
+      font-size: .65rem;
+      font-weight: 700;
+      color: var(--secondary);
+      letter-spacing: 1px;
+    }
+
+    .vr-scroll-panel .wf-card p {
+      font-size: .82rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.5;
+      margin-top: auto;
+    }
+
+    /* ── Problema ── */
+    .vr-scroll-panel .prob-header {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 6rem;
+      align-items: start;
+      margin-bottom: 5rem;
+    }
+
+    .vr-scroll-panel .prob-rows {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(113,73,255,0.08);
+      margin-bottom: 4rem;
+    }
+
+    .vr-scroll-panel .prob-row {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 2rem;
+      padding: 1.6rem 0;
+      border-bottom: 1px solid rgba(113,73,255,0.06);
+    }
+
+    .vr-scroll-panel .prob-row:last-child { border-bottom: none; }
+
+    .vr-scroll-panel .prob-row-label {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.6;
+    }
+
+    .vr-scroll-panel .prob-row-val {
+      font-size: .8rem;
+      color: var(--lm-muted);
+      line-height: 1.6;
+    }
+
+    .vr-scroll-panel .bq {
+      padding: 4rem 4.5rem;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vr-scroll-panel .bq-mark {
+      position: absolute;
+      top: -2.5rem;
+      left: 2rem;
+      font-size: 11rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .vr-scroll-panel .bq-text {
+      font-size: clamp(1rem, 1.4vw, 1.35rem);
+      font-weight: 500;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.88);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Research / Interviews ── */
+    .vr-scroll-panel .int-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 4rem;
+      margin-bottom: 6rem;
+    }
+
+    .vr-scroll-panel .int-card {
+      border-radius: var(--r);
+      padding: 2rem 1.8rem;
+      transition: transform .3s var(--ease);
+    }
+
+    @media (hover: hover) { .vr-scroll-panel .int-card:hover { transform: translateY(-4px); } }
+
+    .vr-scroll-panel .int-meta {
+      display: flex;
+      align-items: baseline;
+      gap: .5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .vr-scroll-panel .int-name {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .vr-scroll-panel .int-card.dark .int-name { color: #fff; }
+
+    .vr-scroll-panel .int-role {
+      font-size: .65rem;
+      font-weight: 500;
+      color: var(--lm-muted);
+    }
+
+    .vr-scroll-panel .int-card.dark .int-role { color: rgba(255,255,255,0.5); }
+
+    .vr-scroll-panel .int-quote {
+      font-size: .8rem;
+      color: var(--lm-muted);
+      line-height: 1.65;
+      font-style: italic;
+      border-left: 2px solid var(--accent);
+      padding-left: .8rem;
+      margin-bottom: 1rem;
+    }
+
+    .vr-scroll-panel .int-card.dark .int-quote {
+      color: rgba(255,255,255,0.65);
+      border-left-color: var(--accent);
+    }
+
+    .vr-scroll-panel .int-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+    }
+
+    /* ── Insights ── */
+    .vr-scroll-panel .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .vr-scroll-panel .insight-card {
+      border-radius: var(--r);
+      padding: 2.2rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s var(--ease);
+    }
+
+    @media (hover: hover) { .vr-scroll-panel .insight-card:hover { transform: translateY(-4px); } }
+
+    .vr-scroll-panel .ins-n {
+      font-size: 2.8rem;
+      font-family: 'Rubik One', sans-serif;
+      color: rgba(113,73,255,0.12);
+      line-height: 1;
+      margin-bottom: .4rem;
+    }
+
+    .vr-scroll-panel .insight-card.dark .ins-n { color: rgba(255,255,255,0.08); }
+
+    .vr-scroll-panel .ins-title {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.3;
+      margin-bottom: .6rem;
+    }
+
+    .vr-scroll-panel .insight-card.dark .ins-title { color: #fff; }
+
+    .vr-scroll-panel .ins-body {
+      font-size: .78rem;
+      color: var(--lm-muted);
+      line-height: 1.65;
+    }
+
+    .vr-scroll-panel .insight-card.dark .ins-body { color: rgba(255,255,255,0.6); }
+
+    /* ── Persona ── */
+    .vr-scroll-panel .persona-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .vr-scroll-panel .persona-featured {
+      padding: 3rem;
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .vr-scroll-panel .persona-cards-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+    }
+
+    .vr-scroll-panel .attr-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: .85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .vr-scroll-panel .attr-row:last-child { border-bottom: none; }
+
+    .vr-scroll-panel .attr-key {
+      font-size: .78rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+    }
+
+    .vr-scroll-panel .attr-val {
+      font-size: .78rem;
+      color: #fff;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .vr-scroll-panel .persona-card {
+      padding: 2.2rem;
+      border-radius: var(--r);
+    }
+
+    .vr-scroll-panel .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .8rem;
+    }
+
+    .vr-scroll-panel .tag {
+      padding: .38rem .85rem;
+      border-radius: 100px;
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--pale);
+      border: 1px solid rgba(113,73,255,0.15);
+    }
+
+    .vr-scroll-panel .frus-list {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      margin-top: .8rem;
+    }
+
+    .vr-scroll-panel .frus-row {
+      font-size: .8rem;
+      color: var(--lm-muted);
+      padding-left: .8rem;
+      border-left: 2px solid var(--accent);
+      line-height: 1.5;
+    }
+
+    .vr-scroll-panel .label-sm {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+
+    .vr-scroll-panel .label-sm-dark {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(229,160,255,0.8);
+      margin-bottom: .4rem;
+    }
+
+    /* ── JTBD ── */
+    .vr-scroll-panel .jtbd-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 4rem;
+    }
+
+    .vr-scroll-panel .jtbd-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .vr-scroll-panel .jtbd-card {
+      padding: 2.5rem;
+      border-radius: var(--r);
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s var(--ease);
+    }
+
+    @media (hover: hover) { .vr-scroll-panel .jtbd-card:hover { transform: translateY(-5px); } }
+
+    .vr-scroll-panel .jtbd-chip {
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: .8rem;
+    }
+
+    .vr-scroll-panel .jtbd-card h4 {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: .55rem;
+      line-height: 1.35;
+    }
+
+    .vr-scroll-panel .jtbd-card p {
+      font-size: .78rem;
+      color: var(--lm-muted);
+      line-height: 1.65;
+    }
+
+    .vr-scroll-panel .jtbd-card.dark .jtbd-chip { color: rgba(229,160,255,.8); }
+    .vr-scroll-panel .jtbd-card.dark h4 { color: #fff; }
+    .vr-scroll-panel .jtbd-card.dark p  { color: rgba(255,255,255,.6); }
+
+    /* ── Hipótesis ── */
+    .vr-scroll-panel .hipo-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .vr-scroll-panel .hipo-featured {
+      padding: 3.5rem;
+      border-radius: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .vr-scroll-panel .hipo-card {
+      padding: 2.2rem;
+      border-radius: var(--r);
+    }
+
+    .vr-scroll-panel .hipo-n {
+      font-size: 2.5rem;
+      font-family: 'Rubik One', sans-serif;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: .6rem;
+    }
+
+    .vr-scroll-panel .hipo-card p       { font-size: .8rem; color: var(--lm-muted); line-height: 1.65; }
+    .vr-scroll-panel .hipo-featured .hipo-n { color: rgba(229,160,255,0.75); }
+    .vr-scroll-panel .hipo-featured p   { color: rgba(255,255,255,0.85); }
+
+    /* ── Benchmark ── */
+    .vr-scroll-panel .bench-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 4rem;
+    }
+
+    .vr-scroll-panel .bench-card {
+      border-radius: var(--r);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s var(--ease);
+    }
+
+    @media (hover: hover) { .vr-scroll-panel .bench-card:hover { box-shadow: 0 16px 48px rgba(113,73,255,0.14); } }
+
+    .vr-scroll-panel .bench-app {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: .6rem;
+    }
+
+    .vr-scroll-panel .bench-card.dark .bench-app { color: rgba(229,160,255,.7); }
+
+    .vr-scroll-panel .bench-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: .4rem;
+    }
+
+    .vr-scroll-panel .bench-card.dark .bench-name { color: #fff; }
+
+    .vr-scroll-panel .bench-body {
+      font-size: .78rem;
+      color: var(--lm-muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .vr-scroll-panel .bench-card.dark .bench-body { color: rgba(255,255,255,.6); }
+
+    .vr-scroll-panel .bench-crit {
+      font-size: .75rem;
+      color: var(--primary);
+      font-weight: 600;
+      padding: .6rem .9rem;
+      background: var(--pale);
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+    .vr-scroll-panel .bench-card.dark .bench-crit {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* ── Color swatches ── */
+    .vr-scroll-panel .color-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .vr-scroll-panel .color-item {
+      position: relative;
+      height: 148px;
+      display: flex;
+      align-items: center;
+    }
+
+    .vr-scroll-panel .color-solid {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 70%;
+      height: 108px;
+      border-radius: 18px;
+    }
+
+    .vr-scroll-panel .color-glow {
+      position: absolute;
+      left: 5%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52%;
+      height: 86px;
+      border-radius: 18px;
+      filter: blur(22px);
+      z-index: 1;
+      opacity: .7;
+    }
+
+    .vr-scroll-panel .color-glass {
+      position: relative;
+      z-index: 2;
+      width: 64%;
+      height: 148px;
+      background: transparent;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 26px;
+      box-shadow: 0 4px 20px rgba(113,73,255,0.08);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .vr-scroll-panel .c-name {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .4px;
+      text-transform: capitalize;
+      margin-bottom: 3px;
+    }
+
+    .vr-scroll-panel .c-hex {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      font-family: var(--font);
+    }
+
+    .vr-scroll-panel .tw { color: #fff; }
+    .vr-scroll-panel .td { color: var(--primary); }
+
+    /* ── Typography ── */
+    .vr-scroll-panel .typo-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 4rem;
+      align-items: end;
+      margin-top: 4rem;
+    }
+
+    .vr-scroll-panel .typo-sub {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: 3rem;
+    }
+
+    .vr-scroll-panel .typo-sub span {
+      color: var(--lm-muted);
+      margin-left: .3rem;
+    }
+
+    .vr-scroll-panel .typo-row {
+      display: grid;
+      grid-template-columns: 72px 1fr 110px;
+      align-items: baseline;
+      gap: 2rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid rgba(113,73,255,0.06);
+    }
+
+    .vr-scroll-panel .typo-row:last-child { border-bottom: none; }
+
+    .vr-scroll-panel .typo-level {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--lm-muted);
+    }
+
+    .vr-scroll-panel .typo-sample {
+      color: var(--ink);
+      letter-spacing: -.3px;
+      line-height: 1.1;
+    }
+
+    .vr-scroll-panel .typo-spec {
+      font-size: .65rem;
+      font-weight: 500;
+      color: var(--lm-muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* ── Kingdoms ── */
+    .vr-scroll-panel .kingdom-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem;
+      margin-top: 4rem;
+    }
+
+    .vr-scroll-panel .kingdom-card {
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+      transition: box-shadow .3s var(--ease);
+    }
+
+    @media (hover: hover) {
+      .vr-scroll-panel .kingdom-card:hover { box-shadow: 0 28px 80px rgba(0,0,0,0.35); }
+    }
+
+    .vr-scroll-panel .kd-bg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .vr-scroll-panel .kd-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.08) 50%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .vr-scroll-panel .kd-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      text-align: center;
+      padding: 2rem 1.8rem 2.2rem;
+    }
+
+    .vr-scroll-panel .kd-name {
+      font-family: 'Rubik One', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: .3rem;
+      letter-spacing: -.5px;
+    }
+
+    .vr-scroll-panel .kd-realm {
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1rem;
+    }
+
+    .vr-scroll-panel .kd-task {
+      font-size: .78rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ── Research image placeholder ── */
+    /* ── Reveal animation ── */
+    .vr-scroll-panel .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .85s var(--ease), transform .85s var(--ease);
+    }
+
+    .vr-scroll-panel .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Footer ── */
+    .vr-scroll-panel footer {
+      padding: 3rem 6vw 3.5rem;
+      border-top: 1px solid rgba(113,73,255,0.07);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vr-scroll-panel .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .vr-scroll-panel .footer-brand {
+      font-family: 'Rubik One', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--primary);
+      letter-spacing: -.4px;
+    }
+
+    .vr-scroll-panel .footer-pills {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .vr-scroll-panel .footer-pill {
+      padding: .32rem .85rem;
+      border-radius: 100px;
+      font-size: .65rem;
+      font-weight: 600;
+      color: var(--secondary);
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(113,73,255,0.15);
+    }
+
+    /* ══ Cinematic scroll animations ══ */
+    #lmProgress {
+      position: sticky;
+      top: 0;
+      height: 2px;
+      margin-bottom: -2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+      width: 0%;
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .vr-scroll-panel .sw  { display: inline-block; overflow: hidden; vertical-align: bottom; padding-bottom: 0.15em; margin-bottom: -0.15em; }
+    .vr-scroll-panel .swi {
+      display: inline-block;
+      transform: translateY(110%);
+      opacity: 0;
+      transition: transform .9s cubic-bezier(.16,1,.3,1), opacity .5s ease;
+      will-change: transform;
+    }
+
+    .vr-scroll-panel h2.st-split.reveal    { transform: none; }
+    .vr-scroll-panel h2.st-split.reveal.on { transform: none; }
+
+    .vr-scroll-panel .chip.reveal    { transform: translateX(-16px); }
+    .vr-scroll-panel .chip.reveal.on { transform: translateX(0); }
+
+    .vr-scroll-panel .bq.reveal {
+      transform: translateY(36px) scale(0.96);
+      transition: opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1);
+    }
+    .vr-scroll-panel .bq.reveal.on { opacity: 1; transform: translateY(0) scale(1); }
+
+    .vr-scroll-panel .hipo-card.gc.reveal    { transform: translateX(24px); }
+    .vr-scroll-panel .hipo-card.gc.reveal.on { transform: translateX(0); }
+
+    .vr-scroll-panel .color-item.reveal {
+      transform: translateY(28px) scale(0.94);
+      transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+    }
+    .vr-scroll-panel .color-item.reveal.on { opacity: 1; transform: translateY(0) scale(1); }
+
+    /* Shine on dark cards */
+    .vr-scroll-panel .wf-card.dark       { position: relative; overflow: hidden; }
+    .vr-scroll-panel .hipo-featured.dark { position: relative; overflow: hidden; }
+    .vr-scroll-panel .wf-card.dark::after,
+    .vr-scroll-panel .jtbd-card.dark::after,
+    .vr-scroll-panel .hipo-featured.dark::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+      transform: translateX(-100%) skewX(-15deg);
+      transition: transform .65s var(--ease);
+      pointer-events: none;
+    }
+    @media (hover: hover) {
+      .vr-scroll-panel .wf-card.dark:hover::after        { transform: translateX(120%) skewX(-15deg); }
+      .vr-scroll-panel .jtbd-card.dark:hover::after      { transform: translateX(120%) skewX(-15deg); }
+      .vr-scroll-panel .hipo-featured.dark:hover::after  { transform: translateX(120%) skewX(-15deg); }
+    }
+
+    /* ── Flecha pulsante (solo el icono, el botón es estático) ── */
+    @keyframes arrowRight {
+      0%, 100% { transform: translateX(0)  scale(1);   opacity: 0.55; }
+      50%       { transform: translateX(3px) scale(1.25); opacity: 1; }
+    }
+    @keyframes arrowLeft {
+      0%, 100% { transform: translateX(0)   scale(1);   opacity: 0.55; }
+      50%       { transform: translateX(-3px) scale(1.25); opacity: 1; }
+    }
+    @keyframes arrowRightHandle {
+      0%, 100% { transform: translateX(0) rotate(180deg) scale(1); opacity: 0.55; }
+      50%       { transform: translateX(3px) rotate(180deg) scale(1.25); opacity: 1; }
+    }
+
+    /* Tab handle: píldora discreta en el borde izquierdo (cuerpo estático) */
+    .info-tab {
+      display: none;
+      position: fixed;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      z-index: 400;
+      width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: 0.5px solid rgba(255,255,255,0.1);
+      border-left: none;
+      color: rgba(255,255,255,0.8);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 3px 0 14px rgba(0,0,0,0.55);
+      transition: background .2s, color .2s;
+    }
+    @media (hover: hover) {
+      .info-tab:hover { background: #1c1c24; color: #fff; }
+      .info-tab:hover svg { animation-play-state: paused; opacity: 1; transform: none; }
+    }
+    .info-tab svg { animation: arrowRight 1.6s ease-in-out infinite; }
+    .info-tab.panel-open { opacity: 0; pointer-events: none; }
+
+    /* Close button: píldora discreta (ahora anclada al wrapper) */
+    .info-close {
+      display: none;
+      position: absolute;
+      right: -22px; /* Sobresale hacia la derecha del panel */
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 500;
+      width: 22px; height: 48px;
+      background: #0d0d0f;
+      border-radius: 0 14px 14px 0;
+      border: none;
+      box-shadow: none;
+      color: rgba(255,255,255,0.8);
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: color .2s;
+    }
+    @media (hover: hover) {
+      .info-close:hover { color: #fff; }
+      .info-close:hover svg { animation-play-state: paused; opacity: 1; transform: rotate(180deg); }
+    }
+    /* Por defecto (cerrado), la flecha apunta a la derecha */
+    .info-close svg { animation: arrowRightHandle 1.6s ease-in-out infinite; }
+
+    @media (min-width: 901px) and (max-width: 1440px) {
+      /* Ocultamos el tab estático, usaremos solo el tirador físico del panel */
+      .info-tab   { display: none !important; }
+      .info-close { display: flex; opacity: 1; pointer-events: all; }
+
+      .vr-stage { grid-template-columns: 1fr !important; }
+
+      /* overlay: ::after del stage comparte su stacking context
+         z-index 2 → sobre el scroll panel (z:auto) pero bajo el panel (z:3) */
+      .vr-stage::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: transparent;
+        pointer-events: none;
+        transition: background .35s ease;
+        z-index: 2;
+      }
+      .vr-stage.panel-open::after {
+        background: rgba(0,0,0,0.58);
+        pointer-events: all;
+      }
+
+      .vr-info-wrapper {
+        position: fixed !important;
+        top: var(--nh) !important;
+        bottom: -20px !important; /* Evita la línea roja al fondo extendiendo más abajo */
+        left: 0;
+        width: min(460px, 88vw);
+        z-index: 3;
+        transform: translateX(-100%);
+        transition: transform .4s cubic-bezier(0.16,1,0.3,1), filter .4s ease;
+        filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+      }
+      .vr-info-wrapper.panel-open {
+        transform: translateX(0);
+        filter: drop-shadow(12px 0 40px rgba(0,0,0,0.55));
+      }
+      /* Cuando está abierto, la flecha apunta a la izquierda */
+      .vr-info-wrapper.panel-open .info-close svg {
+        animation: arrowLeft 1.6s ease-in-out infinite;
+      }
+    }
+    @media (min-width: 901px) and (max-width: 1440px) and (hover: hover) {
+      .vr-info-wrapper.panel-open .info-close:hover svg {
+        animation-play-state: paused; opacity: 1; transform: none;
+      }
+    }
+    @media (min-width: 901px) and (max-width: 1440px) {
+      .vr-info {
+        width: 100%; height: 100%;
+        overflow-y: auto; overflow-x: hidden;
+        border-right: none;
+        background: #0d0d0f;
+        padding-bottom: 60px; /* Compensa el bottom: -20px */
+      }
+      .vr-scroll-panel { height: 100% !important; overflow-y: auto !important; }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .vr-scroll-panel .cover-grid, .vr-scroll-panel .wf-header,
+      .vr-scroll-panel .prob-header, .vr-scroll-panel .persona-grid,
+      .vr-scroll-panel .persona-cards-row, .vr-scroll-panel .jtbd-head,
+      .vr-scroll-panel .hipo-layout, .vr-scroll-panel .typo-layout { grid-template-columns: 1fr; }
+      .vr-scroll-panel .cover-phone { justify-content: center; }
+      .vr-scroll-panel .cover-phone img { width: 100% !important; max-width: 600px !important; margin-left: auto !important; margin-right: auto !important; }
+      .vr-scroll-panel .cover-grid > .reveal { text-align: center; }
+      .vr-scroll-panel .cover-eyebrow { justify-content: center; }
+      .vr-scroll-panel .cover-meta { justify-content: center; }
+      .vr-scroll-panel .cover-desc { max-width: 100%; }
+      .vr-scroll-panel .wf-cards { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .insight-grid,
+      .vr-scroll-panel .bench-grid { grid-template-columns: 1fr 1fr; }
+      .vr-scroll-panel .int-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .hipo-featured { grid-row: auto; }
+      .vr-scroll-panel .color-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .kingdom-grid { grid-template-columns: 1fr; }
+      .vr-scroll-panel .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .learning-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .section { padding: 9rem 5vw; }
+      .vr-scroll-panel .cover { padding: 14rem 5vw 9rem; }
+      .vr-scroll-panel h2.st { font-size: clamp(1.8rem, 3.5vw, 3.2rem); letter-spacing: -1.5px; }
+      .vr-scroll-panel .cover-h1 { font-size: clamp(3.2rem, 7vw, 6rem); }
+    }
+
+    @media (max-width: 900px) {
+      html, body { height: auto !important; overflow: auto !important; min-height: 100%; }
+      .vr-stage {
+        position: relative !important; inset: auto !important;
+        display: flex !important; flex-direction: column !important;
+        height: auto !important; overflow: visible !important;
+        grid-template-columns: 1fr;
+      }
+      .vr-info {
+        min-height: 100svh;
+        height: auto !important; overflow: visible !important;
+        padding: calc(var(--nh) + 12px) 24px 72px; position: relative !important;
+      }
+      .vr-num { margin-bottom: auto; }
+      .vr-center { justify-content: flex-end; }
+      .vr-scroll-panel { height: auto !important; min-height: 100svh; overflow-y: visible !important; overflow: visible !important; }
+      .vr-title { font-size: clamp(42px, 9vw, 68px); }
+      .vr-desc { max-width: 100%; font-size: 12.5px; }
+      .vr-tools { flex-wrap: wrap; }
+      .lm-hero { height: 70vw; min-height: 340px; }
+      .vr-scroll-panel .section { padding: 8rem 5vw; }
+      .vr-scroll-panel .cover { padding: 10rem 5vw 8rem; }
+    }
+
+    @media (max-width: 768px) {
+      .vr-info { padding: calc(var(--nh) + 12px) 20px 64px; }
+      .vr-title { font-size: clamp(38px, 9vw, 58px); }
+      .vr-desc { font-size: 12px; }
+      .lm-hero { height: 68vw; min-height: 280px; }
+      .vr-scroll-panel .section { padding: 5rem 5vw; }
+      .vr-scroll-panel .cover { padding: 6rem 5vw 5rem; }
+      .vr-scroll-panel h2.st { font-size: clamp(1.7rem, 5vw, 2.6rem); letter-spacing: -1px; }
+      .vr-scroll-panel .cover-h1 { font-size: clamp(2.8rem, 10vw, 5rem); }
+      .vr-scroll-panel .sb { font-size: .84rem; }
+    }
+
+    @media (max-width: 640px) {
+      .vr-info { padding: 16px 20px 56px; }
+      .vr-title { font-size: clamp(34px, 10vw, 50px); }
+      .vr-subtitle { font-size: 9px; }
+      .vr-desc { font-size: 11.5px; margin-bottom: 16px; }
+      .vr-role { font-size: 9.5px; }
+      .vr-tools-label { font-size: 7px; }
+      .vr-tools { gap: 5px; margin-bottom: 24px; }
+      .tool-pill { font-size: 9.5px; padding: 5px 10px; }
+      .vr-btns { flex-direction: column; gap: 8px; }
+      .btn-primary, .btn-secondary { text-align: center; font-size: 11px; padding: 12px 18px; }
+      .lm-hero { height: 72vw; min-height: 240px; }
+      .vr-scroll-panel .section { padding: 3.5rem 5vw; }
+      .vr-scroll-panel .cover { padding: 3.5rem 5vw 4rem; }
+      .vr-scroll-panel h2.st { font-size: clamp(1.5rem, 7vw, 2.2rem); letter-spacing: -.5px; line-height: 1.1; }
+      .vr-scroll-panel .sb { font-size: .8rem; line-height: 1.7; }
+      .vr-scroll-panel .cover-h1 { font-size: clamp(2.6rem, 13vw, 4.5rem); letter-spacing: -2px; }
+      .vr-scroll-panel .cover-desc { font-size: .82rem; margin-bottom: 1.6rem; }
+      .vr-scroll-panel .cover-meta { gap: .6rem; flex-wrap: wrap; }
+      .vr-scroll-panel .cover-meta-item { min-width: 45%; }
+      .vr-scroll-panel .cover-phone { min-height: 0; }
+      .vr-scroll-panel .cover-phone img { width: 100% !important; max-width: 340px !important; margin-left: auto !important; margin-right: auto !important; }
+      .vr-scroll-panel .chip { font-size: .58rem; }
+      .vr-scroll-panel .wf-cards, .vr-scroll-panel .jtbd-grid,
+      .vr-scroll-panel .color-grid, .vr-scroll-panel .kingdom-grid,
+      .vr-scroll-panel .int-grid, .vr-scroll-panel .insight-grid,
+      .vr-scroll-panel .bench-grid, .vr-scroll-panel .metrics-grid,
+      .vr-scroll-panel .learning-grid { grid-template-columns: 1fr; }
+      .vr-scroll-panel .wf-cards > *, .vr-scroll-panel .learning-grid > * { grid-column: span 1 !important; }
+      .vr-scroll-panel .prob-row { grid-template-columns: 1fr; gap: .3rem; padding: 1.2rem 0; }
+      .vr-scroll-panel .prob-row-val { padding-left: .8rem; border-left: 2px solid rgba(113,73,255,0.15); font-size: .77rem; }
+      .vr-scroll-panel .wf-card,
+      .vr-scroll-panel .strat-card,
+      .vr-scroll-panel .research-card,
+      .vr-scroll-panel .campaign-card,
+      .vr-scroll-panel .metric-card,
+      .vr-scroll-panel .learning-card,
+      .vr-scroll-panel .bq { padding: 1.25rem; }
+      .vr-scroll-panel .wf-cards,
+      .vr-scroll-panel .metrics-grid,
+      .vr-scroll-panel .learning-grid { gap: 0.75rem; }
+      .vr-scroll-panel .mc-n { font-size: clamp(2.2rem, 11vw, 3.6rem); }
+      .vr-scroll-panel .bq-text { font-size: .82rem; line-height: 1.7; }
+      .vr-scroll-panel .bq-mark { font-size: 4rem; }
+      .vr-scroll-panel .rc-body, .vr-scroll-panel .rc-item,
+      .vr-scroll-panel .strat-body { font-size: .78rem; }
+      .vr-scroll-panel .lc-n { font-size: 2rem; }
+      .vr-scroll-panel .typo-row { grid-template-columns: 60px 1fr; }
+      .vr-scroll-panel .typo-spec { display: none; }
+
+      /* ── Cards sin padding mobile previo ── */
+      .vr-scroll-panel .jtbd-card,
+      .vr-scroll-panel .bench-card,
+      .vr-scroll-panel .insight-card,
+      .vr-scroll-panel .hipo-card,
+      .vr-scroll-panel .hipo-featured,
+      .vr-scroll-panel .int-card { padding: 1.25rem; }
+
+      /* ── Gap interno uniforme en todos los cards ── */
+      .vr-scroll-panel .wf-card,
+      .vr-scroll-panel .strat-card,
+      .vr-scroll-panel .research-card,
+      .vr-scroll-panel .campaign-card,
+      .vr-scroll-panel .metric-card,
+      .vr-scroll-panel .learning-card,
+      .vr-scroll-panel .jtbd-card,
+      .vr-scroll-panel .bench-card,
+      .vr-scroll-panel .insight-card,
+      .vr-scroll-panel .hipo-card,
+      .vr-scroll-panel .hipo-featured,
+      .vr-scroll-panel .int-card { gap: 0.5rem; }
+
+      /* ── Separadores de sección: de 4-6rem → 1.5rem ── */
+      .vr-scroll-panel .wf-header,
+      .vr-scroll-panel .prob-header { margin-bottom: 1.5rem; }
+      .vr-scroll-panel .prob-rows { margin-bottom: 1.5rem; }
+      .vr-scroll-panel .jtbd-head { margin-bottom: 1.5rem; }
+      .vr-scroll-panel .int-grid { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+      .vr-scroll-panel .hipo-layout { margin-top: 1.5rem; }
+      .vr-scroll-panel .bench-grid { margin-top: 1.5rem; }
+      .vr-scroll-panel .kingdom-grid { margin-top: 1.5rem; }
+      .vr-scroll-panel .typo-layout { margin-top: 1.5rem; }
+      .vr-scroll-panel .typo-sub { margin-bottom: 0.75rem; }
+
+      /* ── Margin-bottom en hijos de cards ── */
+      .vr-scroll-panel .jtbd-chip,
+      .vr-scroll-panel .jtbd-card h4,
+      .vr-scroll-panel .bench-app,
+      .vr-scroll-panel .bench-name,
+      .vr-scroll-panel .hipo-n,
+      .vr-scroll-panel .ins-n,
+      .vr-scroll-panel .ins-title,
+      .vr-scroll-panel .label-sm,
+      .vr-scroll-panel .label-sm-dark,
+      .vr-scroll-panel .mc-label { margin-bottom: 0.25rem; }
+      .vr-scroll-panel .bench-body { margin-bottom: 0.5rem; }
+    }
+
+    @media (max-width: 390px) {
+      .vr-info { padding: 28px 16px 24px; }
+      .vr-title { font-size: 30px; }
+      .vr-scroll-panel .section { padding: 2.5rem 4vw; }
+      .vr-scroll-panel .cover { padding: 2.5rem 4vw 3.5rem; }
+      .vr-scroll-panel h2.st { font-size: 1.4rem; }
+      .vr-scroll-panel .cover-h1 { font-size: 2.4rem; }
+      .vr-scroll-panel .sb { font-size: .77rem; }
+      .vr-scroll-panel .wf-card,
+      .vr-scroll-panel .strat-card,
+      .vr-scroll-panel .research-card,
+      .vr-scroll-panel .campaign-card,
+      .vr-scroll-panel .metric-card,
+      .vr-scroll-panel .learning-card,
+      .vr-scroll-panel .jtbd-card,
+      .vr-scroll-panel .bench-card,
+      .vr-scroll-panel .insight-card,
+      .vr-scroll-panel .hipo-card,
+      .vr-scroll-panel .hipo-featured,
+      .vr-scroll-panel .int-card,
+      .vr-scroll-panel .bq { padding: 1rem; }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      html, body { height: auto !important; overflow: auto !important; min-height: 100%; }
+      .vr-stage { position: relative !important; inset: auto !important; display: flex !important; flex-direction: column !important; height: auto !important; overflow: visible !important; }
+      .vr-info { height: auto !important; overflow: visible !important; position: relative !important; min-height: auto; padding: 24px 28px 28px; }
+      .vr-scroll-panel { height: auto !important; overflow-y: visible !important; overflow: visible !important; }
+      .vr-num { margin-bottom: 12px; }
+      .vr-title { font-size: 30px; margin-bottom: 4px; }
+      .vr-subtitle { margin-bottom: 6px; font-size: 8px; }
+      .vr-desc { font-size: 10.5px; margin-bottom: 10px; line-height: 1.6; }
+      .vr-role { font-size: 9px; margin-bottom: 10px; }
+      .vr-tools { margin-bottom: 10px; gap: 4px; }
+      .tool-pill { font-size: 9px; padding: 4px 8px; }
+      .vr-btns { gap: 6px; flex-wrap: wrap; }
+      .btn-primary, .btn-secondary { font-size: 10px; padding: 9px 14px; }
+      .lm-hero { height: 42vw; min-height: 180px; }
+      .vr-scroll-panel .section { padding: 4rem 5vw; }
+      .vr-scroll-panel .cover { padding: 5rem 5vw 4rem; }
+      .vr-scroll-panel h2.st { font-size: clamp(1.3rem, 4vw, 2rem); }
+      .vr-scroll-panel .cover-h1 { font-size: clamp(2.2rem, 7vw, 3.5rem); }
+      .vr-scroll-panel .sb { font-size: .8rem; }
+      .vr-scroll-panel .wf-cards { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .wf-cards > *, .vr-scroll-panel .learning-grid > * { grid-column: span 1 !important; }
+      .vr-scroll-panel .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+      .vr-scroll-panel .learning-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .metric-card { padding: 1.8rem 1.6rem; }
+      .vr-scroll-panel .mc-n { font-size: 2.2rem; }
+    }
+
+    /* ── Auto-layout: corrige grillas con celdas vacías ── */
+
+    /* insight-grid (5 tarjetas, 3 cols):
+       dark(span2) + gc = fila1 completa; gc+gc+gc = fila2 completa */
+    .vr-scroll-panel .insight-grid .insight-card.dark { grid-column: span 2; }
+
+    /* int-grid (5 tarjetas, 3 cols): mismo patrón */
+    .vr-scroll-panel .int-grid .int-card.dark { grid-column: span 2; }
+
+    /* jtbd-grid (4 tarjetas, 3 cols, dark con row-span2):
+       último gc rellena la celda vacía en col2+col3 de fila2 */
+    .vr-scroll-panel .jtbd-grid .jtbd-card.gc:last-child { grid-column: span 2; }
+
+    @media (max-width: 1100px) {
+      /* jtbd-grid: pasa a 2 cols; dark ocupa fila completa (reset row-span inline) */
+      .vr-scroll-panel .jtbd-grid { grid-template-columns: repeat(2, 1fr); }
+      .vr-scroll-panel .jtbd-card.dark { grid-column: span 2; grid-row: auto !important; }
+      /* último gc también fila completa → layout: dark / gc+gc / gc */
+      .vr-scroll-panel .jtbd-grid .jtbd-card.gc:last-child { grid-column: span 2; }
+
+      /* bench-grid (3 tarjetas en 2 cols): dark fila completa, gc+gc en fila2 */
+      .vr-scroll-panel .bench-grid .bench-card.dark { grid-column: span 2; }
+
+      /* color-grid (3 items en 2 cols): último item fila completa */
+      .vr-scroll-panel .color-grid .color-item:last-child { grid-column: span 2; }
+    }
+
+    @media (max-width: 640px) {
+      /* Reset de todos los spans para grilla de 1 columna */
+      .vr-scroll-panel .insight-grid .insight-card.dark,
+      .vr-scroll-panel .int-grid .int-card.dark,
+      .vr-scroll-panel .bench-grid .bench-card.dark,
+      .vr-scroll-panel .color-grid .color-item:last-child { grid-column: span 1; }
+      .vr-scroll-panel .jtbd-grid { grid-template-columns: 1fr; }
+      .vr-scroll-panel .jtbd-card.dark { grid-column: span 1 !important; grid-row: auto !important; }
+      .vr-scroll-panel .jtbd-grid .jtbd-card.gc:last-child { grid-column: span 1; }
+    }
+
+    /* ══════════════════════════════════════
+       PANEL IZQUIERDO — LUMI skin
+    ══════════════════════════════════════ */
+    .vr-category    { margin-bottom: 8px; }
+    .vr-title       { margin-bottom: 12px; }
+    .vr-subtitle    { margin-bottom: 16px; }
+    .vr-desc        { margin-bottom: 12px; max-width: 100%; font-size: 11.5px; line-height: 1.7; }
+    .vr-role        { margin-bottom: 16px; }
+    .vr-tools-label { margin-bottom: 8px; }
+    .vr-btns        { gap: 8px; flex-direction: column; align-items: stretch; flex-shrink: 0; }
+    .btn-primary, .btn-secondary { text-align: center; width: 100%; box-sizing: border-box; }
+
+    .vr-tools-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 16px; }
+    .vr-tools-grid .tool-card:last-child:nth-child(odd) { grid-column: span 2; }
+    .tool-card      { border-radius: 14px; padding: 12px 12px 11px; display: flex;
+                      flex-direction: column; justify-content: space-between; min-height: 76px;
+                      background: linear-gradient(145deg, #2E2E2E 0%, #111111 100%);
+                      border: 1px solid rgba(255,255,255,0.10);
+                      box-shadow: 0 6px 18px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.12);
+                      user-select: none; pointer-events: none; }
+    .tool-card__icon { width: 26px; height: 26px; display: block; flex-shrink: 0; }
+    .tool-card__name { font-size: 11px; font-weight: 700; color: #fff; letter-spacing: -.01em; line-height: 1; }
+    .tool-card--figma       { background: linear-gradient(145deg, #301616 0%, #1a0808 100%) !important; border: 1px solid rgba(255, 90, 90, 0.35) !important; }
+    .tool-card--illustrator { background: linear-gradient(145deg, #301a05 0%, #150b02 100%) !important; border: 1px solid rgba(255, 140, 40, 0.4) !important; }
+    .tool-card--notion      { background: linear-gradient(145deg, #2a2520 0%, #161210 100%) !important; border: 1px solid rgba(240, 210, 180, 0.35) !important; }
+    .tool-card--vscode      { background: linear-gradient(145deg, #072238 0%, #020d18 100%) !important; border: 1px solid rgba(60, 160, 255, 0.35) !important; }
+    .tool-card--photoshop   { background: linear-gradient(145deg, #07223b 0%, #020d1a 100%) !important; border: 1px solid rgba(80, 180, 255, 0.35) !important; }
+    .tool-card--lightroom   { background: linear-gradient(145deg, #0a2a34 0%, #031015 100%) !important; border: 1px solid rgba(90, 210, 255, 0.35) !important; }
+    .tool-card--meta        { background: linear-gradient(145deg, #071f3b 0%, #020b18 100%) !important; border: 1px solid rgba(70, 150, 255, 0.35) !important; }
+    .tool-card--canva       { background: linear-gradient(145deg, #07213b 0%, #020b18 100%) !important; border: 1px solid rgba(60, 170, 255, 0.35) !important; }
+    .tool-card--claude      { background: linear-gradient(145deg, #281d16 0%, #120c0a 100%) !important; border: 1px solid rgba(240, 190, 150, 0.35) !important; }
+    .tool-card--unity       { background: linear-gradient(145deg, #282828 0%, #111111 100%) !important; border: 1px solid rgba(190, 190, 190, 0.35) !important; }
+
+    .vr-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 16px; flex-shrink: 0; }
+
+    .btn-primary   { background: linear-gradient(145deg, #7149FF 0%, #3A1BAA 100%); color: #fff;
+                     border: 1px solid rgba(155,111,255,0.42); box-shadow: 0 6px 22px rgba(58,27,170,0.50), inset 0 1px 0 rgba(200,180,255,0.32); }
+    .btn-secondary { background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%);
+                     color: rgba(255,255,255,0.50); border: .5px solid rgba(255,255,255,0.12);
+                     box-shadow: inset 0 1px 0 rgba(255,255,255,0.08); }
+  </style>
+</head>
+<body>
+<div id="nav-container"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
+
+<!-- Tab handle: rectangle sticking out from left edge (visible 901–1440px) -->
+<button class="info-tab" id="infoToggle" aria-label="Ver ficha del proyecto">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 18 15 12 9 6"/>
+  </svg>
+</button>
+
+<div class="vr-stage">
+
+  <!-- ═══ LEFT PANEL WRAPPER ═══ -->
+  <div class="vr-info-wrapper" id="infoWrapper">
+    <div class="vr-info">
+      <span class="vr-num">01 / 07 &nbsp;—&nbsp; Universitario</span>
+      <div class="vr-center">
+      <p class="vr-category">UX Research · Product Design · Prototipado</p>
+      <h1 class="vr-title">LUMI</h1>
+      <p class="vr-subtitle">Pontificia Universidad Javeriana</p>
+      <p class="vr-desc">
+        Aplicación de acompañamiento emocional y gamificación para jóvenes entre 18 y 25 años.
+        Investigación con 5 usuarios, ideación, design system completo y prototipo navegable.
+      </p>
+      <p class="vr-role">
+        <strong>Product &amp; UX/UI Designer</strong><br>
+        Research · Arquitectura de información · Prototipado
+      </p>
+      <p class="vr-tools-label">Herramientas</p>
+      <div class="vr-tools-grid">
+        <div class="tool-card tool-card--figma">
+          <img src="../../../assets/iconos/herramientas/Figma.svg" class="tool-card__icon" alt="">
+          <span class="tool-card__name">Figma</span>
+        </div>
+        <div class="tool-card tool-card--illustrator">
+          <img src="../../../assets/iconos/herramientas/illustrator.svg" class="tool-card__icon" alt="">
+          <span class="tool-card__name">Illustrator</span>
+        </div>
+        <div class="tool-card tool-card--notion">
+          <img src="../../../assets/iconos/herramientas/notion.svg" class="tool-card__icon" alt="">
+          <span class="tool-card__name">Notion</span>
+        </div>
+      </div>
+      <div class="vr-divider"></div>
+      <div class="vr-btns">
+        <a class="btn-primary" id="verCaso" href="https://screeching-garden-7af.notion.site/LUMIS-Case-Study-fd055bf1f74a837dbdc5012c14b79e9c?source=copy_link" target="_blank" rel="noopener noreferrer">Ver caso completo →</a>
+        <a class="btn-secondary" href="/paginas/proyectos/">← Proyectos</a>
+      </div>
+    </div> <!-- /.vr-center -->
+  </div> <!-- /.vr-info -->
+  
+  <!-- Close button: anclado al wrapper -->
+  <button class="info-close" id="infoClose" aria-label="Cerrar panel">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  </button>
+</div> <!-- /.vr-info-wrapper -->
+
+  <!-- ═══ RIGHT PANEL: scrollable case study ═══ -->
+  <div class="vr-scroll-panel" id="scrollPanel">
+    <div id="lmProgress" aria-hidden="true"></div>
+
+    <!-- HERO -->
+    <div class="lm-hero" id="lmHero">
+      <video class="lm-hero-video" src="../../../assets/lumi/lumi.mp4" autoplay muted loop playsinline></video>
+      <div class="lm-sc"></div>
+    </div>
+
+    <!-- COVER -->
+    <section class="cover" style="position:relative;overflow:hidden;">
+      <!-- Purple glow blob -->
+      <div style="position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(113,73,255,0.08),transparent 70%);right:-200px;top:-100px;pointer-events:none;border-radius:50%;"></div>
+      <div class="cover-grid">
+        <div class="reveal">
+          <div class="cover-eyebrow"><span class="ey-dot"></span>Case Study · Product Design · UX Research</div>
+          <h1 class="cover-h1">LU<em>MI</em></h1>
+          <p class="cover-desc">Una aplicación móvil que combina gestión de tareas, registro emocional y gamificación para transformar la rutina diaria en una experiencia con criaturas mágicas, recompensas simbólicas y retroalimentación positiva.</p>
+          <div class="cover-meta">
+            <div class="cover-meta-item"><span>Tipo</span><strong>App Móvil</strong></div>
+            <div class="cover-meta-item"><span>Rol</span><strong>UX/UI Designer</strong></div>
+            <div class="cover-meta-item"><span>Audiencia</span><strong>18–25 años</strong></div>
+          </div>
+        </div>
+        <div class="cover-phone reveal" style="transition-delay:.08s;">
+          <img src="../../../assets/lumi/portada.webp" alt="LUMI App" style="width:120%;max-width:none;height:auto;display:block;filter:drop-shadow(0 40px 80px rgba(113,73,255,0.35));margin-left:-10%;">
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 01 OVERVIEW -->
+    <section class="section" id="descripcion" style="position:relative;overflow:hidden;padding-top:12rem;">
+      <div style="position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(113,73,255,0.06),transparent 70%);left:-300px;bottom:-200px;pointer-events:none;border-radius:50%;"></div>
+      <div class="container">
+        <div class="wf-header reveal">
+          <div>
+            <div class="chip">Overview</div>
+            <h2 class="st">Del problema al prototipo.</h2>
+          </div>
+          <p class="sb" style="padding-top:1rem;">Un proceso de diseño centrado en el usuario que va desde la investigación cualitativa hasta un prototipo navegable completo en Figma, con un design system propio.</p>
+        </div>
+
+        <div class="wf-cards reveal" style="transition-delay:.1s;">
+
+          <div class="wf-card dark" style="grid-column:span 2;border-radius:24px;padding:2.8rem;flex-direction:column;justify-content:space-between;min-height:200px;">
+            <div class="wf-n" style="color:rgba(229,160,255,0.75);">Fase 01</div>
+            <div>
+              <p style="font-size:1.05rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:.6rem;">Identificación del Problema</p>
+              <p style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;">5 entrevistas estructuradas con jóvenes de 18–25 años. Análisis de pain points, hallazgos y oportunidades de diseño.</p>
+            </div>
+          </div>
+
+          <div class="wf-card gc">
+            <div class="wf-n">Fase 02</div>
+            <p>Análisis y hallazgos — consolidación de insights cualitativos en patrones de comportamiento</p>
+          </div>
+
+          <div class="wf-card">
+            <div class="wf-n">Fase 03</div>
+            <p>Definición de criterios de éxito, métricas y alcance del MVP v1</p>
+          </div>
+
+          <div class="wf-card">
+            <div class="wf-n">Fase 04</div>
+            <p>Ideación y benchmarking — referentes como Habitica, Finch y Todoist</p>
+          </div>
+
+          <div class="wf-card gc">
+            <div class="wf-n">Fase 05</div>
+            <p>Arquitectura de información — flujos de usuario y mapa de navegación en FigJam</p>
+          </div>
+
+          <div class="wf-card dark" style="grid-column:span 2;border-radius:var(--r);padding:2.5rem;flex-direction:column;justify-content:space-between;min-height:180px;">
+            <div class="wf-n" style="color:rgba(229,160,255,.7);">Fase 06</div>
+            <div>
+              <p style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.3;margin-bottom:.5rem;">Design System</p>
+              <p style="font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.6;">Paleta cromática, sistema tipográfico (Rubik One + Poppins), componentes glass y los 4 reinos con sus personajes.</p>
+            </div>
+          </div>
+
+          <div class="wf-card gc" style="grid-column:span 2;padding:2.5rem;flex-direction:column;justify-content:space-between;min-height:160px;">
+            <div class="wf-n">Fase 07</div>
+            <p style="font-size:.9rem;font-weight:600;color:var(--ink);line-height:1.4;margin-top:auto;">Wireframes y prototipo navegable — 20+ pantallas en Figma, onboarding, home, registro diario y 4 reinos</p>
+          </div>
+
+          <div class="wf-card dark" style="grid-column:span 2;border-radius:var(--r);padding:2.5rem;flex-direction:row;align-items:flex-end;justify-content:space-between;min-height:160px;">
+            <div>
+              <div class="wf-n" style="color:rgba(229,160,255,.7);margin-bottom:.8rem;">Fase 08</div>
+              <p style="font-size:.95rem;font-weight:700;color:#fff;line-height:1.3;">Documentación y Entrega</p>
+            </div>
+            <p style="font-size:.75rem;color:rgba(255,255,255,.45);max-width:200px;text-align:right;line-height:1.6;">Case study en Notion, flujos en FigJam y archivo de diseño completo con componentes</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 02 PROBLEMA -->
+    <section class="section" id="problema" style="position:relative;overflow:hidden;">
+      <div class="container">
+        <div class="prob-header reveal" style="grid-template-columns:1fr;">
+          <div>
+            <div class="chip">Problema</div>
+            <h2 class="st">No es pereza. Es falta de acompañamiento.</h2>
+            <p class="sb">Los jóvenes entre 18 y 25 años saben perfectamente qué deben hacer. El problema no es capacidad ni tiempo — es la ausencia de validación emocional en su rutina diaria.</p>
+          </div>
+        </div>
+
+        <div class="prob-rows reveal" style="transition-delay:.08s;">
+          <div class="prob-row">
+            <span class="prob-row-label">Situación</span>
+            <span class="prob-row-val" style="color:var(--secondary);font-weight:700;">Consecuencia</span>
+          </div>
+          <div class="prob-row">
+            <span class="prob-row-label">Tareas acumuladas sin completar</span>
+            <span class="prob-row-val">Estrés y sensación de fracaso que retroalimenta el ciclo</span>
+          </div>
+          <div class="prob-row">
+            <span class="prob-row-label">Sin retroalimentación al lograr algo</span>
+            <span class="prob-row-val">Desmotivación progresiva — el esfuerzo se siente invisible</span>
+          </div>
+          <div class="prob-row">
+            <span class="prob-row-label">Organización sin adaptación emocional</span>
+            <span class="prob-row-val">Abandono del sistema cuando el estado de ánimo baja</span>
+          </div>
+          <div class="prob-row">
+            <span class="prob-row-label">Herramientas punitivas (rachas, puntos)</span>
+            <span class="prob-row-val">Rechazo y evitación — la app se convierte en otra fuente de culpa</span>
+          </div>
+        </div>
+
+        <div class="bq dark reveal" style="transition-delay:.14s;">
+          <div class="bq-mark">"</div>
+          <p class="bq-text">"Los jóvenes no abandonan sus tareas por pereza — las abandonan por falta de validación emocional. La frustración viene de no sentirse vistos cuando logran algo."</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- 03 RESEARCH -->
+    <section class="section" id="research" style="position:relative;overflow:hidden;">
+      <div style="position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(229,160,255,0.07),transparent 70%);right:-200px;top:0;pointer-events:none;border-radius:50%;"></div>
+      <div class="container">
+
+        <div class="wf-header reveal">
+          <div>
+            <div class="chip">Research</div>
+            <h2 class="st">5 voces, un mismo patrón.</h2>
+          </div>
+          <p class="sb" style="padding-top:1.5rem;">Entrevistas estructuradas con preguntas fijas sobre actividades, frustración, organización y motivación. Todos querían lo mismo con sus propias palabras.</p>
+        </div>
+
+        <!-- Interview cards -->
+        <div class="int-grid reveal" style="transition-delay:.05s;">
+
+          <div class="int-card dark">
+            <div class="int-meta">
+              <span class="int-name">Daniel</span>
+              <span class="int-role">· 20 años · Estudiante</span>
+            </div>
+            <p class="int-quote">"Me motiva cuando alguien me felicita o reconoce mi esfuerzo."</p>
+            <div class="int-tags">
+              <span class="tag" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.1);">Listas en papel</span>
+              <span class="tag" style="background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);border-color:rgba(255,255,255,0.1);">No las sigue</span>
+            </div>
+          </div>
+
+          <div class="int-card gc">
+            <div class="int-meta">
+              <span class="int-name">Juan</span>
+              <span class="int-role">· 22 años · Joven trabajador</span>
+            </div>
+            <p class="int-quote">"Que me diga qué hacer primero según mi energía y que me felicite cuando termino algo."</p>
+            <div class="int-tags">
+              <span class="tag">Calendario del celular</span>
+              <span class="tag">No lo revisa</span>
+            </div>
+          </div>
+
+          <div class="int-card gc">
+            <div class="int-meta">
+              <span class="int-name">Camila</span>
+              <span class="int-role">· 19 años · Estudiante</span>
+            </div>
+            <p class="int-quote">"Quiero un sistema que haga mis tareas divertidas y que me motive sin presionarme."</p>
+            <div class="int-tags">
+              <span class="tag">Notas del celular</span>
+              <span class="tag">Se olvida revisar</span>
+            </div>
+          </div>
+
+          <div class="int-card gc">
+            <div class="int-meta">
+              <span class="int-name">Miguel</span>
+              <span class="int-role">· 24 años · Joven trabajador</span>
+            </div>
+            <p class="int-quote">"Que me sugiera prioridades según cómo me sienta y me felicite cuando completo algo."</p>
+            <div class="int-tags">
+              <span class="tag">Agenda física</span>
+              <span class="tag">La ignora si está cansado</span>
+            </div>
+          </div>
+
+          <div class="int-card gc">
+            <div class="int-meta">
+              <span class="int-name">Laura</span>
+              <span class="int-role">· 21 años · Estudiante</span>
+            </div>
+            <p class="int-quote">"Que haga la rutina más divertida y me acompañe de forma motivadora sin castigos."</p>
+            <div class="int-tags">
+              <span class="tag">Recordatorios celular</span>
+              <span class="tag">Los ignora</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Insights -->
+        <div class="chip reveal" style="margin-top:5rem;">Hallazgos Consolidados</div>
+        <div class="insight-grid reveal" style="transition-delay:.06s;">
+
+          <div class="insight-card dark">
+            <div class="ins-n">01</div>
+            <div class="ins-title">No es pereza — es falta de validación</div>
+            <p class="ins-body">Los usuarios no abandonan tareas por falta de voluntad. Las abandonan porque nadie les dice que su esfuerzo importa.</p>
+          </div>
+
+          <div class="insight-card gc">
+            <div class="ins-n">02</div>
+            <div class="ins-title">El estado emocional es una variable ignorada</div>
+            <p class="ins-body">Ninguna herramienta actual se adapta a cómo se siente el usuario ese día. La organización existe, la adaptación no.</p>
+          </div>
+
+          <div class="insight-card gc">
+            <div class="ins-n">03</div>
+            <div class="ins-title">El tono importa tanto como la función</div>
+            <p class="ins-body">Una app que felicita genera más adherencia que una que solo registra. El lenguaje amable no es cosmético — es funcional.</p>
+          </div>
+
+          <div class="insight-card gc">
+            <div class="ins-n">04</div>
+            <div class="ins-title">Gamificación ligera, no competitiva</div>
+            <p class="ins-body">Los usuarios quieren celebración, no presión de rachas ni comparación con otros. La gamificación funciona cuando es liviana.</p>
+          </div>
+
+          <div class="insight-card gc">
+            <div class="ins-n">05</div>
+            <div class="ins-title">La criatura no es un adorno</div>
+            <p class="ins-body">Es el vehículo emocional que hace que el usuario se preocupe por su progreso sin que se lo pidan directamente.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- PERSONA + JTBD -->
+    <section class="section" id="persona" style="position:relative;overflow:hidden;">
+      <div class="container">
+
+        <div class="chip reveal">User Persona</div>
+        <h2 class="st reveal" style="max-width:560px;">Camila, Daniel y Laura. El mismo usuario.</h2>
+
+        <div class="persona-grid" style="margin-top:4rem;">
+          <div class="persona-featured dark reveal">
+            <div>
+              <div class="label-sm-dark">Perfil Principal</div>
+              <p style="font-size:1.5rem;font-weight:700;color:#fff;letter-spacing:-.4px;margin-top:.3rem;line-height:1.2;">El Joven<br>Estudiante / Trabajador</p>
+            </div>
+            <div style="display:flex;flex-direction:column;">
+              <div class="attr-row"><span class="attr-key">Edad</span><span class="attr-val">18 a 25 años</span></div>
+              <div class="attr-row"><span class="attr-key">Contexto</span><span class="attr-val">Universidad / Trabajo</span></div>
+              <div class="attr-row"><span class="attr-key">Dispositivo</span><span class="attr-val">Celular (herramienta principal)</span></div>
+              <div class="attr-row"><span class="attr-key">Nivel digital</span><span class="attr-val">Medio-alto</span></div>
+              <div class="attr-row"><span class="attr-key">Herramientas actuales</span><span class="attr-val">Notas, recordatorios, papel</span></div>
+              <div class="attr-row" style="border-bottom:none;"><span class="attr-key">Meta</span><span class="attr-val">Sentirse acompañado y capaz</span></div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:1.2rem;">
+            <div class="persona-card gc reveal" style="transition-delay:.06s;flex:1;">
+              <div class="label-sm">Lo que necesita</div>
+              <div class="tag-wrap">
+                <span class="tag">Retroalimentación inmediata</span>
+                <span class="tag">Reconocimiento del esfuerzo</span>
+                <span class="tag">Rutina sin presión</span>
+                <span class="tag">Adaptación al estado emocional</span>
+                <span class="tag">Celebración de logros pequeños</span>
+              </div>
+            </div>
+            <div class="persona-card gc reveal" style="transition-delay:.1s;flex:1;">
+              <div class="label-sm">Lo que lo frustra hoy</div>
+              <div class="frus-list">
+                <p class="frus-row">No completar tareas y sentir que pierde el tiempo</p>
+                <p class="frus-row">Herramientas que no lo motivan ni adaptan</p>
+                <p class="frus-row">No recibir reconocimiento por logros cotidianos</p>
+                <p class="frus-row">Acumulación de pendientes que genera estrés</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem;" class="reveal">
+          <div class="dark bq">
+            <p style="font-size:.95rem;font-weight:500;color:rgba(255,255,255,.88);line-height:1.75;">"Completaré mis tareas diarias sintiéndome acompañado y motivado, sin que la app me presione ni me haga sentir mal si un día no puedo con todo."</p>
+          </div>
+        </div>
+
+        <!-- JTBD -->
+        <div style="margin-top:8rem;">
+          <div class="jtbd-head reveal">
+            <div>
+              <div class="chip">Jobs To Be Done</div>
+              <h2 class="st">¿Para qué abre LUMI el usuario?</h2>
+            </div>
+            <p class="sb" style="padding-top:1.5rem;">Cuatro momentos reales en los que LUMI debe estar presente. Cada uno revela una necesidad emocional distinta.</p>
+          </div>
+
+          <div class="jtbd-grid">
+            <div class="jtbd-card dark reveal" style="grid-row:span 2;transition-delay:.05s;border-radius:28px;display:flex;flex-direction:column;min-height:320px;">
+              <div>
+                <div class="jtbd-chip" style="color:rgba(229,160,255,.8);">Job 01 — Inicio del día</div>
+                <h4 style="color:#fff;font-size:1.05rem;line-height:1.3;margin-bottom:.8rem;">Ayudarme a empezar cuando no tengo ganas</h4>
+                <p style="color:rgba(255,255,255,.6);font-size:.82rem;line-height:1.65;">
+                  Cuando me levanto sin energía, quiero que algo me ayude a comenzar con al menos una tarea pequeña, para sentir que el día no se perdió.
+                </p>
+              </div>
+            </div>
+
+            <div class="jtbd-card gc reveal" style="transition-delay:.1s;">
+              <div class="jtbd-chip">Job 02 — Logro completado</div>
+              <h4>Reconocimiento inmediato y visible</h4>
+              <p>Cuando termino algo que me costaba, quiero recibir una celebración real, para sentir que mi esfuerzo valió la pena.</p>
+            </div>
+
+            <div class="jtbd-card gc reveal" style="transition-delay:.15s;">
+              <div class="jtbd-chip">Job 03 — Día de poca energía</div>
+              <h4>Solo lo que puedo hacer hoy</h4>
+              <p>Cuando estoy agotado, quiero sugerencias adaptadas a ese estado, para no sentirme presionado ni fracasado.</p>
+            </div>
+
+            <div class="jtbd-card gc reveal" style="transition-delay:.2s;">
+              <div class="jtbd-chip">Job 04 — Primera vez del día</div>
+              <h4>Decirle cómo me siento al abrir la app</h4>
+              <p>Cuando abro LUMI por primera vez, quiero hacer un check-in emocional, para que todo lo que me muestre tenga sentido con mi realidad.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- HIPÓTESIS + BENCHMARK -->
+    <section class="section" id="hipotesis" style="position:relative;overflow:hidden;">
+      <div style="position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(113,73,255,0.07),transparent 70%);left:-250px;bottom:-200px;pointer-events:none;border-radius:50%;"></div>
+      <div class="container">
+
+        <div class="chip reveal">Hipótesis</div>
+        <h2 class="st reveal">La apuesta de diseño.</h2>
+
+        <div class="hipo-layout">
+          <div class="hipo-featured dark reveal">
+            <div class="bq-mark" style="font-size:8rem;top:-1.5rem;left:1.5rem;">"</div>
+            <div class="hipo-n" style="margin-bottom:1.2rem;">Hipótesis central</div>
+            <p style="font-size:.95rem;color:rgba(255,255,255,.88);line-height:1.8;position:relative;z-index:1;">Si los usuarios registran su estado emocional al inicio del día y reciben tareas adaptadas a ese estado junto con <strong style="color:#E5A0FF;">retroalimentación positiva inmediata</strong>, completarán más tareas y se sentirán más motivados que con un sistema de listas tradicional.</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:1.2rem;">
+            <div class="hipo-card gc reveal" style="transition-delay:.08s;">
+              <div class="hipo-n">01</div>
+              <p><strong style="color:var(--primary);">La criatura como engagement</strong> — ¿El personaje aumenta el tiempo en la app? Validado por prueba de usabilidad.</p>
+            </div>
+            <div class="hipo-card gc reveal" style="transition-delay:.13s;">
+              <div class="hipo-n">02</div>
+              <p><strong style="color:var(--primary);">Check-in emocional sin abandono</strong> — ¿El registro emocional no genera fricción en el onboarding? Validado por test A/B.</p>
+            </div>
+            <div class="hipo-card gc reveal" style="transition-delay:.18s;">
+              <div class="hipo-n">03</div>
+              <p><strong style="color:var(--primary);">Recompensas simbólicas</strong> suficientes sin puntos numéricos — validado por encuesta post-sesión.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- BENCHMARK -->
+    <section class="section" id="benchmark" style="position:relative;overflow:hidden;">
+      <div class="container">
+
+        <div class="chip reveal">Benchmark</div>
+        <h2 class="st reveal">Qué existe y qué falta.</h2>
+        <p class="sb reveal" style="max-width:600px;transition-delay:.04s;margin-bottom:0;">Tres referentes directos y por qué ninguno resuelve el problema completo de LUMI.</p>
+
+        <div class="bench-grid reveal" style="transition-delay:.08s;">
+
+          <div class="bench-card dark">
+            <div class="bench-app">Referente 01</div>
+            <div class="bench-name">Habitica</div>
+            <p class="bench-body">App de hábitos gamificada con sistema RPG. El mejor referente en gamificación de tareas. Convierte la productividad en un videojuego de rol completo.</p>
+            <div class="bench-crit">Punto crítico: mecánica compleja y tono competitivo que no es inclusivo para todos los perfiles</div>
+          </div>
+
+          <div class="bench-card gc">
+            <div class="bench-app">Referente 02</div>
+            <div class="bench-name">Finch</div>
+            <p class="bench-body">App de autocuidado emocional con mascota virtual. Referente en acompañamiento emocional y cuidado del bienestar con una criatura como guía.</p>
+            <div class="bench-crit">Punto crítico: poca conexión entre el estado emocional y las tareas concretas del día</div>
+          </div>
+
+          <div class="bench-card gc">
+            <div class="bench-app">Referente 03</div>
+            <div class="bench-name">Todoist</div>
+            <p class="bench-body">App de productividad con karma y puntos. Referente en organización eficiente de tareas con sistema de prioridades y retroalimentación numérica.</p>
+            <div class="bench-crit">Punto crítico: retroalimentación basada en números, sin ningún componente emocional</div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:1.5rem;" class="reveal">
+          <div style="padding:2rem 2.5rem;border-radius:var(--r);background:var(--pale);border:1px solid rgba(113,73,255,0.12);">
+            <p style="font-size:.8rem;color:var(--lm-muted);line-height:1.7;"><strong style="color:var(--primary);">La oportunidad de LUMI:</strong> ningún referente combina adaptación emocional real con gamificación liviana y tono no punitivo. LUMI existe en esa intersección.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="div">
+
+    <!-- DESIGN SYSTEM -->
+    <section class="section" id="sistema" style="position:relative;overflow:hidden;">
+      <div style="position:absolute;width:900px;height:900px;background:radial-gradient(circle,rgba(113,73,255,0.06),transparent 70%);right:-300px;bottom:-300px;pointer-events:none;border-radius:50%;"></div>
+      <div class="container">
+
+        <div class="chip reveal">Sistema Visual</div>
+        <h2 class="st reveal">El lenguaje de LUMI.</h2>
+        <p class="sb reveal" style="max-width:600px;transition-delay:.05s;">Un design system cohesivo construido sobre un gradiente púrpura, cards frosted glass y personajes 3D cartoon. Cada decisión visual tiene una razón emocional.</p>
+
+        <!-- Lumi -->
+        <div style="margin-top:7rem;">
+          <div class="chip reveal">El personaje</div>
+          <h2 class="st reveal">¿Quién es Lumi?</h2>
+          <p class="sb reveal" style="max-width:580px;transition-delay:.04s;">Lumi es la criatura morada que acompaña al usuario en su día a día. No juzga, no presiona. Celebra los logros pequeños, entiende los días difíciles y convierte la rutina en algo con alma. Es el corazón emocional de la app.</p>
+
+          <div class="reveal" style="transition-delay:.08s;margin-top:3.5rem;display:flex;justify-content:center;">
+            <img src="../../../assets/lumi/lumi.webp" alt="Lumi — la criatura de LUMI"
+                 style="width:100%;max-width:900px;height:auto;display:block;
+                        filter:drop-shadow(0 32px 80px rgba(113,73,255,0.3));">
+          </div>
+        </div>
+
+        <!-- Colors -->
+        <div class="chip reveal" style="margin-top:7rem;">Sistema Cromático</div>
+        <div class="color-grid reveal">
+
+          <div class="color-item">
+            <div class="color-solid" style="background:#7149FF;"></div>
+            <div class="color-glow"  style="background:#7149FF;"></div>
+            <div class="color-glass tw"><span class="c-name">Primary</span><span class="c-hex">#7149FF</span></div>
+          </div>
+
+          <div class="color-item">
+            <div class="color-solid" style="background:#9B6FFF;"></div>
+            <div class="color-glow"  style="background:#9B6FFF;"></div>
+            <div class="color-glass tw"><span class="c-name">Secondary</span><span class="c-hex">#9B6FFF</span></div>
+          </div>
+
+          <div class="color-item">
+            <div class="color-solid" style="background:#E5A0FF;"></div>
+            <div class="color-glow"  style="background:#E5A0FF;"></div>
+            <div class="color-glass td"><span class="c-name">Accent</span><span class="c-hex">#E5A0FF</span></div>
+          </div>
+
+
+        </div>
+
+        <!-- Typography -->
+        <div style="margin-top:9rem;">
+          <div class="chip reveal">Sistema Tipográfico</div>
+          <h2 class="st reveal">Rubik One y Poppins.</h2>
+          <p class="sb reveal" style="max-width:520px;transition-delay:.04s;">Dos familias con roles claros. Rubik One para impacto y personalidad, Poppins para legibilidad y calidez en todos los pesos.</p>
+
+          <div class="typo-layout">
+            <div class="reveal">
+              <div class="typo-sub">Tipografía display <span>→ Rubik One</span></div>
+              <div class="typo-row">
+                <span class="typo-level">Display</span>
+                <span class="typo-sample" style="font-family:'Rubik One',sans-serif;font-size:52px;font-weight:400;color:var(--primary);">LUMI</span>
+                <span class="typo-spec">Rubik One · 52px</span>
+              </div>
+              <div class="typo-sub" style="margin-top:3rem;">Tipografía de sistema <span>→ Poppins</span></div>
+              <div class="typo-row">
+                <span class="typo-level">H1</span>
+                <span class="typo-sample" style="font-size:40px;font-weight:700;color:var(--ink);">Tu jardín mágico</span>
+                <span class="typo-spec">Bold · 40px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">H2</span>
+                <span class="typo-sample" style="font-size:28px;font-weight:600;color:var(--ink);">¿Cómo te sientes hoy?</span>
+                <span class="typo-spec">SemiBold · 28px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">H3</span>
+                <span class="typo-sample" style="font-size:20px;font-weight:500;color:var(--ink);">Creatividad · Emociones</span>
+                <span class="typo-spec">Medium · 20px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">Body</span>
+                <span class="typo-sample" style="font-size:15px;font-weight:400;color:var(--lm-muted);letter-spacing:0;">Cada pequeña acción cuenta. Yo estoy aquí, siempre.</span>
+                <span class="typo-spec">Regular · 15px</span>
+              </div>
+              <div class="typo-row">
+                <span class="typo-level">Caption</span>
+                <span class="typo-sample" style="font-size:11px;font-weight:300;letter-spacing:2px;text-transform:uppercase;color:var(--lm-muted);">A tu ritmo · sin castigos</span>
+                <span class="typo-spec">Light · 11px</span>
+              </div>
+            </div>
+
+            <!-- Onboarding screen -->
+            <div style="display:flex;align-items:flex-end;justify-content:center;">
+              <img src="../../../assets/lumi/onboarding.webp" alt="LUMI Onboarding" style="width:100%;max-width:280px;height:auto;display:block;filter:drop-shadow(0 32px 64px rgba(113,73,255,0.35));">
+            </div>
+          </div>
+        </div>
+
+        <!-- Kingdoms -->
+        <div style="margin-top:9rem;">
+          <div class="chip reveal">Los 4 Reinos</div>
+          <h2 class="st reveal">Cada criatura, un mundo emocional.</h2>
+          <p class="sb reveal" style="max-width:580px;transition-delay:.04s;">Los reinos organizan las tareas por dimensión de vida. El usuario selecciona máximo 2 por día, evitando la sobrecarga y respetando su energía real.</p>
+
+          <div class="kingdom-grid reveal" style="transition-delay:.08s;">
+
+            <div class="kingdom-card kd-orin">
+              <img src="../../../assets/lumi/buhocard.webp" alt="Orin" class="kd-bg">
+              <div class="kd-overlay"></div>
+              <div class="kd-content">
+                <div class="kd-name">ORIN</div>
+                <div class="kd-realm">Creatividad</div>
+                <p class="kd-task">Lee 10 min · Pinta un cuadro · Escucha música nueva</p>
+              </div>
+            </div>
+
+            <div class="kingdom-card kd-gato">
+              <img src="../../../assets/lumi/gatocard.webp" alt="Gato Negro" class="kd-bg">
+              <div class="kd-overlay"></div>
+              <div class="kd-content">
+                <div class="kd-name">Gato Negro</div>
+                <div class="kd-realm">Emociones</div>
+                <p class="kd-task">Escribe cómo te sientes · Habla con alguien · Descansa sin culpa</p>
+              </div>
+            </div>
+
+            <div class="kingdom-card kd-kiro">
+              <img src="../../../assets/lumi/zorrocard.webp" alt="Kiro" class="kd-bg">
+              <div class="kd-overlay"></div>
+              <div class="kd-content">
+                <div class="kd-name">KIRO</div>
+                <div class="kd-realm">Descanso</div>
+                <p class="kd-task">Duerme 30 min · Ver una película · Salir a caminar</p>
+              </div>
+            </div>
+
+            <div class="kingdom-card kd-ciervo">
+              <img src="../../../assets/lumi/ciervocard.webp" alt="Ciervo Verde" class="kd-bg">
+              <div class="kd-overlay"></div>
+              <div class="kd-content">
+                <div class="kd-name">Ciervo Verde</div>
+                <div class="kd-realm">Hábitos</div>
+                <p class="kd-task">Tomar agua · Hacer ejercicio · Ordenar el cuarto</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Scroll to Top -->
+        <div class="scroll-top-wrap reveal" style="transition-delay:.1s;">
+          <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Volver arriba">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div style="position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(113,73,255,0.06),transparent 70%);left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;border-radius:50%;"></div>
+      <div class="footer-inner">
+        <div class="footer-brand">LUMI</div>
+        <p style="font-size:.75rem;color:var(--lm-muted);text-align:center;max-width:380px;line-height:1.7;">
+          UX Research · Product Design · Prototipado<br>
+          Pontificia Universidad Javeriana · Andrés Galdino
+        </p>
+        <div class="footer-pills">
+          <span class="footer-pill">UX Research</span>
+          <span class="footer-pill">Product Design</span>
+          <span class="footer-pill">Figma</span>
+          <span class="footer-pill">FigJam</span>
+          <span class="footer-pill">Gamificación</span>
+          <span class="footer-pill">Notion</span>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- end .vr-scroll-panel -->
+</div><!-- end .vr-stage -->
+
+<script src="../../../js/loader.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var cursor      = document.getElementById('cursor');
+  var scrollPanel = document.getElementById('scrollPanel');
+
+  /* ── Cursor ── */
+  document.addEventListener('mousemove', function (e) {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  window.addEventListener('load', function () {
+    document.querySelectorAll('a, button').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
+      el.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
+    });
+  });
+
+
+  if (!scrollPanel) return;
+
+  /* ════════════════════════════
+     PHASE 1 — DOM SETUP
+  ════════════════════════════ */
+
+  /* Split h2.st into word spans */
+  scrollPanel.querySelectorAll('h2.st').forEach(function (h) {
+    var words = h.textContent.trim().split(/\s+/);
+    h.textContent = '';
+    h.classList.add('st-split');
+    words.forEach(function (w, i) {
+      var outer = document.createElement('span');
+      outer.className = 'sw';
+      var inner = document.createElement('span');
+      inner.className = 'swi';
+      inner.textContent = w;
+      inner.style.transitionDelay = (i * 0.07) + 's';
+      outer.appendChild(inner);
+      h.appendChild(outer);
+      if (i < words.length - 1) h.appendChild(document.createTextNode(' '));
+    });
+  });
+
+  /* Color grid: per-item stagger */
+  scrollPanel.querySelectorAll('.color-grid.reveal').forEach(function (grid) {
+    grid.classList.remove('reveal');
+    grid.querySelectorAll('.color-item').forEach(function (item, i) {
+      item.classList.add('reveal');
+      item.style.transitionDelay = (i * 0.075) + 's';
+    });
+  });
+
+  /* Workflow cards: per-card stagger */
+  scrollPanel.querySelectorAll('.wf-cards.reveal').forEach(function (cards) {
+    cards.classList.remove('reveal');
+    cards.querySelectorAll('.wf-card').forEach(function (card, i) {
+      card.classList.add('reveal');
+      card.style.transitionDelay = Math.min(i * 0.055, 0.38) + 's';
+    });
+  });
+
+  /* Kingdom grid: per-card stagger */
+  scrollPanel.querySelectorAll('.kingdom-grid.reveal').forEach(function (grid) {
+    grid.classList.remove('reveal');
+    grid.querySelectorAll('.kingdom-card').forEach(function (card, i) {
+      card.classList.add('reveal');
+      card.style.transitionDelay = (i * 0.08) + 's';
+    });
+  });
+
+  /* ════════════════════════════
+     PHASE 2 — INTERSECTION OBSERVER
+  ════════════════════════════ */
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      el.classList.add('on');
+      el.querySelectorAll('.swi').forEach(function (s) {
+        s.style.transform = 'translateY(0)';
+        s.style.opacity   = '1';
+      });
+      io.unobserve(el);
+    });
+  }, { root: scrollPanel, threshold: 0.03 });
+
+  requestAnimationFrame(function () {
+    scrollPanel.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  });
+
+  /* ════════════════════════════
+     PHASE 3 — RAF SCROLL LOOP
+  ════════════════════════════ */
+
+  var heroEl   = scrollPanel.querySelector('.lm-hero');
+  var heroCont = heroEl ? heroEl.querySelector('.lm-hero-content') : null;
+  var heroSc   = heroEl ? heroEl.querySelector('.lm-sc')           : null;
+  var progress = document.getElementById('lmProgress');
+
+  if (heroCont) heroCont.style.willChange = 'transform, opacity';
+
+  var ticking = false;
+
+  function tick() {
+    var sy = scrollPanel.scrollTop;
+    var ph = scrollPanel.clientHeight;
+    var sh = scrollPanel.scrollHeight;
+
+    /* Scroll progress bar */
+    if (progress) {
+      progress.style.width = (sy / Math.max(sh - ph, 1) * 100) + '%';
+    }
+
+    /* Hero parallax */
+    if (heroEl) {
+      var heroH = heroEl.offsetHeight || ph;
+      var p = Math.min(Math.max(sy / heroH, 0), 1);
+      if (heroCont) {
+        heroCont.style.transform = 'translateY(' + (sy * 0.25) + 'px)';
+        heroCont.style.opacity   = String(Math.max(0, 1 - p * 2.2));
+      }
+      if (heroSc)    heroSc.style.opacity = String(Math.max(0, 1 - sy * 0.007));
+    }
+
+    ticking = false;
+  }
+
+  scrollPanel.addEventListener('scroll', function () {
+    if (!ticking) { requestAnimationFrame(tick); ticking = true; }
+  }, { passive: true });
+
+  requestAnimationFrame(tick);
+
+  /* ── Info panel slide-in (901–1440px) ── */
+  var infoTab     = document.getElementById('infoToggle');
+  var infoClose   = document.getElementById('infoClose');
+  var infoWrapper = document.getElementById('infoWrapper');
+  var stage       = document.querySelector('.vr-stage');
+
+  function openInfoPanel() {
+    infoWrapper.classList.add('panel-open');
+    stage.classList.add('panel-open');
+    infoTab.classList.add('panel-open');
+  }
+  function closeInfoPanel() {
+    infoWrapper.classList.remove('panel-open');
+    stage.classList.remove('panel-open');
+    infoTab.classList.remove('panel-open');
+  }
+  
+  infoTab.addEventListener('click', openInfoPanel);
+  
+  /* El botón close ahora actúa como tirador (abre y cierra) */
+  infoClose.addEventListener('click', function() {
+    if (infoWrapper.classList.contains('panel-open')) {
+      closeInfoPanel();
+    } else {
+      openInfoPanel();
+    }
+  });
+  /* clic en el overlay (::after del stage) cierra el panel */
+  stage.addEventListener('click', function (e) {
+    if (stage.classList.contains('panel-open') && !infoWrapper.contains(e.target)) {
+      closeInfoPanel();
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeInfoPanel();
+  });
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 1440 || window.innerWidth <= 900) closeInfoPanel();
+  });
+
+  /* ── Scroll to Top ── */
+  var scrollTopBtn = document.getElementById('scrollTopBtn');
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', function () {
+      var target = scrollPanel.scrollHeight > scrollPanel.clientHeight ? scrollPanel : window;
+      target.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    scrollTopBtn.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
+    scrollTopBtn.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
+  }
+
+})();
+</script>
+</body>
+</html>

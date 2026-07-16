@@ -4,6 +4,9 @@
 .cn-logo{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;text-decoration:none;flex-shrink:0;transition:border-color .2s;overflow:hidden}
 .cn-logo:hover{border-color:rgba(255,255,255,.42)}
 .cn-logo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.cn-name{display:flex;align-items:center;gap:5px;margin-left:10px;color:#f5f5f7;font-family:var(--nf);font-size:clamp(11px,3vw,13px);font-weight:600;letter-spacing:-.01em;text-decoration:none;white-space:nowrap;flex-shrink:0;transition:color .2s}
+.cn-name:hover{color:var(--nmuted)}
+.cn-name-badge{width:14px;height:14px;flex-shrink:0}
 .cn-list{list-style:none;margin:0 auto;padding:0;display:flex}
 .cn-btn{display:flex;align-items:center;height:var(--nh);padding:0 9px;color:var(--nfg);font-family:var(--nf);font-size:12px;font-weight:400;text-decoration:none;letter-spacing:.01em;white-space:nowrap;cursor:pointer;transition:color .2s;background:none;border:none;user-select:none}
 .cn-item:hover>.cn-btn{color:var(--nmuted)}
@@ -73,31 +76,32 @@
 
 <nav class="cn" role="navigation" aria-label="Navegación principal">
   <div class="cn-w">
-    <a class="cn-logo" href="/index.html" aria-label="Inicio — Andrés Galdino"><img src="/assets/favicon.svg" alt="" aria-hidden="true" width="28" height="28"></a>
+    <a class="cn-logo" href="/" aria-label="Inicio — Andrés Galdino"><img src="/assets/profile.webp" alt="" aria-hidden="true" width="28" height="28"></a>
+    <a class="cn-name" href="/" aria-label="Inicio — Andrés Galdino">Andrés Galdino<img class="cn-name-badge" src="/assets/iconos/verify.svg" alt="Verificado"></a>
     <ul class="cn-list" role="list">
-      <li class="cn-item"><a class="cn-btn" href="/index.html">Inicio</a></li>
+      <li class="cn-item"><a class="cn-btn" href="/">Inicio</a></li>
       <li class="cn-item">
-        <a class="cn-btn" href="/paginas/proyectos.html" aria-haspopup="true">Proyectos</a>
+        <a class="cn-btn" href="/paginas/proyectos/" aria-haspopup="true">Proyectos</a>
         <div class="cn-drop" role="menu">
           <div class="cn-dw">
             <div class="cn-lg">
               <span class="cn-lbl">Proyectos</span>
-              <a href="/paginas/proyectos/universitario.html" role="menuitem">Universidad</a>
-              <a href="/paginas/proyectos/victoria-regia.html" role="menuitem">Victoria Regia</a>
-              <a href="/paginas/proyectos/moda-week-international.html" role="menuitem">Moda Week</a>
-              <a href="/paginas/proyectos/chiper.html" role="menuitem">Chiper</a>
-              <a href="/paginas/proyectos/farmalaxia.html" role="menuitem">Farmalaxia</a>
-              <a href="/paginas/proyectos/dreams.html" role="menuitem">Dreams</a>
-              <a href="/paginas/proyectos/museo.html" role="menuitem">Museo</a>
+              <a href="/paginas/proyectos/universitario/" role="menuitem">Universidad</a>
+              <a href="/paginas/proyectos/victoria-regia/" role="menuitem">Victoria Regia</a>
+              <a href="/paginas/proyectos/moda-week-international/" role="menuitem">Moda Week</a>
+              <a href="/paginas/proyectos/chiper/" role="menuitem">Chiper</a>
+              <a href="/paginas/proyectos/farmalaxia/" role="menuitem">Farmalaxia</a>
+              <a href="/paginas/proyectos/dreams/" role="menuitem">Dreams</a>
+              <a href="/paginas/proyectos/museo/" role="menuitem">Museo</a>
             </div>
           </div>
         </div>
       </li>
       <li class="cn-item">
-        <a class="cn-btn" href="/paginas/sobre-mi.html">Perfil</a>
+        <a class="cn-btn" href="/paginas/sobre-mi/">Perfil</a>
       </li>
       <li class="cn-item">
-        <a class="cn-btn" href="/paginas/contacto.html">Contacto</a>
+        <a class="cn-btn" href="/paginas/contacto/">Contacto</a>
       </li>
     </ul>
     <button class="cn-sbtn" id="cnSBtn" aria-label="Abrir búsqueda">
@@ -110,26 +114,26 @@
 </nav>
 
 <div class="cn-mob" id="cnMob" role="dialog" aria-label="Menú móvil">
-  <div class="cn-mob-row"><a class="cn-mob-link" href="/index.html">Inicio</a></div>
+  <div class="cn-mob-row"><a class="cn-mob-link" href="/">Inicio</a></div>
   <div class="cn-mob-row">
     <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
-      <a class="cn-mob-link" href="/paginas/proyectos.html" style="padding-right:0;">Proyectos</a>
+      <a class="cn-mob-link" href="/paginas/proyectos/" style="padding-right:0;">Proyectos</a>
       <button id="cnMobProyBtn" aria-expanded="false" style="background:none; border:none; color:rgba(245,245,247,.88); padding:16px;">
         <svg id="cnChev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="pointer-events:none;transition:transform .35s cubic-bezier(.16,1,.3,1)"><path d="M6 9l6 6 6-6"/></svg>
       </button>
     </div>
     <div class="cn-mob-acc" id="cnAcc">
-      <a class="cn-mob-acc-link" href="/paginas/proyectos/universitario.html">Universidad</a>
-      <a class="cn-mob-acc-link" href="/paginas/proyectos/victoria-regia.html">Victoria Regia</a>
-      <a class="cn-mob-acc-link" href="/paginas/proyectos/moda-week-international.html">Moda Week</a>
-      <a class="cn-mob-acc-link" href="/paginas/proyectos/chiper.html">Chiper</a>
-      <a class="cn-mob-acc-link" href="/paginas/proyectos/farmalaxia.html">Farmalaxia</a>
-      <a class="cn-mob-acc-link" href="/paginas/proyectos/dreams.html">Dreams</a>
-      <a class="cn-mob-acc-link" href="/paginas/proyectos/museo.html">Museo</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/universitario/">Universidad</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/victoria-regia/">Victoria Regia</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/moda-week-international/">Moda Week</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/chiper/">Chiper</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/farmalaxia/">Farmalaxia</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/dreams/">Dreams</a>
+      <a class="cn-mob-acc-link" href="/paginas/proyectos/museo/">Museo</a>
     </div>
   </div>
-  <div class="cn-mob-row"><a class="cn-mob-link" href="/paginas/sobre-mi.html">Perfil</a></div>
-  <div class="cn-mob-row"><a class="cn-mob-link" href="/paginas/contacto.html">Contacto</a></div>
+  <div class="cn-mob-row"><a class="cn-mob-link" href="/paginas/sobre-mi/">Perfil</a></div>
+  <div class="cn-mob-row"><a class="cn-mob-link" href="/paginas/contacto/">Contacto</a></div>
   <div class="cn-mob-footer">Andrés Galdino · Portfolio</div>
 </div>
 
@@ -142,11 +146,11 @@
   <div class="cn-sp-sugg" id="cnSugg">
     <span class="cn-sp-sugg-lbl">Accesos rápidos</span>
     <div class="cn-sp-chips">
-      <a class="cn-sp-chip" href="/paginas/proyectos.html">Todos los Proyectos</a>
-      <a class="cn-sp-chip" href="/paginas/proyectos/moda-week-international.html">Moda Week</a>
-      <a class="cn-sp-chip" href="/paginas/proyectos/chiper.html">Chiper</a>
-      <a class="cn-sp-chip" href="/paginas/sobre-mi.html">Perfil</a>
-      <a class="cn-sp-chip" href="/paginas/contacto.html">Contacto</a>
+      <a class="cn-sp-chip" href="/paginas/proyectos/">Todos los Proyectos</a>
+      <a class="cn-sp-chip" href="/paginas/proyectos/moda-week-international/">Moda Week</a>
+      <a class="cn-sp-chip" href="/paginas/proyectos/chiper/">Chiper</a>
+      <a class="cn-sp-chip" href="/paginas/sobre-mi/">Perfil</a>
+      <a class="cn-sp-chip" href="/paginas/contacto/">Contacto</a>
     </div>
   </div>
   <div class="cn-sp-results cn-sp-chips" id="cnSPResults" aria-live="polite" aria-label="Resultados de búsqueda"></div>
