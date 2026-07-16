@@ -206,7 +206,7 @@
       width: max-content;
       animation: marqueeScroll 60s linear infinite;
     }
-    .marquee-inner img { height: 24px; width: auto; opacity: .35; filter: grayscale(100%); }
+    .marquee-inner img { height: 24px; width: auto; opacity: .55; filter: brightness(0) invert(1); }
     @keyframes marqueeScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
     @media (max-width: 640px) {
       .marquee-wrap { display: none; }
@@ -438,53 +438,21 @@
 })();
 </script>
 
-<!-- Marquee de marcas: loop infinito + spotlight central -->
+<!-- Marquee de marcas: loop infinito -->
 <script>
 (function () {
-  var wrap  = document.getElementById('marqueeWrap');
   var inner = document.getElementById('marqueeInner');
-  if (!wrap || !inner) return;
+  if (!inner) return;
 
   function fillTrack() {
     var tries = 0;
     do {
       inner.innerHTML += inner.innerHTML;
       tries++;
-    } while (inner.scrollWidth < window.innerWidth * 4 && tries < 10);
+    } while (inner.scrollWidth < window.innerWidth * 4 && tries < 4);
   }
   if (document.readyState === 'complete') fillTrack();
   else window.addEventListener('load', fillTrack);
-
-  var track = wrap.querySelector('.marquee-track');
-  var spotlightAnimId;
-  function updateSpotlight() {
-    if (!document.hidden) {
-      var rect   = track.getBoundingClientRect();
-      var center = rect.left + rect.width / 2;
-      var zone   = 60;
-      var imgs   = inner.querySelectorAll('img');
-      for (var i = 0; i < imgs.length; i++) {
-        var img = imgs[i];
-        var r = img.getBoundingClientRect();
-        var imgCenter = r.left + r.width / 2;
-        var dist = Math.abs(imgCenter - center);
-        if (dist < zone) {
-          var intensity = 1 - dist / zone;
-          img.style.filter  = 'grayscale(' + (1 - intensity) + ')';
-          img.style.opacity = 0.35 + 0.65 * intensity;
-        } else {
-          img.style.filter  = 'grayscale(1)';
-          img.style.opacity = '0.35';
-        }
-      }
-    }
-    spotlightAnimId = requestAnimationFrame(updateSpotlight);
-  }
-  updateSpotlight();
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) cancelAnimationFrame(spotlightAnimId);
-    else updateSpotlight();
-  });
 })();
 </script>
 </body>
