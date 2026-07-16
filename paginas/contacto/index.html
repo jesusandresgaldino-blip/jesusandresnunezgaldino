@@ -23,10 +23,14 @@
   <link rel="stylesheet" href="../../css/main.css">
   <style>
     html, body {
-      background: url('../../assets/contact-bg.webp') center/cover no-repeat fixed #0a0a0e;
+      background: #000;
       min-height:100svh; overflow-x:hidden;
     }
     .cursor { background:#fff !important; mix-blend-mode:difference !important; }
+    #dot-grid {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1;
+    }
 
     .contact-stage {
       position:relative; z-index:3;
@@ -173,11 +177,46 @@
       .pc-btn:hover { background: linear-gradient(145deg, #222 0%, #050505 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1); transform: translateY(-1px) scale(0.98); }
     }
     .pc-btn-plus { font-size:15px; font-weight:300; line-height:1; }
+
+    /* ── Marquee de marcas ── */
+    .marquee-wrap {
+      position: fixed;
+      bottom: 0; left: 14px; right: 14px;
+      z-index: 4;
+      padding-bottom: clamp(16px,3vh,28px);
+      pointer-events: none;
+      opacity: 0;
+      animation: mqFadeIn .8s ease .5s forwards;
+    }
+    @keyframes mqFadeIn { to { opacity: 1; } }
+    .marquee-label {
+      font-family: var(--font);
+      font-size: 9px; font-weight: 700;
+      color: rgba(255,255,255,.4); letter-spacing: 2px;
+      text-transform: uppercase; text-align: center;
+      margin-bottom: 10px;
+    }
+    .marquee-track {
+      overflow: hidden; width: 100%;
+      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+    .marquee-inner {
+      display: flex; align-items: center; gap: 48px;
+      width: max-content;
+      animation: marqueeScroll 60s linear infinite;
+    }
+    .marquee-inner img { height: 24px; width: auto; opacity: .35; filter: grayscale(100%); }
+    @keyframes marqueeScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    @media (max-width: 640px) {
+      .marquee-wrap { display: none; }
+    }
   </style>
 </head>
 <body>
 
 <div id="nav-container"></div>
+<canvas id="dot-grid" aria-hidden="true"></canvas>
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <div class="contact-stage">
@@ -222,6 +261,22 @@
   </div>
 </div>
 
+<!-- Marquee de marcas -->
+<div class="marquee-wrap" id="marqueeWrap" aria-hidden="true">
+  <div class="marquee-label">Marcas con las que colaboré</div>
+  <div class="marquee-track">
+    <div class="marquee-inner" id="marqueeInner">
+      <img src="../../assets/logos/CHIPER.webp" alt="Chiper">
+      <img src="../../assets/logos/AE.webp" alt="Amazonas Ecotravel">
+      <img src="../../assets/logos/EG.webp" alt="Expeditions George">
+      <img src="../../assets/logos/FL.webp" alt="Farmalaxia">
+      <img src="../../assets/logos/AFW.webp" alt="Amazonas Fashion Week">
+      <img src="../../assets/logos/MW.webp" alt="Moda Week">
+      <img src="../../assets/logos/VR.webp" alt="Victoria Regia">
+    </div>
+  </div>
+</div>
+
 <script src="../../js/loader.js"></script>
 
 <!-- Cursor -->
@@ -238,6 +293,64 @@
       el.addEventListener('mouseenter',function(){cursor.classList.add('big');});
       el.addEventListener('mouseleave',function(){cursor.classList.remove('big');});
     });
+  });
+})();
+</script>
+
+<!-- Dot grid — puntos blancos sobre fondo negro -->
+<script>
+(function () {
+  'use strict';
+  var dc = document.getElementById('dot-grid');
+  if (!dc) return;
+  var dx = dc.getContext('2d');
+  var mx = window.innerWidth / 2, my = window.innerHeight / 2;
+  var prevMx = mx, prevMy = my;
+  var dotAnimId;
+
+  document.addEventListener('mousemove', function (e) {
+    mx = e.clientX; my = e.clientY;
+  });
+
+  function resizeDot() { dc.width = window.innerWidth; dc.height = window.innerHeight; }
+  resizeDot();
+  window.addEventListener('resize', resizeDot);
+
+  function drawDots() {
+    if (mx === prevMx && my === prevMy) {
+      dotAnimId = requestAnimationFrame(drawDots);
+      return;
+    }
+    prevMx = mx; prevMy = my;
+
+    dx.clearRect(0, 0, dc.width, dc.height);
+    var sp = 38;
+    var cols = Math.ceil(dc.width  / sp) + 1;
+    var rows = Math.ceil(dc.height / sp) + 1;
+    for (var i = 0; i < cols; i++) {
+      for (var j = 0; j < rows; j++) {
+        var x = i * sp, y = j * sp;
+        var ddx = x - mx, ddy = y - my;
+        var dist  = Math.sqrt(ddx * ddx + ddy * ddy);
+        var force = Math.max(0, 1 - dist / 140);
+        x += ddx * force * -0.45;
+        y += ddy * force * -0.45;
+        dx.beginPath();
+        dx.arc(x, y, 1 + force * 2.2, 0, Math.PI * 2);
+        dx.fillStyle = 'rgba(255,255,255,' + (0.07 + force * 0.28) + ')';
+        dx.fill();
+      }
+    }
+    dotAnimId = requestAnimationFrame(drawDots);
+  }
+  drawDots();
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      cancelAnimationFrame(dotAnimId);
+    } else {
+      dotAnimId = requestAnimationFrame(drawDots);
+    }
   });
 })();
 </script>
@@ -322,6 +435,50 @@
   setVars(curX,curY);
   initialUntil=performance.now()+1200;
   toCenter();
+})();
+</script>
+
+<!-- Marquee de marcas: loop infinito + spotlight central -->
+<script>
+(function () {
+  var wrap  = document.getElementById('marqueeWrap');
+  var inner = document.getElementById('marqueeInner');
+  if (!wrap || !inner) return;
+
+  var original = inner.innerHTML;
+  function fillTrack() {
+    var tries = 0;
+    while (inner.scrollWidth < window.innerWidth * 4 && tries < 10) {
+      inner.innerHTML += original;
+      tries++;
+    }
+  }
+  if (document.readyState === 'complete') fillTrack();
+  else window.addEventListener('load', fillTrack);
+
+  var track = wrap.querySelector('.marquee-track');
+  function updateSpotlight() {
+    var rect   = track.getBoundingClientRect();
+    var center = rect.left + rect.width / 2;
+    var zone   = rect.width * 0.15;
+    var imgs   = inner.querySelectorAll('img');
+    for (var i = 0; i < imgs.length; i++) {
+      var img = imgs[i];
+      var r = img.getBoundingClientRect();
+      var imgCenter = r.left + r.width / 2;
+      var dist = Math.abs(imgCenter - center);
+      if (dist < zone) {
+        var intensity = 1 - dist / zone;
+        img.style.filter  = 'grayscale(' + (1 - intensity) + ')';
+        img.style.opacity = 0.35 + 0.65 * intensity;
+      } else {
+        img.style.filter  = 'grayscale(1)';
+        img.style.opacity = '0.35';
+      }
+    }
+    requestAnimationFrame(updateSpotlight);
+  }
+  updateSpotlight();
 })();
 </script>
 </body>
