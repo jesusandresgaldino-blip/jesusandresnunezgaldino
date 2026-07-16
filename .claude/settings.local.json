@@ -110,7 +110,15 @@
       "Bash(cp \"/Users/andresgaldino/Documents/Pagina AndreGaldino/assets/Logos/CHIPER.png\" assets/logos/)",
       "Bash(cp \"/Users/andresgaldino/Documents/Pagina AndreGaldino/assets/Logos/AE.png\" assets/logos/)",
       "Bash(cp \"/Users/andresgaldino/Documents/Pagina AndreGaldino/assets/Logos/EG.png\" assets/logos/)",
-      "Bash(cp \"/Users/andresgaldino/Documents/Pagina AndreGaldino/assets/Logos/FL.png\" assets/logos/)"
+      "Bash(cp \"/Users/andresgaldino/Documents/Pagina AndreGaldino/assets/Logos/FL.png\" assets/logos/)",
+      "Bash(ffmpeg -y -ss 2 -i assets/destok.mp4 -frames:v 1 /tmp/old_frame.png)",
+      "Bash(ffmpeg -y -ss 2 -i /tmp/destok_test_crf22.mp4 -frames:v 1 /tmp/new_frame.png)",
+      "Bash(ffmpeg -y -i /Users/andresgaldino/Documents/parallax.MOV -vf scale=1280:720 -c:v libx264 -crf 23 -preset slow -an -movflags +faststart -pix_fmt yuv420p /tmp/parallax_test.mp4)",
+      "Bash(cp /tmp/destok_test_crf22.mp4 assets/destok.mp4)",
+      "Bash(cp /tmp/parallax_test.mp4 assets/parallax.mp4)",
+      "Bash(curl -sI \"https://raw.githubusercontent.com/jesusandresgaldino-blip/jesusandresnunezgaldino/main/assets/destok.mp4\")",
+      "Bash(curl -sI \"https://andresgaldino.com/assets/destok.mp4\")",
+      "Bash(perl -0777 -pi -e \"s/cursor\\\\.style\\\\.left = mx \\\\+ 'px';\\\\n\\\\s*cursor\\\\.style\\\\.top\\\\s*= my \\\\+ 'px';/cursor.style.transform = 'translate3d\\(' + mx + 'px,' + my + 'px,0\\) translate\\(-50%,-50%\\)';/\" index.html)"
     ]
   }
 }

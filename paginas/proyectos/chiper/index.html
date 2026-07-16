@@ -2351,8 +2351,7 @@
 
   /* ── Cursor ── */
   document.addEventListener('mousemove', function (e) {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
+    cursor.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0) translate(-50%,-50%)';
   });
   window.addEventListener('load', function () {
     document.querySelectorAll('a, button').forEach(function (el) {

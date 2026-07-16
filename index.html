@@ -702,8 +702,7 @@ window._darkMode = true;
 
   document.addEventListener('mousemove', function (e) {
     mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
+    cursor.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0) translate(-50%,-50%)';
   });
 
   function bindCursorHover() {

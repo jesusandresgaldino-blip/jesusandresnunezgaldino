@@ -962,8 +962,7 @@ html,body{background:#000;font-family:var(--font);height:100%;overflow:hidden;co
 var cursor=document.getElementById('cursor');
 var IHOV='a,button,.swatch,.skill-tag,[role="button"]';
 document.addEventListener('mousemove',function(e){
-  cursor.style.left=e.clientX+'px';
-  cursor.style.top=e.clientY+'px';
+  cursor.style.transform = 'translate3d(' + e.clientX + 'px,' + e.clientY + 'px,0) translate(-50%,-50%)';
 });
 document.addEventListener('mouseleave',function(){cursor.style.opacity='0';});
 document.addEventListener('mouseenter',function(){cursor.style.opacity='1';});

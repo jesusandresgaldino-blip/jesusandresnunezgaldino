@@ -37,9 +37,10 @@ html, body {
   background: #111;
   border-radius: 50%;
   position: fixed;
+  top: 0; left: 0;
   pointer-events: none;
   z-index: 99999;
-  transform: translate(-50%, -50%);
+  will-change: transform;
   transition: width .3s, height .3s;
   mix-blend-mode: multiply;
 }
