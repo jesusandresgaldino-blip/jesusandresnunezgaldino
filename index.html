@@ -69,6 +69,15 @@
       align-items: center; justify-content: center; text-align: center;
       padding: clamp(70px,10vh,110px) clamp(24px,5vw,80px) clamp(40px,8vh,80px);
     }
+    .hero-scrim {
+      position: absolute; inset: 0; z-index: -1;
+      background: radial-gradient(ellipse 70% 60% at 50% 45%, rgba(0,0,0,.6) 0%, rgba(0,0,0,.92) 100%);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      mask-image: linear-gradient(to bottom, black 0%, black 88%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 88%, transparent 100%);
+      pointer-events: none;
+    }
 
     /* Palabras rotatorias */
     .rotating-words {
@@ -548,6 +557,7 @@
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <main class="hero">
+  <div class="hero-scrim" id="heroScrim" aria-hidden="true"></div>
   <h1 class="sr-only">Andrés Galdino — Product &amp; Creative Designer</h1>
   <div class="rotating-words" aria-hidden="true">
     <div class="word-track">
@@ -698,6 +708,7 @@ window._darkMode = true;
     var heroName = hero.querySelector('.hero-name');
     var heroSub  = hero.querySelector('.hero-sub');
     var heroBtns = hero.querySelector('.hero-btns');
+    var heroScrim = document.getElementById('heroScrim');
 
     function applyEl(el, ty, op) {
       if (!el) return;
@@ -712,6 +723,7 @@ window._darkMode = true;
         [marquee, heroName, heroSub, heroBtns].forEach(function (el) {
           if (el) { el.style.transform = ''; el.style.opacity = ''; }
         });
+        if (heroScrim) heroScrim.style.opacity = '';
         return;
       }
       var h = hero.offsetHeight || window.innerHeight;
@@ -719,6 +731,7 @@ window._darkMode = true;
       applyEl(heroName, sy * -0.36, Math.max(0, 1 - (sy / h) * 2.4));
       applyEl(heroSub,  sy * -0.22, Math.max(0, 1 - (sy / h) * 1.9));
       applyEl(heroBtns, sy * -0.12, Math.max(0, 1 - (sy / h) * 1.5));
+      if (heroScrim) heroScrim.style.opacity = Math.max(0, 1 - (sy / h) * 2.2).toFixed(4);
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
