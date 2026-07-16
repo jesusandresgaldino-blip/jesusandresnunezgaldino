@@ -176,8 +176,8 @@
     fx.style.cssText = [
       'position:fixed;top:44px;left:0;right:0;bottom:0;z-index:896;',
       'pointer-events:none;opacity:0;',
-      'backdrop-filter:blur(20px) saturate(65%);',
-      '-webkit-backdrop-filter:blur(20px) saturate(65%);',
+      'backdrop-filter:blur(2px) saturate(100%);',
+      '-webkit-backdrop-filter:blur(2px) saturate(100%);',
       'background:rgba(0,0,0,.22);',
       'transition:opacity .4s cubic-bezier(.2,0,0,1)'
     ].join('');
