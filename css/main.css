@@ -50,7 +50,7 @@ html, body {
 /* ── Cursor visual personalizado ── */
 .cursor {
   width: 10px; height: 10px;
-  background: #111;
+  background: #fff;
   border-radius: 50%;
   position: fixed;
   top: 0; left: 0;
@@ -58,9 +58,9 @@ html, body {
   z-index: 99999;
   will-change: transform;
   transition: width .3s, height .3s;
-  mix-blend-mode: multiply;
+  mix-blend-mode: difference;
 }
-.cursor.big { width: 36px; height: 36px; background: rgba(0,0,0,.08); }
+.cursor.big { width: 36px; height: 36px; background: rgba(255,255,255,.5); }
 
 /* Ocultar cursor en táctil */
 @media (pointer: coarse) {
