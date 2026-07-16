@@ -18,6 +18,22 @@ html, body {
 /* ── Cursor personalizado (solo en dispositivos con mouse preciso) ── */
 @media (pointer: fine) {
   * { cursor: none !important; }
+  html.cn-native-cursor #nav-container,
+  html.cn-native-cursor #nav-container *,
+  html.cn-native-cursor .cn-mob,
+  html.cn-native-cursor .cn-mob *,
+  html.cn-native-cursor .cn-sp,
+  html.cn-native-cursor .cn-sp * {
+    cursor: auto !important;
+  }
+  html.cn-native-cursor #nav-container a,
+  html.cn-native-cursor #nav-container button,
+  html.cn-native-cursor .cn-mob a,
+  html.cn-native-cursor .cn-mob button,
+  html.cn-native-cursor .cn-sp a,
+  html.cn-native-cursor .cn-sp button {
+    cursor: pointer !important;
+  }
 }
 
 /* ── Utilidades de accesibilidad ── */

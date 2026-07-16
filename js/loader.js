@@ -306,6 +306,18 @@
       });
     }
 
+    /* Restaurar el cursor nativo sobre el nav y sus paneles (dropdown, buscador, menú móvil):
+       el cursor personalizado se "congela" en el borde cuando el mouse sale del viewport
+       de la página (p. ej. hacia la barra de direcciones), lo que se siente como que
+       el nav "rebota" o no deja navegar. */
+    var customCursor = document.querySelector('.cursor');
+    document.addEventListener('mousemove', function (e) {
+      var overNav = e.target && e.target.closest &&
+        e.target.closest('#nav-container, .cn-mob, .cn-sp');
+      document.documentElement.classList.toggle('cn-native-cursor', !!overNav);
+      if (customCursor) customCursor.style.opacity = overNav ? '0' : '';
+    }, { passive: true });
+
     document.dispatchEvent(new CustomEvent('navReady'));
   }
 

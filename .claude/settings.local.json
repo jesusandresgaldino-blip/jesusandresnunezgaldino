@@ -118,7 +118,12 @@
       "Bash(cp /tmp/parallax_test.mp4 assets/parallax.mp4)",
       "Bash(curl -sI \"https://raw.githubusercontent.com/jesusandresgaldino-blip/jesusandresnunezgaldino/main/assets/destok.mp4\")",
       "Bash(curl -sI \"https://andresgaldino.com/assets/destok.mp4\")",
-      "Bash(perl -0777 -pi -e \"s/cursor\\\\.style\\\\.left = mx \\\\+ 'px';\\\\n\\\\s*cursor\\\\.style\\\\.top\\\\s*= my \\\\+ 'px';/cursor.style.transform = 'translate3d\\(' + mx + 'px,' + my + 'px,0\\) translate\\(-50%,-50%\\)';/\" index.html)"
+      "Bash(perl -0777 -pi -e \"s/cursor\\\\.style\\\\.left = mx \\\\+ 'px';\\\\n\\\\s*cursor\\\\.style\\\\.top\\\\s*= my \\\\+ 'px';/cursor.style.transform = 'translate3d\\(' + mx + 'px,' + my + 'px,0\\) translate\\(-50%,-50%\\)';/\" index.html)",
+      "Bash(mkdir -p /tmp/bugframes)",
+      "Bash(ffmpeg -y -i '/var/folders/rd/9j8c92q91vs1yzp4vf6g33r80000gn/T/TemporaryItems/NSIRD_screencaptureui_TBG2em/Grabación de pantalla 2026-07-15 a la\\(s\\) 10.20.43 p.m..mov' -vf fps=4 /tmp/bugframes/frame_%03d.png)",
+      "Read(//Users/andresgaldino/Desktop/**)",
+      "Bash(rm -f /tmp/bugframes/*)",
+      "Bash(ffmpeg -y -i '/Users/andresgaldino/Desktop/Grabación de pantalla 2026-07-15 a la\\(s\\) 10.27.14 p.m..mov' -vf fps=6 /tmp/bugframes/frame_%03d.png)"
     ]
   }
 }
