@@ -53,7 +53,8 @@
 
     html, body { background: #000; }
     html { overscroll-behavior-y: none; }
-    .cursor { background: #fff !important; mix-blend-mode: difference !important; }
+    /* Cursor nativo en el home (el cursor personalizado se quitó por rendimiento) */
+    * { cursor: auto !important; }
 
     /* ── Canvases de fondo ── */
     #dot-grid {
@@ -568,8 +569,6 @@
 
 <canvas id="dot-grid" aria-hidden="true"></canvas>
 
-<div class="cursor" id="cursor" aria-hidden="true"></div>
-
 <main class="hero">
   <div class="hero-scrim" id="heroScrim" aria-hidden="true"></div>
   <h1 class="sr-only">Andrés Galdino — Product &amp; Creative Designer</h1>
@@ -695,23 +694,14 @@ window._darkMode = true;
 (function () {
   'use strict';
 
-  var cursor = document.getElementById('cursor');
   var mx = window.innerWidth / 2;
   var my = window.innerHeight / 2;
   var dotAnimId;
 
+  /* Posición del mouse para el efecto del dot-grid (el cursor visual personalizado ya no existe) */
   document.addEventListener('mousemove', function (e) {
     mx = e.clientX; my = e.clientY;
-    cursor.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0) translate(-50%,-50%)';
   });
-
-  function bindCursorHover() {
-    document.querySelectorAll('button, a, .hero-letter').forEach(function (el) {
-      el.addEventListener('mouseenter', function () { cursor.classList.add('big'); });
-      el.addEventListener('mouseleave', function () { cursor.classList.remove('big'); });
-    });
-  }
-  window.addEventListener('load', bindCursorHover);
 
   /* ── Hero parallax — cada elemento sube a su propia velocidad al hacer scroll ── */
   (function () {

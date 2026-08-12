@@ -125,7 +125,10 @@
       "Bash(rm -f /tmp/bugframes/*)",
       "Bash(ffmpeg -y -i '/Users/andresgaldino/Desktop/Grabación de pantalla 2026-07-15 a la\\(s\\) 10.27.14 p.m..mov' -vf fps=6 /tmp/bugframes/frame_%03d.png)",
       "Bash(curl -s \"https://andresgaldino.com/js/loader.js\")",
-      "Bash(curl -s \"https://andresgaldino.com/css/main.css\")"
+      "Bash(curl -s \"https://andresgaldino.com/css/main.css\")",
+      "Bash(awk '/<style>/{print NR\": start\"} /<\\\\/style>/{print NR\": end\"}' index.html)",
+      "Bash(grep -rho 'https\\\\?://[a-zA-Z0-9.-]*\\\\.[a-z]\\\\{2,\\\\}' --include=\"*.html\" .)",
+      "Bash(node -e \"require\\('fs'\\).readFileSync\\('index.html','utf8'\\)\")"
     ]
   }
 }
