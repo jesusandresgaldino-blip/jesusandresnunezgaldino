@@ -14,12 +14,12 @@
     { title: 'Proyectos',             url: 'paginas/proyectos/',                           tags: 'trabajos diseño ux ui' },
     { title: 'Perfil',                url: 'paginas/sobre-mi/',                            tags: 'bio historia habilidades skills sobre mi' },
     { title: 'Contacto',              url: 'paginas/contacto/',                            tags: 'email linkedin behance redes' },
-    { title: 'Universidad',           url: 'paginas/proyectos/universitario/',             tags: 'editorial educacion universitario' },
-    { title: 'Victoria Regia',        url: 'paginas/proyectos/victoria-regia/',            tags: 'branding naturaleza cosmeticos amazonia' },
+    { title: 'LUMI',                  url: 'paginas/proyectos/universitario/',             tags: 'ux ui producto app research universitario' },
+    { title: 'Victoria Regia',        url: 'paginas/proyectos/victoria-regia/',            tags: 'producto branding naturaleza ecoturismo reserva amazonas' },
     { title: 'Moda Week',             url: 'paginas/proyectos/moda-week-international/',   tags: 'branding eventos moda' },
     { title: 'Chiper',                url: 'paginas/proyectos/chiper/',                    tags: 'b2b e-commerce app' },
     { title: 'Farmalaxia',            url: 'paginas/proyectos/farmalaxia/',                tags: 'branding salud farmacia identidad' },
-    { title: 'Dreams',                url: 'paginas/proyectos/dreams/',                    tags: 'ux ui app motion producto juego 3d cozy' },
+    { title: 'Dreams',                url: 'paginas/proyectos/dreams/',                    tags: 'videojuego unity juego personal 3d cozy' },
     { title: 'Museo',                 url: 'paginas/proyectos/museo/',                     tags: 'cultura arte exposicion' }
   ];
 

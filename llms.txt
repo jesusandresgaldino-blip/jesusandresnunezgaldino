@@ -1,52 +1,52 @@
 # Andrés Galdino
 
-> Product Designer based in Bogotá, Colombia. Focused on UI/UX, design systems, visual identity, web animations, and logo motion. 8 years of professional experience building brands and digital interfaces. Available for remote work across Latin America and internationally.
+> Product Designer based in Bogotá, Colombia. 6+ years designing digital products end to end: research, information architecture, UX/UI, design systems, and developer handoff. Available for remote, hybrid, or on-site work.
 
 ## About
 
-Andrés Galdino is a Product Designer with experience spanning brand identity, UI/UX product design, and creative direction. His work is grounded in structured design thinking and hands-on execution — from strategy and naming through final production and web implementation.
+Andrés Galdino is a Product Designer with experience spanning UX/UI product design, design systems, and brand identity. His work is grounded in structured design thinking and hands-on execution — from strategy and naming through final production and web implementation.
 
 Primary tool: Figma. Additional tools: Adobe Illustrator, Notion, Unity (prototyping), AI-assisted workflows (ChatGPT, Claude, Gemini).
 
-Languages: Spanish (native), Portuguese (fluent, available for projects in Brazil), English.
+Languages: Spanish (native), Portuguese (native, Brazilian family), English (intermediate, B1).
 
 ## Professional Experience
 
-- **Chiper** — Designer within the product team. Contributed to visual communication and UI projects, including campaigns developed alongside Coca-Cola and other fast-moving consumer goods brands. Focus on DesignOps, visual scalability, and B2B product design across 4 Latin American markets.
+- **Chiper (ChiperOS)** — Product & Visual Designer, DesignOps. Jun 2024 – Mar 2025. Remote, B2B marketplace in Colombia, Mexico, Brazil, and Venezuela. Built a modular design system that reduced production cycles by 50% (from 15 days to 1 week) across 4 simultaneous markets, working with global brands such as Coca-Cola, Nestlé, Unilever, and PepsiCo. Sole designer for the Brazilian market.
 
-- **Reserva Natural Victoria Regia** — Full brand identity project: naming system, visual identity, digital presence, and ongoing web management for an Amazonian nature reserve in Colombia.
+- **Reserva Natural Victoria Regia** — Digital Founder and Product Designer. 2019 – present. Leads the company's digital product end to end: information architecture, UX/UI in Figma, design system, brand, and the production website for an ecotourism nature reserve in the Colombian Amazon.
 
-- **Design Scalability** — Creation of look-and-feel design templates and reusable design systems for products launched simultaneously in Colombia, Brazil, and Mexico.
+- **Moda Week International** — Graphic Designer and Brand Strategist. Jan 2018 – May 2022. Remote, US fashion media. Led visual and brand strategy: editorial design, motion graphics, and campaigns.
 
 ## Projects
 
-- [Chiper](https://andresgaldino.com/paginas/proyectos/chiper.html): DesignOps and visual scalability for a B2B e-commerce platform, with campaigns involving Coca-Cola and other major brands.
-- [Victoria Regia](https://andresgaldino.com/paginas/proyectos/victoria-regia.html): Brand identity, digital presence, and web management for an Amazonian nature reserve.
-- [Amazonas Fashion Week](https://andresgaldino.com/paginas/proyectos/moda-week-international.html): Creative direction and brand design for the most significant fashion event in the Colombian Amazon.
-- [FarmalaxIA](https://andresgaldino.com/paginas/proyectos/farmalaxia.html): Full brand identity for a pharmaceutical company integrating AI-assisted health services.
-- [Dreams](https://andresgaldino.com/paginas/proyectos/dreams.html): UX/UI and motion design for a mobile app with cozy exploration and collectible creature mechanics.
-- [LUMI](https://andresgaldino.com/paginas/proyectos/universitario.html): UX/UI case study for an emotional wellness and gamification app for young adults.
-- [Museo](https://andresgaldino.com/paginas/proyectos/museo.html): Personal visual archive — photography, identity, design experiments, and creative exploration.
+- [Chiper](https://andresgaldino.com/paginas/proyectos/chiper/): Modular design system and DesignOps for a B2B marketplace: 50% shorter production cycles across 4 markets.
+- [Victoria Regia](https://andresgaldino.com/paginas/proyectos/victoria-regia/): Brand identity, digital presence, and web management for an Amazonian nature reserve.
+- [Amazonas Fashion Week](https://andresgaldino.com/paginas/proyectos/moda-week-international/): Project within Moda Week International: brand strategy and design for the most significant fashion event in the Colombian Amazon.
+- [FarmalaxIA](https://andresgaldino.com/paginas/proyectos/farmalaxia/): Complete visual identity from scratch for a B2B SaaS startup serving independent drugstores.
+- [Dreams](https://andresgaldino.com/paginas/proyectos/dreams/): Personal video game in Unity (videojuego personal en Unity), in development: building and dreamlike exploration, with an entry cinematic, movement mechanics, and a playable prototype.
+- [LUMI](https://andresgaldino.com/paginas/proyectos/universitario/): UX/UI case study for an emotional wellness and gamification app for young adults.
+- [Museo](https://andresgaldino.com/paginas/proyectos/museo/): Personal visual archive — photography, identity, design experiments, and creative exploration.
 
 ## Skills
 
-UI/UX Design, Design Systems, Visual Identity, Brand Strategy, Logo Motion, Web Animation, Creative Direction, Figma, Adobe Illustrator, Motion Graphics, Interaction Design, Typography, Prototyping
+Product Design, UX/UI Design, UX Research, Information Architecture, Interaction Design, Design Systems, Wireframing, Prototyping, Usability Testing, JTBD, Developer Handoff, DesignOps, Visual Identity, Art Direction, Figma, Adobe Illustrator
 
 ## Languages
 
 - Spanish: Native
-- Portuguese: Fluent (projects in Brazil)
-- English: Professional
+- Portuguese: Native (Brazilian family)
+- English: Intermediate (B1)
 
 ## Availability
 
-Based in Bogotá, Colombia. Open to remote projects — Colombia, Mexico, Brazil, and international clients.
+Based in Bogotá, Colombia. Available for remote, hybrid, or on-site work.
 
 ## Contact
 
 - Portfolio: https://andresgaldino.com
-- Profile: https://andresgaldino.com/paginas/sobre-mi.html
-- Projects: https://andresgaldino.com/paginas/proyectos.html
+- Profile: https://andresgaldino.com/paginas/sobre-mi/
+- Projects: https://andresgaldino.com/paginas/proyectos/
 - Email: jesusandresgaldino@gmail.com
 - LinkedIn: https://www.linkedin.com/in/andresgaldino/
 - Instagram: https://www.instagram.com/andri_galdi

@@ -73,7 +73,7 @@ Inyectado en `<head>` de `index.html` y `paginas/sobre-mi.html`. Contiene nombre
 ### Open Graph
 
 Todas las páginas tienen `og:title`, `og:description`, `og:image`, `og:url` apuntando a:
-- Imagen: `/assets/og-image.png`
+- Imagen: `https://andresgaldino.com/assets/profile.webp`
 - Dominio canonical: `https://andresgaldino.com`
 
 ---

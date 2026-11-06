@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="base-depth" content="2">
   <title>Contacto — Andrés Galdino</title>
-  <meta name="description" content="Escríbeme directamente. Andrés Galdino, diseñador con base en Bogotá disponible para proyectos de branding, producto y dirección creativa — Colombia, México, Brasil y remoto.">
+  <meta name="description" content="Escríbeme directamente. Andrés Galdino, Product Designer con base en Bogotá. Disponible para trabajo remoto, híbrido o presencial.">
 
   <meta property="og:type"        content="website">
   <meta property="og:title"       content="Contacto — Andrés Galdino">
-  <meta property="og:description" content="Diseñador con base en Bogotá disponible para proyectos remotos en Latinoamérica. Branding, producto y dirección creativa.">
+  <meta property="og:description" content="Product Designer con base en Bogotá. Disponible para trabajo remoto, híbrido o presencial.">
   <meta property="og:url"         content="https://andresgaldino.com/paginas/contacto/">
-  <meta property="og:image"       content="/assets/og-image.png">
+  <meta property="og:image"       content="https://andresgaldino.com/assets/profile.webp">
   <meta name="twitter:card"       content="summary_large_image">
 
   <link rel="canonical" href="https://andresgaldino.com/paginas/contacto/">
@@ -151,7 +151,13 @@
     }
     .pc-desc {
       font-size:12.5px; color:rgba(255,255,255,.68);
-      line-height:1.55; margin-bottom:16px;
+      line-height:1.55; margin-bottom:10px;
+    }
+    .pc-links { display:flex; flex-direction:column; align-items:flex-start; gap:2px; margin-bottom:8px; }
+    .pc-link {
+      font-size:12.5px; line-height:1.55; color:rgba(255,255,255,.9);
+      text-decoration:underline; text-decoration-color:rgba(255,255,255,.35); text-underline-offset:3px;
+      overflow-wrap:anywhere; transition:color .18s;
     }
     .pc-row { display:flex; align-items:center; justify-content:space-between; }
     .pc-socials { display:flex; gap:14px; align-items:center; }
@@ -173,6 +179,7 @@
     }
     @media (hover: hover) {
       .pc-soc:hover { color:#fff; transform:scale(1.12); }
+      .pc-link:hover { color:#fff; text-decoration-color:#fff; }
       .pc-btn:hover { background: linear-gradient(145deg, #222 0%, #050505 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.1); transform: translateY(-1px) scale(0.98); }
     }
     .pc-btn-plus { font-size:15px; font-weight:300; line-height:1; }
@@ -219,11 +226,11 @@
 <div class="cursor" id="cursor" aria-hidden="true"></div>
 
 <div class="contact-stage">
-  <h1 class="sr-only">Contacto — Andrés Galdino, Product &amp; Creative Designer</h1>
+  <h1 class="sr-only">Contacto — Andrés Galdino, Product Designer · UX/UI</h1>
   <div class="pc-wrap">
     <div class="pc-shell">
       <div class="pc">
-        <img class="pc-photo" src="../../assets/profile.webp" alt="Andrés Galdino">
+        <img class="pc-photo" src="../../assets/profile.webp" alt="Retrato de Andrés Galdino, Product Designer, con saco oscuro y camisa blanca">
         <div class="pc-overlay">
           <div class="pc-name">
             Andrés Galdino
@@ -231,7 +238,11 @@
               <img src="../../assets/iconos/verify.svg" alt="" width="18" height="18">
             </span>
           </div>
-          <p class="pc-desc">Diseñador que construye desde la identidad visual hasta la interfaz terminada — con criterio, no con plantillas.</p>
+          <p class="pc-desc">Product Designer que construye desde la investigación hasta la interfaz terminada — con criterio, no con plantillas.</p>
+          <div class="pc-links">
+            <a class="pc-link" href="mailto:jesusandresgaldino@gmail.com">jesusandresgaldino@gmail.com</a>
+            <a class="pc-link" href="https://www.linkedin.com/in/andresgaldino/" target="_blank" rel="noopener noreferrer">linkedin.com/in/andresgaldino</a>
+          </div>
           <div class="pc-row">
             <div class="pc-socials">
               <a class="pc-soc" href="https://www.instagram.com/andri_galdi/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
